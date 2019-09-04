@@ -18,5 +18,5 @@ Different students learn in different ways, and what one student likes in a prof
 
 **React.JS** is a javascript library for building the front end for web applications. 
 
-**Spring Boot** is a MVC framework for Java EE applications and will connect to datasources and will be used to create the API.
+**Spring Boot** is a MVC framework for Java EE applications and will connect to data sources and will be used to create the API.
 
