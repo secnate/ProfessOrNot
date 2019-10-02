@@ -15,7 +15,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({
-          "accounts": UserSerializer(user,context=self.get_serializer_context()).data,
+          "user": UserSerializer(user,context=self.get_serializer_context()).data,
           "token": AuthToken.objects.create(user)[1]
         })
 # Login API
@@ -37,7 +37,7 @@ class LoginAPI(generics.GenericAPIView):
         # Update User Last Login
         update_last_login(None, user)
         return Response({
-            "accounts": UserSerializer(user, context=self.get_serializer_context()).data,
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
 
