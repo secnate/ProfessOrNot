@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
@@ -13,10 +14,9 @@ class RegisterSerialzer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id','email','password', 'name')
-        extra_kwargs = {'password':{'write_only':True}}
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['email'],
-                    validated_data['password'], validated_data['name'])
+                    validated_data['password'], validated_data['name'], last_login=timezone.now())
         return user
 # Login Serializer
 class LoginSerializer(serializers.Serializer):

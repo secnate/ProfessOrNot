@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import json
 from datetime import timedelta
 from rest_framework.settings import api_settings
 
@@ -22,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')9eb-(^iiuk)wbpix8o@z#fs-tw+yheou3xj7u5spgf%3-p=)^'
+SECRET_KEY = os.environ['PON_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['PON_DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -101,12 +102,18 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
+DEFAULT_DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+DATABASES = (
+  json.loads(os.environ["PON_DATABASES"])
+  if "PON_DATABASES" in os.environ
+  else DEFAULT_DATABASES
+)
 
 
 # Password validation
