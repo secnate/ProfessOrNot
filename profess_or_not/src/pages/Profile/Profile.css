@@ -1,0 +1,16 @@
+/* CSS formatting for the profile page */
+.profilePage {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* CSS formatting for the title */
+
+.pageTitle {
+    font-size: 20pt;
+    padding-top: 20px;
+}
+
+.profileEmphasis {
+    color: red;
+}
