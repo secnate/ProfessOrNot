@@ -16,6 +16,7 @@ import ContactUs from "./pages/ContactUs/ContactUs.js";
 import Logo from "./logo.png";
 import LogoTitle from "./logotitle.png";
 import SearchIcon from "./search.png";
+import { KEYS } from 'eslint-visitor-keys';
 
 
 {/* A good chunk of this is based on the tutorial found on
@@ -32,7 +33,10 @@ import SearchIcon from "./search.png";
 
     function handleKeyPress(e) {
       if (e.charCode === 13) {
-        alert("Submitted Search");
+        
+
+        var input = document.getElementById("searchInput").value;
+        alert("Submitted Search With Input: \"" + input + "\"");
       }
     }
 
@@ -43,7 +47,7 @@ import SearchIcon from "./search.png";
             <button type="submit" className="searchButton" disabled>
               <img alt="" src={SearchIcon}/>
             </button>
-            <input type="text" className="searchTerm" 
+            <input type="text" className="searchTerm" id="searchInput"
                    placeholder="Search For Professors" onKeyPress={handleKeyPress}/>
           </div>
         </div>
