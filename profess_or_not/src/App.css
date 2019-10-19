@@ -163,3 +163,14 @@ body {
   background-color: transparent;
   width: 100%;
 }
+
+#componentDiv {
+  height: 470px;
+  background-color: #5491C3;
+}
+
+#bottomBar {
+  border: 3px #1C286D solid;
+  height: 30px;
+  background-color: #1F68B3
+}

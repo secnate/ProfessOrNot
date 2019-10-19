@@ -16,7 +16,6 @@ import ContactUs from "./pages/ContactUs/ContactUs.js";
 import Logo from "./logo.png";
 import LogoTitle from "./logotitle.png";
 import SearchIcon from "./search.png";
-import { KEYS } from 'eslint-visitor-keys';
 
 
 {/* A good chunk of this is based on the tutorial found on
@@ -85,7 +84,10 @@ import { KEYS } from 'eslint-visitor-keys';
         </div>
 
         {/* This is the actual page we are displaying */}
-        <Main/>
+        <div id="componentDiv">
+          <Main/>
+        </div>
+        <div id="bottomBar"></div>
       </div>
     );
 
