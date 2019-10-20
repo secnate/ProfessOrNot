@@ -57,7 +57,7 @@ class Dropdown extends React.Component {
                 <ul>
                 <li className="homeLink"><NavLink exact activeClassName="current" to='/'>Home</NavLink></li> 
                 <li><NavLink exact activeClassName="current" to='/profile'>Profile</NavLink></li> 
-                <li><NavLink exact activeClassName="current" to='/search'>Classes</NavLink></li> 
+                <li><NavLink exact activeClassName="current" to='/searchclasses'>Classes</NavLink></li> 
                 <li><NavLink exact activeClassName="current" to='/professor'>Professors</NavLink></li>
                 <li><NavLink exact activeClassName="current" to='/about'>About</NavLink></li> 
                 <li><NavLink exact activeClassName="current" to='/contactus'>Contact Us</NavLink></li> 

@@ -6,7 +6,7 @@ import About from "./pages/About/About.js";
 import MainPage from "./pages/Main/Main.js";
 import Professor from "./pages/Professor/Professor.js";
 import Profile from "./pages/Profile/Profile.js";
-import Search from "./pages/Search/Search.js";
+import SearchClasses from "./pages/SearchClasses/SearchClasses.js"
 import SignIn from "./pages/SignIn/SignIn.js";
 import SignUp from "./pages/SignUp/SignUp.js";
 import Test from "./pages/Test/Test.js";
@@ -92,13 +92,13 @@ import SearchIcon from "./search.png";
     );
 
     const Navigation = () => (
-      <nav>
+      <nav> 
         <ul>
           <li><NavLink exact activeClassName="current" to='/'>Main</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/about'>About</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/professor'>Professor</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/profile'>Profile</NavLink></li>
-          <li><NavLink exact activeClassName="current" to='/search'>Search</NavLink></li>
+          <li><NavLink exact activeClassName="current" to='/searchclasses'>Classes</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/signin'>Sign In</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/signup'>Sign Up</NavLink></li>
           <li><NavLink exact activeClassName="current" to='/test'>Test</NavLink></li>
@@ -117,7 +117,7 @@ import SearchIcon from "./search.png";
         <Route exact path='/about' component={About}></Route>
         <Route exact path='/professor' component={Professor}></Route>
         <Route exact path='/profile' component={Profile}></Route>
-        <Route exact path='/search' component={Search}></Route>
+        <Route exact path='/searchclasses' component={SearchClasses}></Route>
         <Route exact path='/signin' component={SignIn}></Route>
         <Route exact path='/signup' component={SignUp}></Route>
         <Route exact path='/test' component={Test}></Route>
