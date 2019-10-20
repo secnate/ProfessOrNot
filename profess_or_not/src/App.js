@@ -72,7 +72,7 @@ import SearchIcon from "./search.png";
 
             <button className="loginLogoutButton"
                     onClick={clickLoginLogoutButton}>
-              {getLoginLogoutButtonText}
+              Login
             </button>
           </div>
 
