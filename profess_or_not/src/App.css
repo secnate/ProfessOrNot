@@ -1,0 +1,176 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.App {
+  width: 100%;
+  margin: 0px auto;
+  padding: 20px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  background-color: black;
+  margin-bottom: 20px;
+}
+
+nav ul li {
+  padding: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.current {
+  border-bottom: 4px solid white;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+.topBar {
+  background-color: lightskyblue;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;
+  height: 70px;
+  float: left;
+}
+
+.ProfessOrNotLogo {
+  height: 35px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#row {
+  display: flex;
+}
+
+.logoSection {
+  width: 110px;
+  height: 40px;
+  background-color: lightskyblue;
+  border-right: darkblue 1px solid;
+}
+
+.titleSection {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.ProfessOrNotTitle {
+  height: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: lightskyblue;
+  padding-left: 5px;
+  border-left: darkblue 1px solid;
+}
+
+.loginLogoutButton {
+  padding-top: 21px;
+  height: 20px;
+  margin: 0 auto;
+  vertical-align: text-bottom;
+}
+
+/* 
+   Search Bar Implementation 
+   Credit goes to codepen.io/huange/pen/rbqsD 
+   for the majority of the code
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+  background: #f2f2f2;
+  font-family: 'Open-Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 260px;
+  border: 1px solid darkblue;
+  border-left-color: white;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 0 5px 5px 0;
+  outline: none;
+  color: black;
+  margin-top: 5px;
+}
+
+.searchTerm:focus {
+  color: black;
+}
+
+.searchImage {
+  margin-bottom: 2px;
+}
+
+.searchButton {
+  width: 25px;
+  height: 20px;
+  border: 1px solid darkblue;
+  border-right-color: white;
+  background: white;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+  font-size: 20px;
+  pointer-events: none;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.searchButton:focus {
+  outline: none;
+}
+
+/* Resize the wrap to see the search bar change! */
+.wrap {
+  padding-left: 0px;
+  background-color: darkblue;
+  margin-right: 0px;
+  height: 30px;
+}
+
+#background-wrapper {
+  background-color: transparent;
+  width: 100%;
+}
+
+#componentDiv {
+  height: 470px;
+  background-color: #5491C3;
+}
+
+#bottomBar {
+  border: 3px #1C286D solid;
+  height: 30px;
+  background-color: #1F68B3
+}

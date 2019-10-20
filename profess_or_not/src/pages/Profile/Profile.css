@@ -1,0 +1,98 @@
+/* CSS formatting for the profile page */
+.profilePage {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* CSS formatting for the title */
+
+.pageTitle {
+    font-size: 20pt;
+    padding-top: 20px;
+}
+
+.profileEmphasis {
+    color: #E80000;
+}
+
+/* CS formatting for the layout */
+
+#contentBox {
+    margin: 0px auto;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    margin-top: -30px;
+}
+
+#column1 {
+    float: left;
+    margin:0;
+    width: 70%;
+    background-color: transparent;
+    height: 100%;
+}
+
+#column2 {
+    float: left;
+    margin: 0;
+    width: 30%;
+    background-color: transparent;
+    height: 100%;
+}
+
+/* Left Column */
+.profileInfoText {
+    background-color: white;
+    margin-left: -20px;
+    transform: translateX(5%);
+    outline-style: solid;
+    outline-color: darkblue;
+    outline-width: 3px;
+    font-size: 15pt;
+    font-style: normal;
+    min-height: 30px;
+    margin-top: -10px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+/* Right Column */
+.profilePic {
+    width: 160px;
+    height: 160px;
+    background-color: white;
+    border-radius: 50%;
+    border: 3px solid darkblue;
+    margin: 0px auto;
+    transform: translateX(-7%);
+}
+
+/* Learning Type Box */
+.learningTypeBox {
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    border: 2px black solid;
+    width: 100%;
+    height: 55px;
+    background-color: white;
+}
+ul {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    color: black;
+}
+
+li {
+    display: inline-block;
+    color: black;
+}
+
+.learningTypeBullet {
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,16 @@
+/* CSS formatting for the contact us page */
+
+.contact {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .contactTitle {
+      font-size: 20pt;
+      font-style: bold;
+  }
+
+  .introText {
+      font-size: 10pt;
+      margin-top: -15px;
+  }
