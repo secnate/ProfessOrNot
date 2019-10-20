@@ -18,13 +18,13 @@ export default class SearchClasses extends React.Component {
 
     updateChecked() {
         if (document.getElementById("school").checked) {
-            console.log("DEBUG: school is checked");
+            alert("DEBUG: school is checked");
         }
         else if (document.getElementById("professors").checked) {
-            console.log("DEBUG: professors is checked");
+            alert("DEBUG: professors is checked");
         } 
         else if (document.getElementById("other").checked) {
-            console.log("DEBUG: other is checked");
+            alert("DEBUG: other is checked");
         }
     }
 
