@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['PON_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['PON_DEBUG']
 
-ALLOWED_HOSTS = os.environ['PON_ALLOWED_HOSTS']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
 
 # Application definition
@@ -102,18 +102,23 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DEFAULT_DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.environ['PON_ENV'] == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-
-DATABASES = (
-  json.loads(os.environ["PON_DATABASES"])
-  if "PON_DATABASES" in os.environ
-  else DEFAULT_DATABASES
-)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['PON_DB_NAME'],
+            'USER': os.environ['PON_DB_USER'],
+            'HOST': os.environ['PON_DB_HOST'],
+            'PORT': os.environ['PON_DB_PORT'],
+        }
+    }
 
 
 # Password validation
