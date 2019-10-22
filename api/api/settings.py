@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['PON_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['PON_DEBUG']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ['PON_ALLOWED_HOSTS']
 
 
 # Application definition
