@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['PON_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['PON_DEBUG']
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.environ.get('PON_ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -114,9 +114,6 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': os.environ['PON_DB_NAME'],
-            'USER': os.environ['PON_DB_USER'],
-            'HOST': os.environ['PON_DB_HOST'],
-            'PORT': os.environ['PON_DB_PORT'],
         }
     }
 
