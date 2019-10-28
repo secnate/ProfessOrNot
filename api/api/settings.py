@@ -30,6 +30,7 @@ DEBUG = os.environ['PON_DEBUG']
 
 ALLOWED_HOSTS = os.environ.get('PON_ALLOWED_HOSTS').split(',')
 
+CORS_ORIGIN_WHITELIST = os.environ.get('PON_CORS_WHITELIST').split(',')
 
 # Application definition
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'knox',
     'debug',
     'accounts',
@@ -75,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
