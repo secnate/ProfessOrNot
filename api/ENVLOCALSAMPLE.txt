@@ -1,0 +1,6 @@
+DJANGO_SETTINGS_MODULE=api.settings
+PON_ENV=local
+PON_DEBUG=True
+PON_SECRET_KEY=ehjfuhefuhe
+PON_ALLOWED_HOSTS=localhost
+PON_CORS_WHITELIST=http://localhost:8080,http://localhost:3000
