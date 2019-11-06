@@ -1,6 +1,8 @@
-# Will is the Code Owner for the API, Scripts, Dockerfile
+# Will is the Code Owner for the API, Scripts, Dockerfile, Travis, Deploykey
 /api/ @willbootle
 Dockerfile @willbootle
 /scripts/ @willbootle
+.travis.yml @willbootle
+deploy_key.enc @willbootle
 # Nathan, Alex, Kassidy are Code Owners for frontend
 /frontend/ @NathanPavlovsky @brockthealex @kblock97
