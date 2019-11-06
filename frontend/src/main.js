@@ -15,6 +15,10 @@ const accessToken  =  localStorage.getItem('token')
 if (accessToken) {
     Vue.prototype.$http.defaults.headers.common['Authorization'] =  "Token " + accessToken
 }
+// If token is present but user object is not, fetch the user
+if (store.getters.isAuthenticated && !store.getters.getUser.name) {
+  store.dispatch('fetch_user')
+}
 Vue.use(BootstrapVue)
 new Vue({
   router,

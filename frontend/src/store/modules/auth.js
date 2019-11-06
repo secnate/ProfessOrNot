@@ -91,6 +91,7 @@ const mutations = {
       logout(state){
         state.status = ''
         state.token = ''
+        state.user = ''
       },
       fetch_user(state, payload){
         state.token = localStorage.getItem("token")
