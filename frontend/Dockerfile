@@ -13,8 +13,10 @@ RUN mkdir -p /var/www/html
 COPY nginx_config/nginx.conf /etc/nginx/nginx.conf
 COPY nginx_config/default.conf /etc/nginx/conf.d/default.conf
 
-# Mount certificate directory
-VOLUME [ "/etc/letsencrypt/live/dev.professornot.com" ]
+# Copy TLS Certificates
+RUN mkdir -p /etc/letsencrypt/live/dev.professornot.com
+COPY /etc/letsencrypt/live/dev.professornot.com/fullchain.pem /etc/letsencrypt/live/dev.professornot.com/fullchain.pem
+COPY /etc/letsencrypt/live/dev.professornot.com/privkey.pem /etc/letsencrypt/live/dev.professornot.com/privkey.pem
 
 # Set the directory we want to run the next commands for
 WORKDIR /tmp/nginx/frontend
