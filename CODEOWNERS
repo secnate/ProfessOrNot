@@ -1,4 +1,6 @@
-# Will is the Code Owner for the API
+# Will is the Code Owner for the API, Scripts, Dockerfile
 /api/ @willbootle
+Dockerfile @willbootle
+/scripts/ @willbootle
 # Nathan, Alex, Kassidy are Code Owners for frontend
 /frontend/ @NathanPavlovsky @brockthealex @kblock97
