@@ -13,6 +13,9 @@ RUN mkdir -p /var/www/html
 COPY nginx_config/nginx.conf /etc/nginx/nginx.conf
 COPY nginx_config/default.conf /etc/nginx/conf.d/default.conf
 
+# Mount certificate directory
+VOLUME [ "/etc/letsencrypt/live/dev.professornot.com" ]
+
 # Set the directory we want to run the next commands for
 WORKDIR /tmp/nginx/frontend
 # Copy our source code into the container
