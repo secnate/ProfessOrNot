@@ -12,6 +12,33 @@ const getters = {
   getUser: state =>  state.user
 };
 const actions = {
+    register({commit}, user) {
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios({url: '/auth/register',
+        data: {
+          email: user.email,
+          password: user.password,
+          name: user.name,
+        },
+        method: 'POST'})
+        .then(resp => {
+          const token = resp.data.token
+          const user = resp.data.user
+          console.log(user)
+          localStorage.setItem('token', token)
+          axios.defaults.headers.common['Authorization'] = 'Token ' + token
+          const payload = [token, user]
+          commit('auth_success', payload)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('auth_error')
+          localStorage.removeItem('token')
+          reject(err)
+        })
+      })
+    },
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
