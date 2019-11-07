@@ -1,9 +1,9 @@
 from django.db import models
 from schools.models import School
 
-class Course(models.Model):
+class Professor(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=8, default="")
+    name = models.CharField(max_length=50, default="")
     school = models.ForeignKey(School, on_delete=models.CASCADE, default=1)
     class Meta:
         unique_together = ('name', 'school')
