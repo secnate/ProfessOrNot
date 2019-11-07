@@ -8,6 +8,7 @@ from .serializers import UserSerializer, RegisterSerialzer, LoginSerializer
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = RegisterSerialzer
 
     def post(self, request, *args, **kwargs):
@@ -20,6 +21,8 @@ class RegisterAPI(generics.GenericAPIView):
         })
 # Login API
 class LoginAPI(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
+
     def get_token_limit_per_user(self):
         return REST_KNOX_SETTINGS.get('TOKEN_LIMIT_PER_USER')
 
@@ -44,7 +47,6 @@ class LoginAPI(generics.GenericAPIView):
 
 # Get User API
 class UserAPI(generics.RetrieveAPIView):
-    permission_classes = [ permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
     def get_object(self):

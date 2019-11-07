@@ -32,6 +32,8 @@ ALLOWED_HOSTS = os.environ.get('PON_ALLOWED_HOSTS').split(',')
 
 CORS_ORIGIN_WHITELIST = os.environ.get('PON_CORS_WHITELIST').split(',')
 
+APPEND_SLASH=False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     'accounts',
     'courses',
     'schools',
+    'professors',
+    'reviews',
 ]
 
 REST_FRAMEWORK = {
@@ -56,6 +60,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     )
 
 }

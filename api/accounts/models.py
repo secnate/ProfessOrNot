@@ -1,5 +1,6 @@
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
+from schools.models import School
 
 
 class MyUserManager(BaseUserManager):
@@ -17,6 +18,7 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=True)
     name = models.CharField(max_length=69)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, default=1)
     is_active = models.BooleanField(
         'active',
         default=True,
