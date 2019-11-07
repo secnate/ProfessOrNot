@@ -8,6 +8,9 @@
       style="max-width: 20rem;"
       class="mb-2"
     >
+      <div v-if="loginAlert">
+        <b-alert show variant="danger">{{loginAlert}}</b-alert>
+      </div>
       <div v-if="registerSelected">
         <Register />
       </div>
@@ -31,11 +34,13 @@ export default {
   },
   data() {
     return {
-      registerSelected: false
+      registerSelected: false,
+      loginAlert: ""
     };
   },
   methods: {
     toggleLogin: function() {
+      this.loginAlert = ""
       this.registerSelected = !this.registerSelected;
     }
   },

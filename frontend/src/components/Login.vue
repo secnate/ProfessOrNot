@@ -44,7 +44,13 @@ export default {
         let password = this.credentials.password
         this.$store.dispatch('login', { email, password })
        .then(() => this.$router.push('/'))
-       .catch(err => console.log(err))
+       .catch(err => {
+         if (err.response.status == 400) {
+           this.$parent.loginAlert = "Wrong Username/Password"
+         } else {
+           this.$parent.loginAlert = err
+         }
+       })
       }
     }
   

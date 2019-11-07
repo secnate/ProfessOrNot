@@ -3,14 +3,14 @@
     <b-form @submit="onSubmit">
       <b-form-input
         id="input-name"
-        v-model="credentials.name"
+        v-model="newUser.name"
         required
         placeholder="Name"
       ></b-form-input>
       <br />
       <b-form-input
         id="input-email"
-        v-model="credentials.email"
+        v-model="newUser.email"
         type="email"
         required
         placeholder="Email"
@@ -18,7 +18,7 @@
       <br />
       <b-form-input
         id="input-password"
-        v-model="credentials.password"
+        v-model="newUser.password"
         type="password"
         required
         placeholder="Password"
@@ -31,19 +31,33 @@
 
 <script>
 export default {
+  /* eslint-disable no-console */
   name: "Register",
   data() {
     return {
-      credentials: {
+      newUser: {
         name: "",
         email: "",
         password: ""
-      }
+      },
     };
   },
   methods: {
     onSubmit(evt) {
-      evt.preventDefault();
+      evt.preventDefault()
+      this.register()
+    },
+    register: function() {
+      let user = this.newUser
+      this.$store.dispatch('register', user)
+      .then(() => this.$router.push('/'))
+      .catch(err => {
+         if (err.response.status == 400) {
+           this.$parent.loginAlert = "This E-Mail is already registered!"
+         } else {
+           this.$parent.loginAlert = err
+         }
+       })
     }
   }
 };
