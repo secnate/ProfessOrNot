@@ -2,10 +2,10 @@
   <div class="login-card">
     <b-card
       :title="cardTitle"
-      img-src="../assets/logotitle.png"
+      img-src="../assets/logotitle.svg"
       img-alt="Image"
       img-topb
-      style="max-width: 20rem;"
+      style= "padding: 10px; fill: blue;"
       class="mb-2"
     >
       <div v-if="loginAlert">
