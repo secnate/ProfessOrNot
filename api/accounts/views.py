@@ -46,7 +46,7 @@ class LoginAPI(generics.GenericAPIView):
 
 
 # Get User API
-class UserAPI(generics.RetrieveAPIView):
+class UserAPI(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
