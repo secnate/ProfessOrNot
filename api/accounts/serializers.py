@@ -15,6 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.set_password(validated_data.get('password', instance.password))
         instance.school_id = (validated_data.get('school_id'), instance.school_id)
+        instance.save()
+        return instance
 # Register Serializer
 class RegisterSerialzer(serializers.ModelSerializer):
     class Meta:
