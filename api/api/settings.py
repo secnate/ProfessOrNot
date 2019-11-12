@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'schools',
     'professors',
     'reviews',
+    'search',
 ]
 # Enable Docs only in DEBUG
 DEFAULT_RENDERER_CLASSES = (
