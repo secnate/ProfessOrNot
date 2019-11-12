@@ -2,13 +2,14 @@ from django.utils import timezone
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
+from schools.serializers import SchoolSerializer
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
-    school_name = serializers.CharField(source='school.name', read_only=True)
+    school = SchoolSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'school_name')
+        fields = ('id', 'email', 'name', 'school')
 
 # Register Serializer
 class RegisterSerialzer(serializers.ModelSerializer):

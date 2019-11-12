@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'schools',
     'professors',
     'reviews',
+    'search',
 ]
 
 REST_FRAMEWORK = {

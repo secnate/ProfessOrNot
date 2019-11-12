@@ -2,9 +2,11 @@ from django.contrib.auth.models import update_last_login
 from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework import status
 from knox.models import AuthToken
 from api.settings import REST_KNOX as REST_KNOX_SETTINGS
 from .serializers import UserSerializer, RegisterSerialzer, LoginSerializer
+from rest_framework import status
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -18,7 +20,7 @@ class RegisterAPI(generics.GenericAPIView):
         return Response({
           "user": UserSerializer(user,context=self.get_serializer_context()).data,
           "token": AuthToken.objects.create(user)[1]
-        })
+        }, status=status.HTTP_201_CREATED)
 # Login API
 class LoginAPI(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
