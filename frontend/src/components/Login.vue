@@ -39,7 +39,7 @@ export default {
           evt.preventDefault()
           this.login()
       },
-      login: function () {
+      login () {
         let email = this.credentials.email 
         let password = this.credentials.password
         this.$store.dispatch('login', { email, password })

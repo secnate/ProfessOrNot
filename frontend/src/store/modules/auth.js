@@ -91,7 +91,7 @@ const actions = {
           .then(resp => {
             const payload = resp.data
             console.log(payload)
-            commit('fetch_user', payload)
+            commit('update_user', payload)
             resolve(resp)
           })
           .catch(err => {
@@ -100,6 +100,26 @@ const actions = {
             reject(err)
           })
         })
+    },
+    // Issue #115 this is what I implemented
+    update_user({commit}, user_updates) {
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios({url: '/auth/user',
+        data: user_updates,
+        method: 'POST'})
+        .then(resp => {
+          const payload = resp.data
+            console.log(payload)
+            commit('update_user', payload)
+            resolve(resp)
+        })
+        .catch(err => {
+          commit('auth_error')
+          localStorage.removeItem('token')
+          reject(err)
+        })
+      })
     },
 }
 const mutations = {
@@ -120,7 +140,7 @@ const mutations = {
         state.token = ''
         state.user = ''
       },
-      fetch_user(state, payload){
+      update_user(state, payload){
         state.token = localStorage.getItem("token")
         state.status = 'success'
         state.user = payload

@@ -18,7 +18,7 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>{{getUser.name}}</template>
-            <b-dropdown-item v-b-modal.my-modal>Profile</b-dropdown-item>
+            <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
             <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
