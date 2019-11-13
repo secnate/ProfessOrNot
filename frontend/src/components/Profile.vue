@@ -52,6 +52,9 @@ export default {
     update_user() {
     /*
     You need to implement this.$store.dispatch('update_user', user_updates)
+    Don't worry about changing school yet.
+    Look at Register and Login components and the Vuex store in store/auth.js for help
+    Also this page https://vuex.vuejs.org
     */
     },
     clear_changes() {

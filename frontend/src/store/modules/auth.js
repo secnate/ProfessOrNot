@@ -102,6 +102,7 @@ const actions = {
         })
     },
     // Issue #115 this is what I implemented
+    // Look at the API documentation to see what is submitted and what is returned
     update_user({commit}, user_updates) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
