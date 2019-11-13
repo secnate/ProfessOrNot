@@ -3,29 +3,38 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
 from schools.serializers import SchoolSerializer
+from schools.models import School
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer(read_only=True)
-    password = serializers.CharField(max_length=25, write_only=True)
+    school = SchoolSerializer()
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'school', 'password')
+        fields = ('id', 'email', 'name', 'school')
+class UserUpdateSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
+    name = serializers.CharField(required=False)
+    password = serializers.CharField(required=False)
+    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', write_only=True, required=False)
+
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
         instance.email = validated_data.get('email', instance.email)
-        instance.set_password(validated_data.get('password', instance.password))
-        instance.school_id = (validated_data.get('school_id'), instance.school_id)
+        instance.name = validated_data.get('name', instance.name)
+        instance.school_id = validated_data.get('school', instance.school).id
+        if 'password' in validated_data.keys():
+            instance.set_password(validated_data['password'])
         instance.save()
         return instance
+
 # Register Serializer
 class RegisterSerialzer(serializers.ModelSerializer):
+    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', default=School.objects.get(pk=1))
     class Meta:
         model = User
-        fields = ('id','email','password', 'name')
+        fields = ('id','email','password', 'name', 'school_id', 'school')
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['email'],
-                    validated_data['password'], validated_data['name'], last_login=timezone.now())
+                    validated_data['password'], validated_data['name'], school=validated_data['school'], last_login=timezone.now())
         return user
 # Login Serializer
 class LoginSerializer(serializers.Serializer):

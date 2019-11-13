@@ -11,7 +11,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class ReviewSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     created = serializers.DateTimeField(read_only=True)
-    reviewer_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='reviewer', write_only=True)
     professor = ProfessorSerializer(read_only=True)
     professor_id = serializers.PrimaryKeyRelatedField(queryset=Professor.objects.all(), source='professor', write_only=True, required=True)
     course = CourseSerializer(read_only=True)
