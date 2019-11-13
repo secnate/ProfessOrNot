@@ -29,7 +29,6 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
 import Profile from "./Profile"
 import { mapGetters } from 'vuex'
 export default {
