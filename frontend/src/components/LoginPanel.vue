@@ -5,7 +5,7 @@
       img-src="../assets/logotitle.svg"
       img-alt="Image"
       img-topb
-      style= "padding: 10px; fill: blue;"
+      style= "padding: 15px; min-width: 350px; max-width: 350px;"
       class="mb-2"
     >
       <div v-if="loginAlert">
