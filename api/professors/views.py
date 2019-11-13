@@ -20,11 +20,9 @@ class ProfessorList(ListCreateAPIView):
             queryset = queryset.filter(name__contains=filter)
         return queryset
     def post(self, request):
-        new_course_data = request.data
-        new_course_data['school_id'] = request.user.school_id
-        serializer = self.get_serializer(data=new_course_data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        course = serializer.save()
+        course = serializer.save(school=request.user.school)
         return Response(ProfessorSerializer(course,context=self.get_serializer_context()).data, status=status.HTTP_201_CREATED)
 class ProfessorDetail(APIView):
     def get_object(self,pk):

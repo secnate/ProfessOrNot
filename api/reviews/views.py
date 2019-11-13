@@ -12,12 +12,10 @@ class ReviewList(ListCreateAPIView):
             queryset = queryset.filter(professor__school__id=schoolid)
         return queryset
     def post(self, request):
-        new_review_data = request.data
-        new_review_data['reviewer_id'] = request.user.id
-        serializer = self.get_serializer(data=new_review_data)
+        serializer = self.get_serializer(data=request.data)
         print(type(request.data))
         serializer.is_valid(raise_exception=True)
-        review = serializer.save()
+        review = serializer.save(reviewer=request.user)
         return Response(ReviewSerializer(review,context=self.get_serializer_context()).data)
 class ReviewDetail(RetrieveAPIView):
     queryset = Review.objects.all()
