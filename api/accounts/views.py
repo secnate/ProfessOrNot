@@ -2,9 +2,12 @@ from django.contrib.auth.models import update_last_login
 from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 from knox.models import AuthToken
 from api.settings import REST_KNOX as REST_KNOX_SETTINGS
-from .serializers import UserSerializer, RegisterSerialzer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerialzer, LoginSerializer, UserUpdateSerializer
+from rest_framework import status
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -18,7 +21,7 @@ class RegisterAPI(generics.GenericAPIView):
         return Response({
           "user": UserSerializer(user,context=self.get_serializer_context()).data,
           "token": AuthToken.objects.create(user)[1]
-        })
+        }, status=status.HTTP_201_CREATED)
 # Login API
 class LoginAPI(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
@@ -46,8 +49,19 @@ class LoginAPI(generics.GenericAPIView):
 
 
 # Get User API
-class UserAPI(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
-
+class UserAPI(APIView):
     def get_object(self):
         return self.request.user
+
+    def get(self, request):
+        serializer = UserSerializer(self.get_object()).data
+        return Response(serializer)
+
+    def post(self, request):
+        user = request.user
+        serializer = UserUpdateSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

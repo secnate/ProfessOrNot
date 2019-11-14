@@ -7,24 +7,24 @@ from reviews.models import Review
 from reviews.serializers import ReviewSlimSerializer
 from professors.serializers import ProfessorSerializer
 from rest_framework.response import Response
+from rest_framework import status
 from django.http import Http404
 
 class CourseList(ListCreateAPIView):
     serializer_class = CourseSerializer
     def get_queryset(self):
         queryset = Course.objects.all()
-        schoolid = self.request.user.school_id
-        if schoolid is not None:
-            queryset = queryset.filter(school__id=schoolid)
+        queryset = queryset.filter(school__id=self.request.user.school_id)
+        filter = self.request.query_params.get('filter', None)
+        if filter is not None:
+            queryset = queryset.filter(name__contains=filter)
         return queryset
     def post(self, request):
-        new_course_data = request.data
-        new_course_data['school'] = request.user.school_id
-        serializer = self.get_serializer(data=new_course_data)
+        serializer = self.get_serializer(data=request.data)
         print(type(request.data))
         serializer.is_valid(raise_exception=True)
-        course = serializer.save()
-        return Response(CourseSerializer(course,context=self.get_serializer_context()).data)
+        course = serializer.save(school=request.user.school)
+        return Response(CourseSerializer(course, context=self.get_serializer_context()).data, status=status.HTTP_201_CREATED)
 
 class CourseDetail(APIView):
     def get_object(self,pk):

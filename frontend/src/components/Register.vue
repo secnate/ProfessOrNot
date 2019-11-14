@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  /* eslint-disable no-console */
   name: "Register",
   data() {
     return {

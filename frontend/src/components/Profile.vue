@@ -35,7 +35,6 @@
 <script>
 import {mapGetters} from "vuex"
 export default {
-  /* eslint-disable no-console */
   name: "Profile",
   computed: {
     ...mapGetters(["getUser"])
