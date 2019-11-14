@@ -24,7 +24,7 @@ const actions = {
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
-          console.log(user)
+          Console.log(user)
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = 'Token ' + token
           const payload = [token, user]
