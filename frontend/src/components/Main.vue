@@ -2,10 +2,9 @@
   <div>
     <Navbar />
     <div>You're Logged In!</div>
-    <!-- <div>
+    <div>
       <input class="form-control" type="text" placeholder="Search" aria-label="Search" />
-    </div> -->
-    
+    </div>
   </div>
 </template>
 
