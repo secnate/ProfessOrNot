@@ -6,6 +6,8 @@
     title="Add Class Review"
     ok-title="Next"
     v-bind:hideFooter="true"
+    @show="handleShow"
+    @close="handleClose"
     >
       
     <b-form @submit="handleNext">
@@ -15,10 +17,11 @@
         > 
             <b-form-input
                 id="input-name"
-                v-model="professorName"
+                v-model="enteredProfessorName"
                 type="text"
                 required
                 placeholder="Professor Name"
+                :disabled="freezeProfessorName"
             ></b-form-input>
         </b-form-group>
 
@@ -32,6 +35,7 @@
                 required
                 pattern="[A-Z]{3}[A-Z]?[1-9][0-9]{2}"
                 placeholder="Course Name"
+                :disabled="freezeCourseName"
             ></b-form-input>
         </b-form-group>
 
@@ -77,10 +81,12 @@ export default {
   },
   data() {
       return {
-          professorName: "",
+          enteredProfessorName: "",
           courseName: "",
           starRating: null,
-          comments: ""
+          comments: "",
+          freezeProfessorName: false,
+          freezeCourseName: false
       }
   },
   methods: {
@@ -98,37 +104,89 @@ export default {
             })
           }
           else {
-              console.log("DEBUG: the course's professor is: " + this.professorName)
+              console.log("DEBUG: the course's professor is: " + this.enteredProfessorName)
               console.log("DEBUG: the course name is: " + this.courseName);
               console.log("DEBUG: the ranking is: " + result);
               console.log("DEBUG: the comments are: " + this.comments);
 
+              console.log("\nDEBUG: testing prop values");
+              console.log("DEBUG: professorNameProp is: " + this.professorNameProp);
+              console.log("DEBUG: professorIDProp is: " + this.professorIDProp);
+              console.log("DEBUG: courseNameProp is: " + this.courseNameProp);
+              console.log("DEBUG: courseIDProp is: " + this.courseIDProp);
               
-              this.closeModal();
               // clean the modal's data and close the window
-              this.resetModal();
+              this.handleClose();
+              this.closeModal();
           }
       },
       getStarRating() {
           return this.starRating;
       },
-      resetModal() {
+      resetModalData() {
           // reset the value, so that if the window gets closed 
           // and opened again, that nothing will happen
-          this.professorName= "";
+          this.enteredProfessorName= "";
           this.courseName= "";
           this.starRating= null;
           this.comments= "";
+          this.freezeCourseName = false;
+          this.freezeProfessorName = false;
       },
       closeModal() {
 
           // close the window
           this.$bvModal.hide('review-modal');
+      },
+      handleShow() {
+          // this is the function that handles when 
+          // the modal is about to be shown
+          console.log("SHOWING MODAL");
+
+          // first we check the props and see if something valid is passed
+          this.checkProps();
+      },
+      handleClose() {
+          // this is the function that handles when the modal is to be closed
+          console.log("CLOSING MODAL");
+
+          // we want the data to be reset when closing
+          this.resetModalData();
+      },
+      checkProps() {
+          // we check if there was a valid professor and/or a valid course passed in as a prop
+          // We freeze the form value if either the ID is not zero or the string is not empty
+          //
+          // check professor name 
+          if (this.professorNameProp !== "" || this.professorIDProp !== 0) {
+              this.enteredProfessorName = this.professorNameProp;
+              this.freezeProfessorName = true;
+          }
+          // check course name
+          if (this.courseNameProp !== "" || this.courseIDProp !== 0) {
+              this.courseName = this.courseNameProp;
+              this.freezeCourseName = true;
+          }
       }
   },
   props: {
-      ModalPlugin
-
+      ModalPlugin,
+      professorNameProp: {
+          type: String, 
+          default: ""
+      },
+      professorIDProp: {
+          type: Number,
+          default: 0
+      },
+      courseNameProp: {
+          type: String,
+          default: ""
+      }, 
+      courseIDProp: {
+          type: Number, 
+          default: 0
+      },
   },
   components: {
       StarRating

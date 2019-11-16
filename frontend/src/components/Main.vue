@@ -12,7 +12,8 @@
         
         <!-- Popovers to display -->
 
-        <Review /> 
+        <Review :professorIDProp="0" professorNameProp="" 
+                :courseIDProp="0" courseNameProp=""/> 
 
     </div>
 
