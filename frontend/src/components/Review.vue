@@ -23,29 +23,15 @@
         </b-form-group>
 
         <b-form-group
-          label="Four-Letter Department Abbreviation (CSCE, RUSS, etc)"
+          label="Course Name (Three or Four Uppercase Letters + Three Digits)"
         > 
             <b-form-input
                 id="input-school"
-                v-model="courseDepartment"
+                v-model="courseName"
                 type="text"
                 required
-                disabled
-                pattern="[A-Za-z]{4}"
-                placeholder="Four-Letter Department Abbreviation"
-            ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="Course Number (Three Digits)"
-        > 
-            <b-form-input
-                id="input-school"
-                v-model="courseNumber"
-                type="text"
-                required
-                pattern="[1-9][0-9]{2}"
-                placeholder="Class Number"
+                pattern="[A-Z]{3}[A-Z]?[1-9][0-9]{2}"
+                placeholder="Course Name"
             ></b-form-input>
         </b-form-group>
 
@@ -92,8 +78,7 @@ export default {
   data() {
       return {
           professorName: "",
-          courseNumber: "",
-          courseDepartment: "CSCE",
+          courseName: "",
           starRating: null,
           comments: ""
       }
@@ -114,8 +99,7 @@ export default {
           }
           else {
               console.log("DEBUG: the course's professor is: " + this.professorName)
-              console.log("DEBUG: the course department is: " + this.courseDepartment);
-              console.log("DEBUG: the course number is: " + this.courseNumber);
+              console.log("DEBUG: the course name is: " + this.courseName);
               console.log("DEBUG: the ranking is: " + result);
               console.log("DEBUG: the comments are: " + this.comments);
 
@@ -132,8 +116,7 @@ export default {
           // reset the value, so that if the window gets closed 
           // and opened again, that nothing will happen
           this.professorName= "";
-          this.courseNumber= "";
-          this.courseDepartment= "CSCE";
+          this.courseName= "";
           this.starRating= null;
           this.comments= "";
       },
