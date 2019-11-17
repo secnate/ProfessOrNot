@@ -30,9 +30,7 @@
                 <option v-for="prof in arrayProfs" v-bind:key="prof.name + prof.id">{{prof.name}}</option>
             </datalist>
 
-        <b-form-group
-          label="Course Name (Three or Four Uppercase Letters + Three Digits)"
-        > 
+        <label> Course Name (Three or Four Uppercase Letters + Three Digits) </label>
             <b-form-input
                 id="input-school"
                 v-model="courseName"
@@ -43,8 +41,11 @@
                 :disabled="freezeCourseName"
                 autocomplete="off"
                 @input="courseInputChanged"
+                list="course-name-list-id"
             ></b-form-input>
-        </b-form-group>
+            <datalist id="course-name-list-id">
+                <option v-for="course in arrayCourses" v-bind:key="course.name + course.id">{{course.name}}</option>
+            </datalist>
 
 
         <b-form-group label="Ranking"> 
@@ -67,10 +68,9 @@
         </b-form-group>
 
         <div class="submitButtonRow">
-          <b-button class="submitButton" type="submit" variant="primary" pill>Finish</b-button>
+          <b-button id="submit-button" class="submitButton" type="submit" variant="primary" pill>Finish</b-button>
         </div>
     </b-form>
-
 
 
   </b-modal>
@@ -114,6 +114,11 @@ export default {
               comment: ""
           },
 
+          submitted: false,
+
+          idOfInputtedCourse: 0,
+          idOfInputtedProfessor: 0
+
       }
   },
   computed: {
@@ -123,6 +128,8 @@ export default {
           event.preventDefault()
 
           var result = this.getStarRating();
+
+          // first we test inputs
           if (result == null) {
               // Display message that ranking wasn't entered
               this.$bvToast.toast('Please Enter Your Star Ranking Of The Course.', {
@@ -132,21 +139,20 @@ export default {
                 toaster:'b-toaster-top-full'
             })
           }
+          else if (this.arrayProfs.length === 0) {
+              // we didn't load any information from the backend database yet
+              // and thus we have an empty array
+              // Display message that ranking wasn't entered
+              this.$bvToast.toast('Please Enter Valid Professor Name', {
+                title: `Incomplete Information`,
+                variant: 'warning',
+                solid: true,
+                toaster:'b-toaster-top-full'
+              })
+          }
           else {
-              console.log("DEBUG: the course's professor is: " + this.enteredProfessorName)
-              console.log("DEBUG: the course name is: " + this.courseName);
-              console.log("DEBUG: the ranking is: " + result);
-              console.log("DEBUG: the comments are: " + this.comments);
-
-              console.log("\nDEBUG: testing prop values");
-              console.log("DEBUG: professorNameProp is: " + this.professorNameProp);
-              console.log("DEBUG: professorIDProp is: " + this.professorIDProp);
-              console.log("DEBUG: courseNameProp is: " + this.courseNameProp);
-              console.log("DEBUG: courseIDProp is: " + this.courseIDProp);
-              
-              // clean the modal's data and close the window
-              this.handleClose();
-              this.closeModal();
+              // submit review, clean the modal's data and close the window
+              this.submitReview();
           }
       },
       getStarRating() {
@@ -178,16 +184,21 @@ export default {
           // we reset the previous-entered data
           this.previousEnteredCourseName = "";
           this.previousEnteredProfName = "";
+
+          // we already submitted
+          this.submitted=false;
+
+          this.idOfInputtedCourse = 0,
+          this.idOfInputtedProfessor = 0
       },
       closeModal() {
-
-          // close the window
+          // prepare for and close the window
+          this.handleClose();
           this.$bvModal.hide('review-modal');
       },
       handleShow() {
           // this is the function that handles when 
           // the modal is about to be shown
-          console.log("SHOWING MODAL");
 
           // first we check the props and see if something valid is passed
           this.resetModalData()
@@ -195,7 +206,6 @@ export default {
       },
       handleClose() {
           // this is the function that handles when the modal is to be closed
-          console.log("CLOSING MODAL");
 
           // we want the data to be reset when closing
           this.resetModalData();
@@ -216,8 +226,6 @@ export default {
           }
       },
       nameInputChanged() {
-          console.log("DEBUG: in nameInputChanged")
-          console.log("DEBUG: the current enteredProfessorName is: " + this.enteredProfessorName);
 
           // this is the method used to query the backend for new data when input is entered 
 
@@ -225,66 +233,64 @@ export default {
           // and are not doing the opposite (i.e. deleting chars from a string going downwards)
           if (this.enteredProfessorName.length == this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
               this.previousEnteredProfName.length < this.enteredProfessorName.length) {
-              console.log("DEBUG: enteredProfessorName is: " + this.enteredProfessorName);
-              console.log("QUERYING BACKEND DATABASE FOR ARRAY OF NAMES!")
               this.getProfessorsFromBackend();
           }
           if (this.enteredProfessorName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
               this.previousEnteredProfName.length > this.enteredProfessorName.length) {
               // going downwards. one character isn't enough for suggestions
               this.arrayProfs = []
-              console.log("DEBUG: cleared up the professors array")
           }
 
           // entering data for next round 
           this.previousEnteredProfName = this.enteredProfessorName;
 
-          if (this.arrayProfs.length != 0) {
+          // I check to see if I entered in a name for an already-valid professor. If yes, then the whole text-input schtick is not needed
+          if (this.arrayProfs.length != 0 && this.inputIsOfAnExistingProfessor() ) {
+                this.arrayProfs[this.arrayProfs.length-1].name =""
+            } 
+
+          if (this.arrayProfs.length != 0 && !this.inputIsOfAnExistingProfessor()) {
               // if there is an array, I take the last item from it, 
-              console.log("DEBUG: in decision statement")
-              console.log("DEBUG: the this.enteredProfessorName.includes(this.newProfessorString) is: " + 
-                            this.enteredProfessorName.includes(this.newProfessorString) )
 
             // and update the string for a prof that isn't in the database, if the item I selected 
             // isn't already a professor that isn't in the database and is denoted as such
-            console.log("DEBUG: the enteredProfessorName doesn't have the default option selected")
             this.arrayProfs[this.arrayProfs.length - 1].name = this.getNewProfessorItemString()
-
-
-              console.log("DEBUG: the new arrayProfs is now: " + JSON.stringify(this.arrayProfs))
           }
       },
       courseInputChanged() {
+        
+          // this is the method used to query the backend for new data when input is entered 
 
           // if we now passed the two-character barrier and are going upwards adding new characters
           // and are not doing the opposite (i.e. deleting chars from a string going downwards)
-          if (this.courseName.length == this.NUM_CHARS_TO_QUERY_BACKEND_AT && 
+          if (this.courseName.length == this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
               this.previousEnteredCourseName.length < this.courseName.length) {
-              console.log("QUERYING BACKEND DATABASE FOR ARRAY OF COURSE NAMES!")
               this.getCoursesFromBackend();
           }
 
           if (this.courseName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
-              this.previousEnteredCourseName.length > this.courseName.length) {
-              // going downwards. on character isn't enough for suggestions
+              this.previousEnteredCourseName.length > this.previousEnteredCourseName.length) {
+              // going downwards. one character isn't enough for suggestions
               this.arrayCourses = []
-              console.log("DEBUG: cleared up the courses array: " + JSON.stringify(this.arrayCourses))
           }
 
-          // updating data for next round 
+          // entering data for next round 
           this.previousEnteredCourseName = this.courseName;
 
-          if (this.arrayCourses.length != 0) {
+          // I check to see if I entered in a name for an already-valid class. If yes, then the whole text-input schtick is not needed
+          if (this.arrayCourses.length != 0 && this.inputIsOfAnExistingCourse() ) {
+                this.arrayCourses[this.arrayCourses.length-1].name =""
+            } 
+
+          if (this.arrayCourses.length != 0 && !this.inputIsOfAnExistingCourse()) {
               // if there is an array, I take the last item from it, 
-              // and update the string for a course that isn't in the database
-              this.arrayCourses[this.arrayCourses.length - 1].name = this.getNewCourseItemString()
-
-              console.log("DEBUG: the new arrayCourses is now: " + JSON.stringify(this.arrayCourses))
+            // and update the string for a prof that isn't in the database, if the item I selected 
+            // isn't already a professor that isn't in the database and is denoted as such
+            this.arrayCourses[this.arrayCourses.length - 1].name = this.getNewCourseItemString()
+            
           }
-
       },
       getProfessorsFromBackend() {
-          console.log("DEBUG: getting the professors from backend");
 
           // get the professors from the backend
           // add in a dummy value to the end of the list with id value 0. 
@@ -301,11 +307,9 @@ export default {
 
                                 // I now append the default object that will represent the case 
                                 // where a user enters in a new professor that is not in the database
-                                this.arrayProfs.push({ id: 0, name: this.getNewProfessorItemString() })
+                                this.arrayProfs.push({ id: this.newProfOrCourseDefaultID, name: this.getNewProfessorItemString() })
 
                                 this.status = 'success'
-
-                                console.log("DEBUG: this.arrayProfs is: " + JSON.stringify(this.arrayProfs))
 
                                 resolve(resp)
                             })
@@ -322,7 +326,6 @@ export default {
           return this.enteredProfessorName
       },
       getCoursesFromBackend() {
-          console.log("DEBUG: getting the courses from backend");
 
           // get the professors from the backend
           // add in a dummy value to the end of the list with id value 0. 
@@ -339,11 +342,9 @@ export default {
 
                                 // I now append the default object that will represent the case 
                                 // where a user enters in a new professor that is not in the database
-                                this.arrayCourses.push({ id: 0, name: this.getNewCourseItemString() })
+                                this.arrayCourses.push({ id: this.newProfOrCourseDefaultID, name: this.getNewCourseItemString() })
 
                                 this.status = 'success'
-
-                                console.log("DEBUG: this.arrayCourses is: " + JSON.stringify(this.arrayCourses))
 
                                 resolve(resp)
                             })
@@ -357,7 +358,222 @@ export default {
       },
       getNewCourseItemString() {
           // if the user enters in a name for a course not in the database, we get its string for a suggestion to be added
-          return this.courseName + " " + this.newCourseString;
+          return this.courseName;
+      },
+      inputIsOfAnExistingProfessor() {
+          // we check if the input is of an existing and valid professor
+          var toSearchOver = this.arrayProfs.slice(0, this.arrayProfs.length-1)
+
+          var i = 0;
+          for (i = 0; i < toSearchOver.length; i++) {
+              if (toSearchOver[i].name === this.enteredProfessorName) {
+                  return true;
+              }
+          }
+
+          return false;
+      }, 
+      inputIsOfAnExistingCourse() {
+          // we check if the input is of an existing and valid professor
+          var toSearchOver = this.arrayCourses.slice(0, this.arrayCourses.length-1)
+
+          var i = 0;
+          for (i = 0; i < toSearchOver.length; i++) {
+              if (toSearchOver[i].name === this.courseName) {
+                  return true;
+              }
+          }
+
+          return false;
+      },
+      createNewReview(prof_id, crs_id, rtng, cmnt) {
+          // create a new review for existing professor and course
+          return new Promise( (resolve, reject) => {
+              this.status = 'loading' // we can show a loading wheel while in this state 
+
+              var dataToPassIn = { "professor_id": prof_id, "course_id" : crs_id, "rating" : rtng, "comment": cmnt }
+              axios({ url: "/reviews", data: dataToPassIn, method: "POST" })
+                            .then( resp => {
+                                console.log(resp)
+
+                                this.status = 'success'
+
+                                resolve(resp)
+
+
+                                // we are done now. close the modal
+                                this.closeModal()
+                            })
+                            .catch( err => {
+                                console.log(err);
+                                this.status = 'error'
+
+                                reject(err)
+                            });
+            });
+      },
+      submitReview() {
+          var createNewProfessorOBJ = false
+          var createNewCourseOBJ = false 
+
+          // first I examine if I need to createnewProfessorOBJ 
+
+          // ---------------------------------------------------------------------------------------
+          this.idOfInputtedProfessor = this.newProfOrCourseDefaultID;    // some empty value; it will get updated later on
+          if (this.freezeProfessorName) {
+              // I assume that the props passed in have a valid name and id, so I won't check it 
+              this.idOfInputtedProfessor = this.professorIDProp
+              createNewProfessorOBJ = false
+          }
+          else {
+              // the professor was entered through the input field
+
+              var i = 0
+              for (i = 0; i < this.arrayProfs.length; i++) {
+                if (this.arrayProfs[i].name === this.enteredProfessorName) {
+                    this.idOfInputtedProfessor = this.arrayProfs[i].id
+                    break
+                }
+            }
+
+            if (this.idOfInputtedProfessor == this.newProfOrCourseDefaultID) {
+                createNewProfessorOBJ = true
+            }
+          }
+
+          // now I examine if I need to create a new course object 
+          // ---------------------------------------------------------------------------------------
+          this.idOfInputtedCourse = this.newProfOrCourseDefaultID;    // some empty value; it will get updated later on
+          if (this.freezeCourseName) {
+              // I assume that the props passed in have a valid name and id, so I won't check it 
+              this.idOfInputtedCourse = this.courseIDProp
+              createNewCourseOBJ = false
+          }
+          else {
+              // the course was entered through the input field
+
+              i = 0
+              for (i = 0; i < this.arrayCourses.length; i++) {
+                if (this.arrayCourses[i].name === this.courseName) {
+                    this.idOfInputtedCourse = this.arrayCourses[i].id
+                    break
+                }
+            }
+
+            if (this.idOfInputtedCourse == this.newProfOrCourseDefaultID) {
+                createNewCourseOBJ = true
+            }
+          }
+
+          // ---------------------------------------------------------------------------------------
+
+
+          // I now consider all possible cases
+          if (!createNewCourseOBJ  && !createNewProfessorOBJ) {
+              // I just create a new review and close the thing 
+              this.createNewReview(this.idOfInputtedProfessor, this.idOfInputtedCourse, this.starRating, this.comments)
+          }
+
+          
+          else if (!createNewCourseOBJ && createNewProfessorOBJ) {
+              // I create a new professor object and then create a new review for an existing class
+
+              new Promise( (resolve, reject) => {
+              this.status = 'loading' // we can show a loading wheel while in this state 
+
+              var dataToPassIn = { "name" : this.enteredProfessorName }
+              axios({ url: "/professors", data: dataToPassIn, method: "POST" })
+                            .then( resp => {
+                                console.log(resp)
+
+                                this.status = 'success'
+                                var newInputProfId = resp.data.id
+
+                                this.createNewReview(newInputProfId, this.idOfInputtedCourse, this.starRating, this.comments)
+                                resolve(resp)
+                            })
+                            .catch( err => {
+                                console.log(err);
+                                this.status = 'error'
+
+                                reject(err)
+                            });
+            });
+          }
+          else if (createNewCourseOBJ && !createNewProfessorOBJ) {
+              new Promise( (resolve, reject) => {
+                  this.status = 'loading'
+
+                  var dataToPassIn = {"name" : this.courseName };
+                  axios({ url: "/courses", data: dataToPassIn, method: "POST" })
+                            .then( resp => {
+                                console.log(resp)
+
+                                this.status = 'success'
+                                var newCourseID = resp.data.id
+
+                                this.createNewReview(this.idOfInputtedProfessor, newCourseID, this.starRating, this.comments)
+                                resolve(resp)
+                            })
+                            .catch( err => {
+                                console.log(err);
+                                this.status = 'error'
+
+                                reject(err)
+                            });
+
+              });
+          }
+          else {
+
+              // I create a new course
+              new Promise( (resolve, reject) => {
+                  this.status = 'loading'
+
+                  var dataToPassIn = {"name" : this.courseName };
+                  // I create a new course
+                  axios({ url: "/courses", data: dataToPassIn, method: "POST" })
+                            .then( resp => {
+                                console.log(resp)
+
+                                this.status = 'success'
+                                this.idOfInputtedCourse = resp.data.id
+
+                                // I create a new professor
+                                new Promise( (resolve, reject) => {
+                                    this.status = 'loading' // we can show a loading wheel while in this state 
+
+                                    var dataToPassInSecondRound = { "name" : this.enteredProfessorName }
+                                    axios({ url: "/professors", data: dataToPassInSecondRound, method: "POST" })
+                                        .then( resp => {
+                                        console.log(resp)
+
+                                        this.idOfInputtedProfessor = resp.data.id
+
+                                        this.status = 'success'
+
+                                        this.createNewReview(this.idOfInputtedProfessor, this.idOfInputtedCourse, this.starRating, this.comments)
+                                        resolve(resp)
+                                    })
+                                    .catch( err => {
+                                    console.log(err);
+                                    this.status = 'error'
+
+                                        reject(err)
+                                    });
+                                });
+
+                                resolve(resp)
+                            })
+                            .catch( err => {
+                                console.log(err);
+                                this.status = 'error'
+
+                                reject(err)
+                            });
+
+              });
+          }
       }
   },
   props: {
@@ -386,10 +602,5 @@ export default {
 
 </script>
 
-<style>
-#prof-name-list-id {
-    vertical-align: top;
-}
-</style>
 
 
