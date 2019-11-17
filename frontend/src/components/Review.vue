@@ -12,9 +12,9 @@
       
     <b-form @submit="handleNext">
 
-        <b-form-group
-          label="Professor's Name"
-        > 
+
+        <label>Professor's Name</label>
+            
             <b-form-input
                 id="input-name"
                 v-model="enteredProfessorName"
@@ -23,8 +23,12 @@
                 placeholder="Professor Name"
                 :disabled="freezeProfessorName"
                 @input="nameInputChanged"
+                autocomplete="off"
+                list="prof-name-list-id"
             ></b-form-input>
-        </b-form-group>
+            <datalist id="prof-name-list-id">
+                <option v-for="prof in arrayProfs" v-bind:key="prof.name + prof.id">{{prof.name}}</option>
+            </datalist>
 
         <b-form-group
           label="Course Name (Three or Four Uppercase Letters + Three Digits)"
@@ -37,6 +41,7 @@
                 pattern="[A-Z]{3}[A-Z]?[1-9][0-9]{2}"
                 placeholder="Course Name"
                 :disabled="freezeCourseName"
+                autocomplete="off"
                 @input="courseInputChanged"
             ></b-form-input>
         </b-form-group>
@@ -54,6 +59,7 @@
             <b-form-textarea
                 id="comment-textarea"
                 v-model="comments"
+                autocomplete="off"
                 type="text"
                 required
                 placeholder="Enter something..."
@@ -80,8 +86,6 @@ import axios from "axios"; // used to communicate with backend database
 export default {
   /* eslint-disable no-console */
   name: "ProfessorReview",
-  computed: {
-  },
   data() {
       return {
           enteredProfessorName: "",
@@ -95,13 +99,11 @@ export default {
           NUM_CHARS_TO_QUERY_BACKEND_AT: 2,  // after two characters of input, we query backend for data
           // default values. they will be updated once the backend is queried
           arrayProfs: [
-          ],
-          newProfessorString: " (New Professor)",                
+          ],             
 
           //default values, they will be updated once the backend is queried
           arrayCourses: [
           ],       
-          newCourseString: " (New Course)",
 
           newProfOrCourseDefaultID: 0,      // the database isn't supposed to have items with ID = 0
 
@@ -113,6 +115,8 @@ export default {
           },
 
       }
+  },
+  computed: {
   },
   methods: {
       handleNext(event) {
@@ -165,8 +169,8 @@ export default {
 
           // we reset the new_review variable since we aren't going to submit anything
           this.new_review = {
-              professor_id: 0,
-              course_id: 0,
+              professor_id: this.newProfOrCourseDefaultID,
+              course_id: this.newProfOrCourseDefaultID,
               rating: 0,
               comment: ""
           }
@@ -186,7 +190,8 @@ export default {
           console.log("SHOWING MODAL");
 
           // first we check the props and see if something valid is passed
-          this.checkProps();
+          this.resetModalData()
+          this.checkProps()
       },
       handleClose() {
           // this is the function that handles when the modal is to be closed
@@ -211,6 +216,9 @@ export default {
           }
       },
       nameInputChanged() {
+          console.log("DEBUG: in nameInputChanged")
+          console.log("DEBUG: the current enteredProfessorName is: " + this.enteredProfessorName);
+
           // this is the method used to query the backend for new data when input is entered 
 
           // if we now passed the two-character barrier and are going upwards adding new characters
@@ -233,8 +241,15 @@ export default {
 
           if (this.arrayProfs.length != 0) {
               // if there is an array, I take the last item from it, 
-              // and update the string for a prof that isn't in the database
-              this.arrayProfs[this.arrayProfs.length - 1].name = this.getNewProfessorItemString()
+              console.log("DEBUG: in decision statement")
+              console.log("DEBUG: the this.enteredProfessorName.includes(this.newProfessorString) is: " + 
+                            this.enteredProfessorName.includes(this.newProfessorString) )
+
+            // and update the string for a prof that isn't in the database, if the item I selected 
+            // isn't already a professor that isn't in the database and is denoted as such
+            console.log("DEBUG: the enteredProfessorName doesn't have the default option selected")
+            this.arrayProfs[this.arrayProfs.length - 1].name = this.getNewProfessorItemString()
+
 
               console.log("DEBUG: the new arrayProfs is now: " + JSON.stringify(this.arrayProfs))
           }
@@ -304,7 +319,7 @@ export default {
       },
       getNewProfessorItemString() {
           // if the user enters in a name for a professor not in the database, we get its string for a suggestion to be added
-          return this.enteredProfessorName + this.newProfessorString;
+          return this.enteredProfessorName
       },
       getCoursesFromBackend() {
           console.log("DEBUG: getting the courses from backend");
@@ -342,7 +357,7 @@ export default {
       },
       getNewCourseItemString() {
           // if the user enters in a name for a course not in the database, we get its string for a suggestion to be added
-          return this.courseName + this.newCourseString;
+          return this.courseName + " " + this.newCourseString;
       }
   },
   props: {
@@ -370,4 +385,11 @@ export default {
 };
 
 </script>
+
+<style>
+#prof-name-list-id {
+    vertical-align: top;
+}
+</style>
+
 
