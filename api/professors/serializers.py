@@ -5,7 +5,7 @@ from .models import Professor
 class ProfessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professor
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'avg_rating']
     def create(self, validated_data):
         professor = Professor.objects.create(**validated_data)
         return professor
