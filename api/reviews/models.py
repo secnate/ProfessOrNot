@@ -8,7 +8,7 @@ class Review(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     reviewer = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE, default=1)
     professor = models.ForeignKey(Professor, related_name='reviews', on_delete=models.CASCADE, default=1)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)
+    course = models.ForeignKey(Course, related_name='reviews', on_delete=models.CASCADE, default=1)
     rating = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)], default=0)
     comment = models.CharField(max_length=255, default='')
     class Meta:
