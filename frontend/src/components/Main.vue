@@ -3,9 +3,11 @@
     <Navbar />
     <div>You're Logged In!</div>
     <div>
-      <b-form-input v-model="text" placeholder="Enter your name"></b-form-input>
-      <div class="mt-2">Value: {{ text }}</div>
-      <p>{{filteredLit}}</p>
+      <!-- Search Bar -->
+      <b-form-input v-model="text" placeholder="Search..."></b-form-input>
+
+      <!-- Displays Filtered List-->
+      <li v-for="(item,index) in filteredProfessors" :key="index">{{ item.name }}</li>
     </div>
   </div>
 </template>
@@ -13,6 +15,12 @@
 <script>
 import Navbar from "./Navbar.vue";
 
+class professor {
+  constructor(name) {
+    //can add more attributes later
+    this.name = name;
+  }
+}
 export default {
   name: "Main",
   components: {
@@ -21,21 +29,23 @@ export default {
   data() {
     return {
       text: "",
-      List: [
-        "Duncan Buell",
-        "Veronica Wilson",
-        "James O'Rieley",
-        "John Doe",
-        "Test Professor1",
-        "Test Professor2"
+      // Could easily change this to a class
+      professors: [
+        new professor("John Doe"),
+        new professor("Bill Burr"),
+        new professor("Test professor")
       ]
     };
   },
-  methods: {
-    filteredList() {
-      return this.List.filter(List => {
-        return List.toLowerCase().includes(this.text.toLowerCase());
-      });
+  methods: {},
+  computed: {
+    filteredProfessors() {
+      if (this.text.length >= 2) {
+        return this.professors.filter(professor => {
+          return professor.name.toLowerCase().includes(this.text.toLowerCase());
+        });
+      }
+      return null;
     }
   }
 };
