@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import LoginPanel from "./components/LoginPanel.vue";
 import Main from "./components/Main.vue";
+import ProfessorPage from "./components/ProfessorPage.vue";
+import CoursePage from "./components/CoursePage.vue";
 import store from "./store"
 
 Vue.use(Router);
@@ -26,6 +28,22 @@ let router = new Router({
       component: LoginPanel,
       meta: {
         unauth: true
+      }
+    },
+    {
+      path: "/professor",
+      name: "professor",
+      component: ProfessorPage,
+      meta : {
+          requiresAuth: true
+      }
+    },
+    {
+      path: "/course",
+      name: "course",
+      component: CoursePage,
+      meta : {
+          requiresAuth: true
       }
     }
   ]
