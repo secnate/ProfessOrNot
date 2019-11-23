@@ -22,8 +22,10 @@ if (store.getters.isAuthenticated && !store.getters.getUser.name) {
   store.dispatch("fetch_user");
 }
 Vue.use(BootstrapVue);
-new Vue({
+var EventBus = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
+
+export default EventBus;

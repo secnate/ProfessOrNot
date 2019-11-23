@@ -7,24 +7,22 @@
       <b-form-input v-model="text" placeholder="Search..."></b-form-input>
 
       <!-- Displays Filtered List-->
-      <li v-for="(item,index) in filteredProfessors" :key="index">{{ item.name }}</li>
+      <li v-for="(item, index) in filteredProfessors" :key="index">
+        {{ item.name }}
+      </li>
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from "./Navbar.vue";
+import Review from "./Review.vue";
 
-class professor {
-  constructor(name) {
-    //can add more attributes later
-    this.name = name;
-  }
-}
 export default {
   name: "Main",
   components: {
-    Navbar
+    Navbar,
+    Review
   },
   data() {
     return {

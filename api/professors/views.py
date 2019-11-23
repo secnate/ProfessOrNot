@@ -17,7 +17,7 @@ class ProfessorList(ListCreateAPIView):
         queryset = queryset.filter(school__id=self.request.user.school_id)
         filter = self.request.query_params.get('filter', None)
         if filter is not None:
-            queryset = queryset.filter(name__contains=filter)
+            queryset = queryset.filter(name__icontains=filter)
         return queryset
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
