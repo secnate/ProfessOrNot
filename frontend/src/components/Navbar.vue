@@ -7,17 +7,12 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
+        <Search class="mr-sm-2" />
         <b-navbar-nav class="ml-auto">
           <div v-if="showSearchBar">
             <b-nav-form>
-              <b-form-input
-                size="sm"
-                class="mr-sm-2"
-                placeholder="Search"
-              ></b-form-input>
-              <b-button size="sm" class="my-2 my-sm-0" type="submit"
-                >Search</b-button
-              >
+              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
             </b-nav-form>
           </div>
           <b-nav-item-dropdown right>
@@ -35,11 +30,14 @@
 
 <script>
 import Profile from "./Profile";
+import Search from "./Search";
 import { mapGetters } from "vuex";
+
 export default {
   name: "Navbar",
   components: {
-    Profile
+    Profile,
+    Search
   },
   methods: {
     logout: function() {
