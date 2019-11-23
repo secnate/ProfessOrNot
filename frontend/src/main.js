@@ -6,7 +6,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
 import store from "./store";
 import Axios from "axios";
-import "vue-search-select/dist/VueSearchSelect.css";
+//import "vue-search-select/dist/VueSearchSelect.css";
 
 require("axios-base-url")("https://dev-api.professornot.com");
 Vue.config.productionTip = false;
