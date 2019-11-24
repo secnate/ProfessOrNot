@@ -1,40 +1,27 @@
 <template>
-    <div>
-        <Navbar/>
-        <div>
-        You're Logged In!
-        </div>
-
-        <br/>
-        <b-button v-b-modal.review-modal>
-            Add A Review
-        </b-button>
-        
-        <!-- Popovers to display -->
-
-        <Review :professorIDProp="0" professorNameProp="" 
-                :courseIDProp="0" courseNameProp=""/> 
-
-    </div>
-
+  <div>
+    <Navbar />
+    <div>You're Logged In!</div>
+    <Search />
+  </div>
 </template>
 
 <script>
-import Navbar from "./Navbar.vue"
-import Review from "./Review.vue"
+import Navbar from "./Navbar.vue";
+import Search from "./Search.vue";
+//import Review from "./Review.vue";
 
 export default {
   name: "Main",
   components: {
-      Navbar, Review
+    Navbar,
+    Search
+    // Review
   },
   data() {
-      return {
-      }
+    return {};
   },
-  methods: {
-  }
-
+  methods: {},
+  computed: {}
 };
 </script>
-
