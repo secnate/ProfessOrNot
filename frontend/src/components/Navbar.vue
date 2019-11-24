@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div id="entire-navbar">
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
-      <b-navbar-brand href="#">ProfessOrNot</b-navbar-brand>
+
+      <!-- The href being '/' allows for someone to click the text and go back to the homepage -->
+      <b-navbar-brand href="/" left>ProfessOrNot</b-navbar-brand>
+
+
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

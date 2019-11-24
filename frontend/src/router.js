@@ -36,7 +36,8 @@ let router = new Router({
       component: ProfessorPage,
       meta : {
           requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/course",
@@ -44,7 +45,8 @@ let router = new Router({
       component: CoursePage,
       meta : {
           requiresAuth: true
-      }
+      },
+      props: true 
     }
   ]
 });

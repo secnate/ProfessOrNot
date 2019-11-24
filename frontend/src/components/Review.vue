@@ -7,7 +7,7 @@
     ok-title="Next"
     v-bind:hideFooter="true"
     @show="handleShow"
-    @close="handleClose"
+    @hide="handleHide"
     >
       
     <b-form @submit="handleNext">
@@ -124,6 +124,9 @@ export default {
   computed: {
   },
   methods: {
+      handleHide() {
+        console.log("DEBUG: hiding the review modal") /* eslint-disable-line no-console */
+      },
       handleNext(event) {
           event.preventDefault()
 
@@ -139,7 +142,7 @@ export default {
                 toaster:'b-toaster-top-full'
             })
           }
-          else if (this.arrayProfs.length === 0) {
+          else if (this.arrayProfs.length === 0 && this.enteredProfessorName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT) {
               // we didn't load any information from the backend database yet
               // and thus we have an empty array
               // Display message that ranking wasn't entered
@@ -193,8 +196,21 @@ export default {
       },
       closeModal() {
           // prepare for and close the window
-          this.handleClose();
+          var refreshWindow = this.submitted // after reseting modal data, we want to read what it was previously 
+          this.resetModalData()
           this.$bvModal.hide('review-modal');
+
+          // if we are in the professor page, we refresh the data in order to 
+          console.log("DEBUG: in close modal. refreshWindow is: " + refreshWindow) /* eslint-disable-line no-console */
+          if (this.$route.path == "/professor" && refreshWindow) {
+            console.log("DEBUG: reloading professor page") /* eslint-disable-line no-console */
+            window.location.reload()
+         }
+
+         // if we are in the course page, we refresh the data in order to have it update
+         if (this.$route.path == "/course" && refreshWindow) {
+             window.location.reload()
+         }
       },
       handleShow() {
           // this is the function that handles when 
@@ -203,12 +219,6 @@ export default {
           // first we check the props and see if something valid is passed
           this.resetModalData()
           this.checkProps()
-      },
-      handleClose() {
-          // this is the function that handles when the modal is to be closed
-
-          // we want the data to be reset when closing
-          this.resetModalData();
       },
       checkProps() {
           // we check if there was a valid professor and/or a valid course passed in as a prop
@@ -392,11 +402,15 @@ export default {
               this.status = 'loading' // we can show a loading wheel while in this state 
 
               var dataToPassIn = { "professor_id": prof_id, "course_id" : crs_id, "rating" : rtng, "comment": cmnt }
+
+              console.log("DEBUG: creating new review. dataToPassIn is: " + JSON.stringify(dataToPassIn))
+              
               axios({ url: "/reviews", data: dataToPassIn, method: "POST" })
                             .then( resp => {
                                 console.log(resp)
 
                                 this.status = 'success'
+                                this.submitted = true
 
                                 resolve(resp)
 
@@ -441,6 +455,9 @@ export default {
             }
           }
 
+          console.log("DEBUG: I create newProfOBJ is: " + createNewProfessorOBJ)
+          console.log("DEBUG: I createNewCourseOBJ is: " + createNewCourseOBJ)
+
           // now I examine if I need to create a new course object 
           // ---------------------------------------------------------------------------------------
           this.idOfInputtedCourse = this.newProfOrCourseDefaultID;    // some empty value; it will get updated later on
@@ -470,6 +487,10 @@ export default {
 
           // I now consider all possible cases
           if (!createNewCourseOBJ  && !createNewProfessorOBJ) {
+              console.log("DEBUG: neither course nor prof exist")
+              console.log("DEBUG: idOfInputtedProfessor is: " + this.idOfInputtedProfessor)
+              console.log("DEBUG: idOfInputtedCourse is: " + this.idOfInputtedCourse)
+
               // I just create a new review and close the thing 
               this.createNewReview(this.idOfInputtedProfessor, this.idOfInputtedCourse, this.starRating, this.comments)
           }
