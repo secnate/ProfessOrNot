@@ -6,7 +6,7 @@
           </h1>
 
         <!-- If the professor didn't teach any classes, then we just display a default message -->
-        <div v-if="this.professorCourses.length == 0">
+        <div v-if="this.professorCourses.length == 0 && this.loadedData">
           <h1>
             No Reviews Have Been Created.
           </h1>
@@ -16,7 +16,7 @@
         </div>
 
         <!-- If the professor taught some classes, then we know we have data to display, like reviews -->
-        <b-container class="professorInfoBody" v-if="this.professorCourses.length != 0">
+        <b-container class="professorInfoBody" v-if="this.professorCourses.length != 0 && this.loadedData">
           <b-row>
             <b-col cols="8">
               <h2 align="left">Average Rating: {{this.professor.avg_rating}}</h2>
@@ -84,7 +84,8 @@ export default {
       professorName: "",
       professorCourses: [],
       professorReviews: [],
-      profId: -1
+      profId: -1,
+      loadedData: false
     }
   },
   methods: {
@@ -93,6 +94,7 @@ export default {
       this.professorCourses = []
       this.professorReviews = []
       this.profId = -1
+      this.loadedData = false
     },
     getRatingString(value) {
       return "Rating: " + JSON.stringify(value)
@@ -139,13 +141,13 @@ export default {
               }
               else {
                 // we got a legitimate professor. extract the data, and save it
-                this.haveProfToShow = true;
                 this.professor = resp.data.professor;
                 this.professorName = this.professor.name
                 this.profId = this.professor.id
                 console.log("DEBUG: the professor is is: " + this.profId + " and the type is: " + typeof this.profId) /* eslint-disable-line no-console */
                 this.professorCourses = resp.data.courses;
                 this.professorReviews = resp.data.reviews;
+                this.loadedData = true
 
                 console.log("DEBUG: searched for a valid professor.") /* eslint-disable-line no-console */
                 console.log("\tThe professor is: " + JSON.stringify(this.professor)) /* eslint-disable-line no-console */

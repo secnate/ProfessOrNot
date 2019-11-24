@@ -5,6 +5,15 @@
             <b> {{ this.course != null ? this.course.name : ""}} </b>
         </h1>
 
+        <!-- If the professor didn't teach any classes, then we just display a default message -->
+        <div v-if="this.courseProfessors.length == 0 && this.loadedData">
+          <h1>
+            No Reviews Have Been Created.
+          </h1>
+          <h1>
+            Would You Like To <div v-on:click="displayReviewModal" class="makeNewReview">Make One?</div>
+          </h1>
+        </div>
 
         <!-- If the course has been taught by a professor, then we know we have data to display, like reviews -->
         <b-container class="courseInfoBody" v-if="this.courseProfessors.length != 0">
@@ -71,7 +80,8 @@ export default {
       courseName: "",
       courseProfessors: [],
       courseReviews: [],
-      courseId: -1
+      courseId: -1,
+      loadedData: false
     }
   },
   methods: {
@@ -81,6 +91,7 @@ export default {
       this.courseProfessors = []
       this.courseReviews = []
       this.courseId = -1
+      this.loadedData = false
     },
     convertDateStringToDateRepresentation(date_str) {
       var dateObj = new Date(date_str)
@@ -89,6 +100,10 @@ export default {
     },
     getRatingString(value) {
       return "Rating: " + JSON.stringify(value)
+    },
+    displayReviewModal() {
+      // is invoked when I need to click a link to pull it up instead of a button
+      this.$bvModal.show('review-modal')
     }
   },
   computed: {
@@ -114,6 +129,7 @@ export default {
               this.courseId = this.course.id
               this.courseProfessors = resp.data.professors
               this.courseReviews = resp.data.reviews
+              this.loadedData = true
 
               console.log("DEBUG: the courseReviews is: " + JSON.stringify(this.courseReviews)) /* eslint-disable-line no-console */
               this.status = 'success'
