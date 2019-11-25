@@ -4,4 +4,4 @@ ssh root@$IP <<EOF
   rm -rf /var/www/html
   mkdir /var/www/html
 EOF
-scp -r dist/* root@$IP:/var/www/html
+scp -r frontend/dist/* root@$IP:/var/www/html
