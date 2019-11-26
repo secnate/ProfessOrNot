@@ -4,7 +4,7 @@ from professors.models import Professor
 from .models import Course
 from .serializers import CourseSerializer
 from reviews.models import Review
-from reviews.serializers import ReviewSlimSerializer
+from reviews.serializers import ReviewSerializer
 from professors.serializers import ProfessorSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -43,7 +43,7 @@ class CourseDetail(APIView):
         course = self.get_object(pk)
         courses_serialized = CourseSerializer(course)
         reviews = Review.objects.filter(course=course)
-        reviews_serialized = ReviewSlimSerializer(reviews, many=True)
+        reviews_serialized = ReviewSerializer(reviews, many=True)
         professors = []
         for review in reviews:
             professor = Professor.objects.get(pk=review.professor.pk)

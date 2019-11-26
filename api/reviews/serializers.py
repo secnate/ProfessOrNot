@@ -36,9 +36,10 @@ class ReviewSerializer(serializers.Serializer):
             )
         ]
 
-
+"""
 class ReviewSlimSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     created = serializers.DateTimeField(read_only=True)
     rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
     comment = serializers.CharField(max_length=255, required=False)
+"""
