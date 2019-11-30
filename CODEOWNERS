@@ -1,9 +1,8 @@
 # Nathan, Alex, Kassidy are Code Owners for frontend
 /frontend/ @NathanPavlovsky @brockthealex @kblock97
-# Will is the Code Owner for the API, Scripts, Dockerfile, Travis, Deploykey, Nginx Configs
+# Will is the Code Owner for the API, Scripts, Vuex, Travis, Deploykey
 /api/ @willbootle
-Dockerfile @willbootle
 /scripts/ @willbootle
 .travis.yml @willbootle
 deploy_key.enc @willbootle
-/frontend/nginx_config/ @willbootle
+/frontend/src/store/ @willbootle
