@@ -59,7 +59,7 @@
                       </b-row>
 
                       <b-row>
-                        <h2 class="date_string"> On {{ convertDateStringToDateRepresentation(review.created) }}</h2>
+                        <h2 class="date_string"> {{ convertDateStringToDateRepresentation(review.created) }}</h2>
                       </b-row>
                     </b-col>
                   </b-row>
