@@ -22,7 +22,7 @@ class ReviewSerializer(serializers.Serializer):
     course_id = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all(), source='course', write_only=True,
                                                    required=True)
     rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
-    comment = serializers.CharField(max_length=255, required=False)
+    comment = serializers.CharField(max_length=255, required=False, allow_blank=True)
 
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
