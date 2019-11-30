@@ -32,25 +32,24 @@
                 :courseIDProp="0" courseNameProp=""/> 
 
     </div>
-
 </template>
 
 <script>
-import Navbar from "./Navbar.vue"
-import Review from "./Review.vue"
+import Navbar from "./Navbar.vue";
+import Search from "./Search.vue";
+//import Review from "./Review.vue";
 
 export default {
   name: "Main",
   components: {
-      Navbar, Review
+    Navbar,
+    Search
+    // Review
   },
   data() {
-      return {
-      }
+    return {};
   },
-  methods: {
-  }
-
+  methods: {},
+  computed: {}
 };
 </script>
-
