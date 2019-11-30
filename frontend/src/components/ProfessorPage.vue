@@ -19,7 +19,7 @@
         <b-container class="professorInfoBody" v-if="this.professorCourses.length != 0 && this.loadedData">
           <b-row>
             <b-col cols="8">
-              <h2 align="left">Average Rating: {{this.professor.avg_rating}}</h2>
+              <h2 align="left">Average Rating: {{this.professor.avg_rating}} / 5</h2>
             </b-col>
             <b-col cols="4">
               <b-button pill variant="info" size="lg" align="right" v-b-modal.review-modal>
@@ -39,7 +39,18 @@
                 <b-container :key="review.id+0" class="review_box"> 
                   <b-row :key="review.id+1">
                     <b-col cols="8" class="review_left_col" :key="review.id+2"> 
-                      <p class="review_comment"> {{review.comment }} </p>
+
+
+                    
+                      <p class="review_course_name"> <b>Course: </b> 
+                        <router-link :to="{name: 'course', query: {courseId : review.course.id }}">
+                          <b>{{ review.course.name }}</b>
+                        </router-link>
+                      </p>
+
+                      <!-- Display any comments -->
+                      <p class="review_comment" v-if="review.comment.length != 0 "> <b>Student Comments:</b> <br/> {{review.comment }} </p>
+                      <p class="review_comment" v-else> <b>Student Comments:</b> <br/> <i>No Comments Were Submitted</i> </p>
                     </b-col>
 
                     <b-col cols="4" class="review_right_col" :key="review.id+3">
@@ -48,7 +59,7 @@
                       </b-row>
 
                       <b-row>
-                        <h2 class="date_string"> On {{ convertDateStringToDateRepresentation(review.created) }}</h2>
+                        <h2 class="date_string"> {{ convertDateStringToDateRepresentation(review.created) }}</h2>
                       </b-row>
                     </b-col>
                   </b-row>
@@ -204,6 +215,7 @@ export default {
   font-size: 15pt;
   width: 100%;
   background-color: none;
+  text-align: left;
 }
 
 .date_string {
@@ -222,6 +234,12 @@ export default {
 .makeNewReview {
   color: blue;
   font-style: underline;
+}
+
+.review_course_name {
+  font-size: 17pt;
+  background-color: lightblue;
+  text-align: left;
 }
 
 </style>

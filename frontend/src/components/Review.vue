@@ -62,8 +62,7 @@
                 v-model="comments"
                 autocomplete="off"
                 type="text"
-                required
-                placeholder="Enter something..."
+                placeholder="Enter comments..."
             ></b-form-textarea>
         </b-form-group>
 
@@ -420,8 +419,25 @@ export default {
                             })
                             .catch( err => {
                                 console.log(err);
-                                this.status = 'error'
+                                console.log(JSON.stringify(err.response.status))
 
+                                // we could have tried to create a new review for an existing 
+                                // tuple of course, professor, and reviewer, which is already existing in the backend
+                                if (err.response.status == 400) {
+
+                                    // done handling this 
+                                    this.closeModal()
+
+                                    // display toaster with information
+                                    this.$bvToast.toast('You Already Reviewed This Class Taught By The Specified Professor', {
+                                            title: `Review Already Exists`,
+                                            variant: 'warning',
+                                            solid: true,
+                                            toaster:'b-toaster-top-full'
+                                    })
+                                } 
+
+                                this.status = 'error'
                                 reject(err)
                             });
             });
