@@ -13,5 +13,6 @@ class Review(models.Model):
     comment = models.CharField(max_length=255, default='')
     class Meta:
         unique_together = ('reviewer', 'professor','course')
+        ordering = ['-created']
     def __str__(self):
         return self.name
