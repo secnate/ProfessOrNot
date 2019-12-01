@@ -7,7 +7,7 @@
     ok-title="Next"
     v-bind:hideFooter="true"
     @show="handleShow"
-    @close="handleClose"
+    @hide="handleHide"
     >
       
     <b-form @submit="handleNext">
@@ -62,8 +62,7 @@
                 v-model="comments"
                 autocomplete="off"
                 type="text"
-                required
-                placeholder="Enter something..."
+                placeholder="Enter comments..."
             ></b-form-textarea>
         </b-form-group>
 
@@ -124,6 +123,8 @@ export default {
   computed: {
   },
   methods: {
+      handleHide() {
+      },
       handleNext(event) {
           event.preventDefault()
 
@@ -139,7 +140,7 @@ export default {
                 toaster:'b-toaster-top-full'
             })
           }
-          else if (this.arrayProfs.length === 0) {
+          else if (this.arrayProfs.length === 0 && this.enteredProfessorName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT) {
               // we didn't load any information from the backend database yet
               // and thus we have an empty array
               // Display message that ranking wasn't entered
@@ -193,8 +194,19 @@ export default {
       },
       closeModal() {
           // prepare for and close the window
-          this.handleClose();
+          var refreshWindow = this.submitted // after reseting modal data, we want to read what it was previously 
+          this.resetModalData()
           this.$bvModal.hide('review-modal');
+
+          // if we are in the professor page, we refresh the data in order to 
+          if (this.$route.path == "/professor" && refreshWindow) {
+            window.location.reload()
+         }
+
+         // if we are in the course page, we refresh the data in order to have it update
+         if (this.$route.path == "/course" && refreshWindow) {
+             window.location.reload()
+         }
       },
       handleShow() {
           // this is the function that handles when 
@@ -204,17 +216,12 @@ export default {
           this.resetModalData()
           this.checkProps()
       },
-      handleClose() {
-          // this is the function that handles when the modal is to be closed
-
-          // we want the data to be reset when closing
-          this.resetModalData();
-      },
       checkProps() {
           // we check if there was a valid professor and/or a valid course passed in as a prop
           // We freeze the form value if either the ID is not zero or the string is not empty
           //
           // check professor name 
+
           if (this.professorNameProp !== "" || this.professorIDProp !== 0) {
               this.enteredProfessorName = this.professorNameProp;
               this.freezeProfessorName = true;
@@ -235,7 +242,7 @@ export default {
               this.previousEnteredProfName.length < this.enteredProfessorName.length) {
               this.getProfessorsFromBackend();
           }
-          if (this.enteredProfessorName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
+          if (this.enteredProfessorName.length <= this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
               this.previousEnteredProfName.length > this.enteredProfessorName.length) {
               // going downwards. one character isn't enough for suggestions
               this.arrayProfs = []
@@ -268,8 +275,8 @@ export default {
               this.getCoursesFromBackend();
           }
 
-          if (this.courseName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
-              this.previousEnteredCourseName.length > this.previousEnteredCourseName.length) {
+          if (this.courseName.length <= this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
+              this.previousEnteredCourseName.length > this.courseName.length) {
               // going downwards. one character isn't enough for suggestions
               this.arrayCourses = []
           }
@@ -392,11 +399,13 @@ export default {
               this.status = 'loading' // we can show a loading wheel while in this state 
 
               var dataToPassIn = { "professor_id": prof_id, "course_id" : crs_id, "rating" : rtng, "comment": cmnt }
+              
               axios({ url: "/reviews", data: dataToPassIn, method: "POST" })
                             .then( resp => {
                                 console.log(resp)
 
                                 this.status = 'success'
+                                this.submitted = true
 
                                 resolve(resp)
 
@@ -406,8 +415,25 @@ export default {
                             })
                             .catch( err => {
                                 console.log(err);
-                                this.status = 'error'
+                                console.log(JSON.stringify(err.response.status))
 
+                                // we could have tried to create a new review for an existing 
+                                // tuple of course, professor, and reviewer, which is already existing in the backend
+                                if (err.response.status == 400) {
+
+                                    // done handling this 
+                                    this.closeModal()
+
+                                    // display toaster with information
+                                    this.$bvToast.toast('You Already Reviewed This Class Taught By The Specified Professor', {
+                                            title: `Review Already Exists`,
+                                            variant: 'warning',
+                                            solid: true,
+                                            toaster:'b-toaster-top-full'
+                                    })
+                                } 
+
+                                this.status = 'error'
                                 reject(err)
                             });
             });
@@ -470,6 +496,7 @@ export default {
 
           // I now consider all possible cases
           if (!createNewCourseOBJ  && !createNewProfessorOBJ) {
+
               // I just create a new review and close the thing 
               this.createNewReview(this.idOfInputtedProfessor, this.idOfInputtedCourse, this.starRating, this.comments)
           }

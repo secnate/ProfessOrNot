@@ -1,22 +1,24 @@
 <template>
-  <div>
-    <Navbar />
-    <div>You're Logged In!</div>
-    <Search />
-  </div>
+    <div>
+        <Navbar/>
+        <h1>
+            <b-img src="../assets/logotitle.png" class="titleImage"/>
+        </h1>
+
+        <Search />
+
+    </div>
 </template>
 
 <script>
 import Navbar from "./Navbar.vue";
 import Search from "./Search.vue";
-//import Review from "./Review.vue";
 
 export default {
   name: "Main",
   components: {
     Navbar,
     Search
-    // Review
   },
   data() {
     return {};
@@ -25,3 +27,10 @@ export default {
   computed: {}
 };
 </script>
+
+<style>
+.titleImage {
+    margin: 0 auto;
+    width: 80%;
+}
+</style>
