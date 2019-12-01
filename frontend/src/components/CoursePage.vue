@@ -155,7 +155,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .courseTitle {
   font-size: 40pt;
 }

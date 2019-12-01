@@ -171,7 +171,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .professorTitle {
   font-size: 40pt;
 }

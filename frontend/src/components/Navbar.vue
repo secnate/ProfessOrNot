@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
-      <b-navbar-brand href="#">ProfessOrNot</b-navbar-brand>
+      <b-navbar-brand to="/" left>ProfessOrNot</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,7 +11,7 @@
         <b-navbar-nav class="ml-auto">
           <div v-if="showSearchBar">
             <b-nav-form>
-              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <b-form-input size="sm" class="" placeholder="Search"></b-form-input>
               <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
             </b-nav-form>
           </div>
@@ -41,7 +41,6 @@ export default {
     logout: function() {
       this.$store
         .dispatch("logout")
-        .then(() => this.$router.push("/login"))
         .catch(err => alert(err.response));
     },
   },

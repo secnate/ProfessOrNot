@@ -179,7 +179,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #search-bar {
   width: 80%;
   height: 40px;

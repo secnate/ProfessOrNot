@@ -146,7 +146,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 #messageTitle {
   font-size: 20pt;

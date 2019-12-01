@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .titleImage {
     margin: 0 auto;
     width: 80%;
