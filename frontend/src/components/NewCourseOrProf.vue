@@ -17,7 +17,7 @@
       Such A Professor Or Class Doesn't Exist.
     </h2>
     <h2 id="message">
-      Would You Like To Create A New Instance? 
+      Would You Like To Add It? 
     </h2>
 
       <b-button variant="outline-primary" id="new-prof-button" @click="handleNewProfessor">

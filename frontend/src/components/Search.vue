@@ -69,12 +69,6 @@ export default {
           else if (this.filteredList[i].type === "COURSE" && this.filteredList[i].id != this.newProfOrCourseDefaultID) {
             router.push({ name: 'course', params: { courseId: this.filteredList[i].id }})
           }
-          else {
-            console.log("This should never happen.")
-          }
-
-          // we moved on. terminate the function
-          return;
         }
       }
 
