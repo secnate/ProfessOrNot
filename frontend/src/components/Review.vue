@@ -221,10 +221,6 @@ export default {
           // We freeze the form value if either the ID is not zero or the string is not empty
           //
           // check professor name 
-          console.log("DEBUG: enteredProfessorName is: " + this.professorNameProp)
-          console.log("DEBUG: enteredCourseName is: " + this.courseNameProp)
-          console.log("DEBUG: ProfessorNameID is: " + this.professorIDProp)
-          console.log("DEUB:G CourseNameID is: " + this.courseIDProp)
 
           if (this.professorNameProp !== "" || this.professorIDProp !== 0) {
               this.enteredProfessorName = this.professorNameProp;

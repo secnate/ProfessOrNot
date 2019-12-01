@@ -56,7 +56,6 @@ export default {
   methods: {
     openNewTypedText() {
       // we decide whether this is the name of a new course or professor to be displayed
-      console.log("DEBUG: clicked enter. Need to do stuff here.")
 
       // first I iterate over the filteredList and see if I have it match something
       var i = 0;
