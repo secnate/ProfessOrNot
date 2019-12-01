@@ -1,48 +1,65 @@
 <template>
   <div>
-    <b-modal id="my-modal" title="Profile Settings" hide-footer>
-      <b-form @submit="onSubmit">
-        <b-form-group label="Name">
-          <b-form-input id="user-name" v-model="user.name" type="text" required></b-form-input>
-          <br />
-          <b-form-group label="Email">
-            <b-form-input id="user-email" v-model="user.email" type="email" required></b-form-input>
-          </b-form-group>
-          <b-form-group label="Password">
-            <b-form-input id="user-password" v-model="user.password" type="password" required></b-form-input>
-          </b-form-group>
+    <b-modal id="profile-modal" title="Profile Settings" hideFooter @hidden="clear_changes">
+      <b-form @submit="handleSubmit">
+        <b-form-group label="Email Address">
+          <b-form-input id="user-email" v-model="email" type="email" required></b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-form-group label="Name">
+          <b-form-input id="user-name" v-model="name" type="text" required></b-form-input>
+        </b-form-group>
+        <div>
+          <b-button type="submit" block variant="outline-primary">Update Profile</b-button>
+        </div>
       </b-form>
     </b-modal>
   </div>
 </template>
 
 <script>
-import {mapGetters} from "vuex"
 export default {
+  /* eslint-disable no-console */
   name: "Profile",
-  computed: {
-    ...mapGetters(["getUser"])
-  },
   data() {
     return {
-      user: {
-        name: "",
-        email: "",
-        password: "",
-        school_id: 1 // U of SC is the default
+      changes: {}
+    }
+  },
+  computed: {
+    email: {
+      get() {
+        return this.$store.getters.getUser.email
+      },
+      set(value) {
+        this.changes.email = value
       }
-    };
+    },
+    name: {
+      get() {
+        return this.$store.getters.getUser.name
+      },
+      set(value) {
+        this.changes.name = value
+      }
+    }
   },
   methods: {
-    onSubmit(evt) {
+    handleSubmit(evt) {
       evt.preventDefault();
-      this.updateProfile();
+      this.update_user()
+      this.$bvModal.hide('profile-modal')
     },
-    updateProfile() {
-      /* eslint-disable no-console */
-      console.log("DEBUG: that's for WILL BOOTLE") /* eslint-disable no-console */
+    update_user() {
+    /*
+    You need to implement this.$store.dispatch('update_user', user_updates)
+    Don't worry about changing school yet.
+    Look at Register and Login components and the Vuex store in store/auth.js for help
+    Also this page https://vuex.vuejs.org
+    */
+      this.$store.dispatch('update_user', this.changes)
+    },
+    clear_changes() {
+      this.changes = {}
     }
   },
   props: {}

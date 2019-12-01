@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import axios from "axios";
+import router from "../../router";
 
 const state = {
   status: "",
@@ -24,6 +26,7 @@ const actions = {
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
+          console.log(user)
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = 'Token ' + token
           const payload = [token, user]
@@ -49,6 +52,7 @@ const actions = {
           .then(resp => {
             const token = resp.data.token
             const user = resp.data.user
+            console.log(user)
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = 'Token ' + token
             const payload = [token, user]
@@ -86,15 +90,39 @@ const actions = {
           method: 'GET' })
           .then(resp => {
             const payload = resp.data
-            commit('fetch_user', payload)
+            console.log(payload)
+            commit('update_user', payload)
             resolve(resp)
           })
           .catch(err => {
             commit('auth_error')
             localStorage.removeItem('token')
+            delete axios.defaults.headers.common['Authorization']
+            router.push('/login')
             reject(err)
           })
         })
+    },
+    // Issue #115 this is what I implemented
+    // Look at the API documentation to see what is submitted and what is returned
+    update_user({commit}, user_updates) {
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios({url: '/auth/user',
+        data: user_updates,
+        method: 'POST'})
+        .then(resp => {
+          const payload = resp.data
+            console.log(payload)
+            commit('update_user', payload)
+            resolve(resp)
+        })
+        .catch(err => {
+          commit('auth_error')
+          localStorage.removeItem('token')
+          reject(err)
+        })
+      })
     },
 }
 const mutations = {
@@ -105,19 +133,23 @@ const mutations = {
         state.status = 'success'
         state.token = payload[0]
         state.user = payload[1]
+        console.log(state.user)
       },
       auth_error(state){
         state.status = 'error'
+        state.token = ''
+        state.user = ''
       },
       logout(state){
         state.status = ''
         state.token = ''
         state.user = ''
       },
-      fetch_user(state, payload){
+      update_user(state, payload){
         state.token = localStorage.getItem("token")
         state.status = 'success'
         state.user = payload
+        console.log(payload)
       }
 }
 

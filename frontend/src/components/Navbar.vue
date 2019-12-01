@@ -1,22 +1,25 @@
 <template>
-  <div id="entire-navbar">
+  <div>
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
+      <b-navbar-brand href="#">ProfessOrNot</b-navbar-brand>
 
-      <!-- The href being '/' allows for someone to click the text and go back to the homepage -->
-      <b-navbar-brand href="/" left>ProfessOrNot</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
+      <b-collapse id="nav-collapse" is-nav>
 
-
-      <b-navbar-toggle target="nav-collapse" class="no-border"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav class="no-border">
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto no-border">
-          <b-nav-item-dropdown class="no-border" right>
+        <b-navbar-nav class="ml-auto">
+          <div v-if="showSearchBar">
+            <b-nav-form>
+              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+            </b-nav-form>
+          </div>
+          <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
-            <template class="no-border" v-slot:button-content>{{ getUser.name }}</template>
-            <b-dropdown-item class="no-border" v-b-modal.my-modal>Profile</b-dropdown-item>
-            <b-dropdown-item class="no-border" v-on:click="logout">Logout</b-dropdown-item>
+            <template v-slot:button-content>{{getUser.name}}</template>
+            <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
+            <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -26,9 +29,9 @@
 </template>
 
 <script>
-import Profile from "./Profile";
-import { mapGetters } from "vuex";
-
+/* eslint-disable no-console */
+import Profile from "./Profile"
+import { mapGetters } from 'vuex'
 export default {
   name: "Navbar",
   components: {
@@ -40,19 +43,16 @@ export default {
         .dispatch("logout")
         .then(() => this.$router.push("/login"))
         .catch(err => alert(err.response));
-    }
+    },
   },
   props: {
-    showSearchBar: Boolean
+    showSearchBar: Boolean,
   },
   computed: {
-    ...mapGetters(["getUser"])
+    ...mapGetters(['getUser'])
   }
 };
 </script>
 
-<style style>
-.no-border {
-  border: none;
-}
+<style scoped>
 </style>
