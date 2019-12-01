@@ -43,7 +43,7 @@
 
                     
                       <p class="review_course_name"> <b>Course: </b> 
-                        <router-link :to="{name: 'course', query: {courseId : review.course.id }}">
+                        <router-link :to="{name: 'course', params: {courseId : review.course.id }}">
                           <b>{{ review.course.name }}</b>
                         </router-link>
                       </p>
@@ -130,7 +130,7 @@ export default {
     // query the backend for the data. If It is "not found," act appropriately
     // otherwise, display it
 
-    this.profId = Number(this.$route.query.profId)
+    this.profId = Number(this.$route.params.profId)
 
     new Promise( (resolve, reject) => {
       this.status = 'loading' // we can show a loading wheel while in this state 

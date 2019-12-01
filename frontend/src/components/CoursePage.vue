@@ -42,7 +42,7 @@
                     <b-col cols="8" class="review_left_col" :key="review.id+2"> 
 
                       <p class="review_prof_name"> <b>Professor: </b> 
-                        <router-link :to="{name: 'professor', query: {profId : review.professor.id }}">
+                        <router-link :to="{name: 'professor', params: {profId : review.professor.id }}">
                           <b>{{ review.professor.name }}</b>
                         </router-link>
                       </p>
@@ -124,7 +124,7 @@ export default {
   },
   mounted() {
 
-      this.courseId = Number(this.$route.query.courseId)
+      this.courseId = Number(this.$route.params.courseId)
 
       new Promise( (resolve, reject) => {
       this.status = 'loading' // we can show a loading wheel while in this state 

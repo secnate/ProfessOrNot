@@ -16,12 +16,12 @@
 
     <li id="bordered-list" v-for="(item, index) in filteredList" :key="index">
       <div v-if='item.type === "COURSE"'>
-        <router-link :to="{name: 'course', query: {courseId : item.id }}">
+        <router-link :to="{name: 'course', params: {courseId : item.id }}">
           <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
         </router-link>
       </div>
       <div v-else-if='item.type === "PROFESSOR"'> 
-        <router-link :to="{name: 'professor', query: {profId : item.id }}">
+        <router-link :to="{name: 'professor', params: {profId : item.id }}">
           <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
         </router-link>
       </div>
@@ -59,15 +59,15 @@ export default {
 
       // first I iterate over the filteredList and see if I have it match something
       var i = 0;
-      for (i = 0; i < this.filteredList.length - 1; i++) {
+      for (i = 0; i < this.filteredList.length; i++) {
         if (this.text.toLowerCase() === this.filteredList[i].name.toLowerCase() ) {
 
           // it exists in the filtered list. we now programmatically go to the page
-          if (this.filteredList[i].type === "PROFESSOR") {
-            router.push({ name: 'professor', query: { profId: this.filteredList[i].id }})
+          if (this.filteredList[i].type === "PROFESSOR" && this.filteredList[i].id != this.newProfOrCourseDefaultID) {
+            router.push({ name: 'professor', params: { profId: this.filteredList[i].id }})
           }
-          else if (this.filteredList[i].type === "COURSE") {
-            router.push({ name: 'course', query: { courseId: this.filteredList[i].id }})
+          else if (this.filteredList[i].type === "COURSE" && this.filteredList[i].id != this.newProfOrCourseDefaultID) {
+            router.push({ name: 'course', params: { courseId: this.filteredList[i].id }})
           }
           else {
             console.log("This should never happen.")
