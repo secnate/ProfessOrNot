@@ -1,9 +1,9 @@
 <template>
     <div>
         <Navbar/>
-        <div>
-        You're Logged In!
-        </div>
+        <h1>
+            <b-img src="../assets/logotitle.png" class="titleImage"/>
+        </h1>
 
         <Search />
 
@@ -27,3 +27,10 @@ export default {
   computed: {}
 };
 </script>
+
+<style>
+.titleImage {
+    margin: 0 auto;
+    width: 80%;
+}
+</style>

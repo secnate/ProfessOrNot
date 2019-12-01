@@ -7,23 +7,16 @@
 
 
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse" class="no-border"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse id="nav-collapse" is-nav class="no-border">
         <!-- Right aligned nav items -->
-        <Search class="mr-sm-2" />
-        <b-navbar-nav class="ml-auto">
-          <div v-if="showSearchBar">
-            <b-nav-form>
-              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-              <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-            </b-nav-form>
-          </div>
-          <b-nav-item-dropdown right>
+        <b-navbar-nav class="ml-auto no-border">
+          <b-nav-item-dropdown class="no-border" right>
             <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>{{ getUser.name }}</template>
-            <b-dropdown-item v-b-modal.my-modal>Profile</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
+            <template class="no-border" v-slot:button-content>{{ getUser.name }}</template>
+            <b-dropdown-item class="no-border" v-b-modal.my-modal>Profile</b-dropdown-item>
+            <b-dropdown-item class="no-border" v-on:click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -34,14 +27,12 @@
 
 <script>
 import Profile from "./Profile";
-import Search from "./Search";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Navbar",
   components: {
-    Profile,
-    Search
+    Profile
   },
   methods: {
     logout: function() {
@@ -60,4 +51,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style style>
+.no-border {
+  border: none;
+}
+</style>

@@ -9,52 +9,125 @@
       placeholder="Search Courses/Professors"
       autocomplete="off"
       @input="searchInputChanged"
+      @keyup.enter="openNewTypedText()"
     />
 
     <!-- Filtered List -->
 
     <li id="bordered-list" v-for="(item, index) in filteredList" :key="index">
-      <button id="button" @click="handleClick(item)">{{ item.name }}</button>
+      <div v-if='item.type === "COURSE"'>
+        <router-link :to="{name: 'course', query: {courseId : item.id }}">
+          <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
+        </router-link>
+      </div>
+      <div v-else-if='item.type === "PROFESSOR"'> 
+        <router-link :to="{name: 'professor', query: {profId : item.id }}">
+          <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
+        </router-link>
+      </div>
+      <div v-else>
+        <!-- this option reflects what the user currently has typed -->
+        <b-button id="button" @click="openNewTypedText()" squared variant="outline-dark" v-b-modal.new-course-prof-modal>{{ item.name }}</b-button>
+      </div>
+      
     </li>
-    <!--
-    <li id="inputed-text" style="if (this.text.length == 0) display:none;">
-      <button id="text-button" @click="handleClick(item)">{{text}}</button>
-    </li>
-    <a>{{text.length}}</a>-->
+
+    <NewCourseOrProf :enteredText="text"/>
   </div>
 </template>
 
 <script>
 import axios from "axios"; // Communicates w/ backend
+import NewCourseOrProf from "./NewCourseOrProf.vue";
+import router from "../router.js";
+
 export default {
   /* eslint-disable no-console */
   name: "Search",
-  components: {},
   data() {
     return {
       previousSearchText: "",
       text: "",
       searchArray: [],
-      backend_query_length_threshold: 2
+      backend_query_length_threshold: 2,
+      newProfOrCourseDefaultID: 0
     };
   },
   methods: {
+    openNewTypedText() {
+      // we decide whether this is the name of a new course or professor to be displayed
+      console.log("DEBUG: clicked enter. Need to do stuff here.")
+
+      // first I iterate over the filteredList and see if I have it match something
+      var i = 0;
+      for (i = 0; i < this.filteredList.length - 1; i++) {
+        if (this.text.toLowerCase() === this.filteredList[i].name.toLowerCase() ) {
+
+          // it exists in the filtered list. we now programmatically go to the page
+          if (this.filteredList[i].type === "PROFESSOR") {
+            router.push({ name: 'professor', query: { profId: this.filteredList[i].id }})
+          }
+          else if (this.filteredList[i].type === "COURSE") {
+            router.push({ name: 'course', query: { courseId: this.filteredList[i].id }})
+          }
+          else {
+            console.log("This should never happen.")
+          }
+
+          // we moved on. terminate the function
+          return;
+        }
+      }
+
+      // didn't find it, so we present a modal clarifying if they want to create a new professor or course
+      this.$bvModal.show('new-course-prof-modal')
+
+
+      //-------------------------------------------------------------
+      /*first iterate over filteredList 
+        if lowercase string input is in filteredList -->
+          go to that page 
+
+      otherwise, display the new course or prof modal*/
+    },
     searchInputChanged() {
-      console.log("DEBUG: search input changed and is: " + this.text);
+      
+      
+      /////////////////////////////////////////////////////////////////
+      // Updating the information queried from the backend and displayed in the page
       if (this.text.length == this.backend_query_length_threshold && 
-          this.text.length > this.previousSearchText.length ) {
+          this.text.length >= this.previousSearchText.length ) {
         this.getSearchFromBackend();
       } 
-      else if (this.text.length == this.backend_query_length_threshold &&
+      else if (this.text.length <= this.backend_query_length_threshold &&
                this.text.length < this.previousSearchText.length ) {
-          
           this.searchArray = []
        }
 
       this.previousSearchText = this.text;
+
+      // updating the entered input
+      if (this.searchArray.length != 0) {
+        // we check to see if the string matches an already-existing item exactly
+        var i = 0
+        var doesMatch = false
+        for (i = 0; i < this.searchArray.length-1; i++) {
+          if (this.searchArray[i].name.toLowerCase() === this.text.toLowerCase()) {
+            doesMatch = true;
+            break;
+          }
+        }
+
+        if (doesMatch == true) {
+          this.searchArray[this.searchArray.length - 1].name = "";
+        }
+        else {
+          // doesn't match, keep the text of the string we find
+          this.searchArray[this.searchArray.length - 1].name = this.text;
+        }
+      }
     },
     getSearchFromBackend() {
-      //es
       // get the professors from the backend
       // add in a dummy value to the end of the list with id value 0.
       // we will be adjusting its name from there
@@ -68,17 +141,19 @@ export default {
         })
           .then(resp => {
             console.log(resp);
-            console.log("DEBUG: resp.data is: " + JSON.stringify(resp.data));
             this.searchArray = resp.data;
-            // Ignore for now...
+
+            
             // --------------------------------------------------------------------
             // I now append the default object that will represent the case
             // where a user enters in a new professor that is not in the database
-            /*             this.arrayProfs.push({
+            this.searchArray.push({
               id: this.newProfOrCourseDefaultID,
-              name: this.getNewProfessorItemString()
-            }); */
+              name: this.text,
+              type: "USER_ENTERED_INPUT"
+            });
             //---------------------------------------------------------------------
+            
             this.status = "success";
             resolve(resp);
           })
@@ -88,18 +163,25 @@ export default {
             reject(err);
           });
       });
-    },
-    handleClick(item) {
-      console.log(item.type);
-      console.log(item.id);
     }
   },
   computed: {
     filteredList() {
-      return this.searchArray.filter(searchArray => {
-        return searchArray.name.toLowerCase().includes(this.text.toLowerCase());
+      // we return the items we are searching for as well as the very default item
+      // representing the user's current input
+      var toReturn = this.searchArray.filter(searchArray => {
+        return searchArray.name.toLowerCase().includes(this.text.toLowerCase()) 
       });
+
+      return toReturn
     }
+  },
+  beforeMount() {
+    this.text = ""
+    this.previousSearchText = ""
+  },
+  components: {
+    NewCourseOrProf
   }
 };
 </script>
@@ -112,6 +194,7 @@ export default {
   color: black;
   border: 1px solid black;
   text-indent: 5px;
+  font-size: 15pt;
 }
 li {
   width: 80%;

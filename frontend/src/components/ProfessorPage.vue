@@ -126,16 +126,11 @@ export default {
     }
   },
   mounted() {
-    console.log("DEBUG: in professor page. before mounting!") /* eslint-disable-line no-console */
-    console.log("DEBUG: passed in profId is: " + this.$route.query.profId) /* eslint-disable-line no-console */
 
     // query the backend for the data. If It is "not found," act appropriately
     // otherwise, display it
-    console.log("DEBUG: querying backend") /* eslint-disable-line no-console */
 
     this.profId = Number(this.$route.query.profId)
-
-    console.log("DEBUG: typeof profId is: " + typeof this.profId) /* eslint-disable-line no-console */
 
     new Promise( (resolve, reject) => {
       this.status = 'loading' // we can show a loading wheel while in this state 
@@ -148,27 +143,16 @@ export default {
                 // we searched for an invalid professor
                 this.resetData()
 
-                console.log("DEBUG: searched for an invalid professor. values are all default.") /* eslint-disable-line no-console */
               }
               else {
                 // we got a legitimate professor. extract the data, and save it
                 this.professor = resp.data.professor;
                 this.professorName = this.professor.name
                 this.profId = this.professor.id
-                console.log("DEBUG: the professor is is: " + this.profId + " and the type is: " + typeof this.profId) /* eslint-disable-line no-console */
                 this.professorCourses = resp.data.courses;
                 this.professorReviews = resp.data.reviews;
                 this.loadedData = true
-
-                console.log("DEBUG: searched for a valid professor.") /* eslint-disable-line no-console */
-                console.log("\tThe professor is: " + JSON.stringify(this.professor)) /* eslint-disable-line no-console */
-                console.log("\tThe professor courses are: " + JSON.stringify(this.professorCourses)) /* eslint-disable-line no-console */
-                console.log("\tThe professor review are: " + JSON.stringify(this.professorReviews)) /* eslint-disable-line no-console */
-                console.log("\tDEBUG: length of prof course array is: " + JSON.stringify(this.professorCourses.length))  /* eslint-disable-line no-console */
               }
-
-
-                                
 
               this.status = 'success'
 

@@ -123,10 +123,8 @@ export default {
     }
   },
   mounted() {
-      console.log("DEBUG: in coursepage page before mounting!") /* eslint-disable-line no-console */
 
       this.courseId = Number(this.$route.query.courseId)
-      console.log("DEBUG: passed in courseId is: " + this.courseId) /* eslint-disable-line no-console */
 
       new Promise( (resolve, reject) => {
       this.status = 'loading' // we can show a loading wheel while in this state 
@@ -142,7 +140,6 @@ export default {
               this.courseReviews = resp.data.reviews
               this.loadedData = true
 
-              console.log("DEBUG: the courseReviews is: " + JSON.stringify(this.courseReviews)) /* eslint-disable-line no-console */
               this.status = 'success'
 
               resolve(resp)

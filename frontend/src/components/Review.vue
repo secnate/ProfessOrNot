@@ -124,7 +124,6 @@ export default {
   },
   methods: {
       handleHide() {
-        console.log("DEBUG: hiding the review modal") /* eslint-disable-line no-console */
       },
       handleNext(event) {
           event.preventDefault()
@@ -200,9 +199,7 @@ export default {
           this.$bvModal.hide('review-modal');
 
           // if we are in the professor page, we refresh the data in order to 
-          console.log("DEBUG: in close modal. refreshWindow is: " + refreshWindow) /* eslint-disable-line no-console */
           if (this.$route.path == "/professor" && refreshWindow) {
-            console.log("DEBUG: reloading professor page") /* eslint-disable-line no-console */
             window.location.reload()
          }
 
@@ -224,6 +221,11 @@ export default {
           // We freeze the form value if either the ID is not zero or the string is not empty
           //
           // check professor name 
+          console.log("DEBUG: enteredProfessorName is: " + this.professorNameProp)
+          console.log("DEBUG: enteredCourseName is: " + this.courseNameProp)
+          console.log("DEBUG: ProfessorNameID is: " + this.professorIDProp)
+          console.log("DEUB:G CourseNameID is: " + this.courseIDProp)
+
           if (this.professorNameProp !== "" || this.professorIDProp !== 0) {
               this.enteredProfessorName = this.professorNameProp;
               this.freezeProfessorName = true;
@@ -244,7 +246,7 @@ export default {
               this.previousEnteredProfName.length < this.enteredProfessorName.length) {
               this.getProfessorsFromBackend();
           }
-          if (this.enteredProfessorName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
+          if (this.enteredProfessorName.length <= this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
               this.previousEnteredProfName.length > this.enteredProfessorName.length) {
               // going downwards. one character isn't enough for suggestions
               this.arrayProfs = []
@@ -277,8 +279,8 @@ export default {
               this.getCoursesFromBackend();
           }
 
-          if (this.courseName.length < this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
-              this.previousEnteredCourseName.length > this.previousEnteredCourseName.length) {
+          if (this.courseName.length <= this.NUM_CHARS_TO_QUERY_BACKEND_AT &&
+              this.previousEnteredCourseName.length > this.courseName.length) {
               // going downwards. one character isn't enough for suggestions
               this.arrayCourses = []
           }
@@ -401,8 +403,6 @@ export default {
               this.status = 'loading' // we can show a loading wheel while in this state 
 
               var dataToPassIn = { "professor_id": prof_id, "course_id" : crs_id, "rating" : rtng, "comment": cmnt }
-
-              console.log("DEBUG: creating new review. dataToPassIn is: " + JSON.stringify(dataToPassIn))
               
               axios({ url: "/reviews", data: dataToPassIn, method: "POST" })
                             .then( resp => {
@@ -471,9 +471,6 @@ export default {
             }
           }
 
-          console.log("DEBUG: I create newProfOBJ is: " + createNewProfessorOBJ)
-          console.log("DEBUG: I createNewCourseOBJ is: " + createNewCourseOBJ)
-
           // now I examine if I need to create a new course object 
           // ---------------------------------------------------------------------------------------
           this.idOfInputtedCourse = this.newProfOrCourseDefaultID;    // some empty value; it will get updated later on
@@ -503,9 +500,6 @@ export default {
 
           // I now consider all possible cases
           if (!createNewCourseOBJ  && !createNewProfessorOBJ) {
-              console.log("DEBUG: neither course nor prof exist")
-              console.log("DEBUG: idOfInputtedProfessor is: " + this.idOfInputtedProfessor)
-              console.log("DEBUG: idOfInputtedCourse is: " + this.idOfInputtedCourse)
 
               // I just create a new review and close the thing 
               this.createNewReview(this.idOfInputtedProfessor, this.idOfInputtedCourse, this.starRating, this.comments)
