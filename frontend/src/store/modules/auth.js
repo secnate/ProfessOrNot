@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import axios from "axios";
+import router from "../../router";
 
 const state = {
   status: "",
@@ -84,7 +85,6 @@ const actions = {
         })
     },
     fetch_user({commit}){
-      console.log("T")
       return new Promise((resolve, reject) => {
         axios({url: '/auth/user', 
           method: 'GET' })
@@ -97,6 +97,8 @@ const actions = {
           .catch(err => {
             commit('auth_error')
             localStorage.removeItem('token')
+            delete axios.defaults.headers.common['Authorization']
+            router.push('/login')
             reject(err)
           })
         })
@@ -135,6 +137,8 @@ const mutations = {
       },
       auth_error(state){
         state.status = 'error'
+        state.token = ''
+        state.user = ''
       },
       logout(state){
         state.status = ''

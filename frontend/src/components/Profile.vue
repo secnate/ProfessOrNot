@@ -46,7 +46,7 @@ export default {
   methods: {
     handleSubmit(evt) {
       evt.preventDefault();
-      this.update_user
+      this.update_user()
       this.$bvModal.hide('profile-modal')
     },
     update_user() {
@@ -56,6 +56,7 @@ export default {
     Look at Register and Login components and the Vuex store in store/auth.js for help
     Also this page https://vuex.vuejs.org
     */
+      this.$store.dispatch('update_user', this.changes)
     },
     clear_changes() {
       this.changes = {}
