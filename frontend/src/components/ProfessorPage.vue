@@ -40,8 +40,7 @@
         </b-container>
 
         <!-- Popovers to display -->
-        <CreateReview :professorIDProp="profId" :professorNameProp="professorName"
-                :courseIDProp="0" courseNameProp=""/> 
+        <CreateReview professorDisabled :propProfessor="professor" /> 
 
     </div>
 

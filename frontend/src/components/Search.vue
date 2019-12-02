@@ -27,7 +27,7 @@
       </div>
       <div v-else>
         <!-- this option reflects what the user currently has typed -->
-        <b-button id="button" @click="openNewTypedText()" squared variant="outline-dark" v-b-modal.new-course-prof-modal>{{ item.name }}</b-button>
+        <b-button id="button" @click="openNewTypedText()" squared variant="outline-dark" v-b-modal.new-course-prof-modal>Create New: "{{ item.name }}"</b-button>
       </div>
       
     </li>
