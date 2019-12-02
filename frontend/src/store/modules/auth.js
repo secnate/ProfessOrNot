@@ -26,7 +26,6 @@ const actions = {
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user
-          console.log(user)
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = 'Token ' + token
           const payload = [token, user]
@@ -52,7 +51,6 @@ const actions = {
           .then(resp => {
             const token = resp.data.token
             const user = resp.data.user
-            console.log(user)
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = 'Token ' + token
             const payload = [token, user]
@@ -91,7 +89,6 @@ const actions = {
           method: 'GET' })
           .then(resp => {
             const payload = resp.data
-            console.log(payload)
             commit('update_user', payload)
             resolve(resp)
           })
@@ -114,13 +111,10 @@ const actions = {
         method: 'POST'})
         .then(resp => {
           const payload = resp.data
-            console.log(payload)
             commit('update_user', payload)
             resolve(resp)
         })
         .catch(err => {
-          commit('auth_error')
-          localStorage.removeItem('token')
           reject(err)
         })
       })
@@ -134,7 +128,6 @@ const mutations = {
         state.status = 'success'
         state.token = payload[0]
         state.user = payload[1]
-        console.log(state.user)
       },
       auth_error(state){
         state.status = 'error'
@@ -150,7 +143,6 @@ const mutations = {
         state.token = localStorage.getItem("token")
         state.status = 'success'
         state.user = payload
-        console.log(payload)
       }
 }
 

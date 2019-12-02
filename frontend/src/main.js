@@ -8,7 +8,8 @@ import store from "./store";
 import Axios from "axios";
 //import "vue-search-select/dist/VueSearchSelect.css";
 
-require("axios-base-url")("https://dev-api.professornot.com");
+//require("axios-base-url")("https://dev-api.professornot.com");
+require("axios-base-url")("http://localhost:8000");
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 const accessToken = localStorage.getItem("token");

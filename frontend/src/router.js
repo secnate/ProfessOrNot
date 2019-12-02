@@ -31,7 +31,7 @@ let router = new Router({
       }
     },
     {
-      path: "/professor",
+      path: "/professor/:id",
       name: "professor",
       component: ProfessorPage,
       meta : {
@@ -40,7 +40,7 @@ let router = new Router({
       props: true
     },
     {
-      path: "/course",
+      path: "/course/:id",
       name: "course",
       component: CoursePage,
       meta : {

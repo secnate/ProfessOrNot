@@ -36,13 +36,11 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
+      "plugin:vue/essential"
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint",
-      "no-console": "off"
+      "parser": "babel-eslint"
     }
   },
   "postcss": {

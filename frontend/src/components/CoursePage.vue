@@ -34,56 +34,26 @@
             
           <div v-show="this.courseReviews.length != 0">
             <h2 align="left"> Reviews: </h2>
-            <template v-for="review in this.courseReviews">
-                
-                <b-container :key="review.id+0" class="review_box"> 
-                  <b-row :key="review.id+1">
-
-                    <b-col cols="8" class="review_left_col" :key="review.id+2"> 
-
-                      <p class="review_prof_name"> <b>Professor: </b> 
-                        <router-link :to="{name: 'professor', params: {profId : review.professor.id }}">
-                          <b>{{ review.professor.name }}</b>
-                        </router-link>
-                      </p>
-
-                      <!-- Display any comments -->
-                      <p class="review_comment" v-if="review.comment.length != 0 "> <b>Student Comments:</b> <br/> {{review.comment }} </p>
-                      <p class="review_comment" v-else> <b>Student Comments:</b> <br/> <i>No Comments Were Submitted</i> </p>
-
-                    </b-col>
-
-                    <b-col cols="4" class="review_right_col" :key="review.id+3">
-                      <b-row>
-                        <h2 class="rating_string"> Ranking: {{review.rating }} / 5 </h2>
-                      </b-row>
-
-                      <b-row>
-                        <h2 class="date_string"> {{ convertDateStringToDateRepresentation(review.created) }}</h2>
-                      </b-row>
-                    </b-col>
-                  </b-row>
-                </b-container>
-
-            </template>
+            <Review v-for="review in this.courseReviews" :key="review.id" :review="review" hideCourseName />
           </div> 
 
         </b-container>
 
         <!-- Popovers to display -->
-        <Review :professorIDProp="0" professorNameProp="" :courseIDProp="courseId" :courseNameProp="courseName"/> 
+        <CreateReview :professorIDProp="0" professorNameProp="" :courseIDProp="courseId" :courseNameProp="courseName"/> 
     </div>
 </template>
 
 <script>
 import Navbar from "./Navbar.vue"
+import CreateReview from "./CreateReview.vue"
 import Review from "./Review.vue"
 import axios from "axios"; // used to communicate with backend database
 
 export default {
   name: "CoursePage",
   components: {
-    Navbar, Review
+    Navbar, CreateReview, Review
   },
   data() {
     return {
@@ -124,14 +94,13 @@ export default {
   },
   mounted() {
 
-      this.courseId = Number(this.$route.params.courseId)
+      this.courseId = Number(this.$route.params.id)
 
       new Promise( (resolve, reject) => {
       this.status = 'loading' // we can show a loading wheel while in this state 
 
       axios({ url: "/courses/" + this.courseId, method: "GET" })
           .then( resp => {
-              console.log(resp) /* eslint-disable-line no-console */
                          
               this.course = resp.data.course
               this.courseName = this.course.name
@@ -145,7 +114,6 @@ export default {
               resolve(resp)
           })
           .catch( err => {
-            console.log(err); /* eslint-disable-line no-console */
             this.status = 'error'
 
             reject(err)

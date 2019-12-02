@@ -12,9 +12,12 @@
         id="input-email"
         v-model="newUser.email"
         type="email"
+        @change="errors.email = null"
+        :state="check_error('email')"
         required
         placeholder="Email"
       ></b-form-input>
+      <b-form-invalid-feedback id="email-error">{{get_error('email')}}</b-form-invalid-feedback>
       <br />
       <b-form-input
         id="input-password"
@@ -39,9 +42,16 @@ export default {
         email: "",
         password: ""
       },
+      errors: {}
     };
   },
   methods: {
+    check_error(error) {
+      return this.errors[error] ? false : null;
+    },
+    get_error(error) {
+      return `${this.errors[error]}`
+    },
     onSubmit(evt) {
       evt.preventDefault()
       this.register()
@@ -51,12 +61,11 @@ export default {
       this.$store.dispatch('register', user)
       .then(() => this.$router.push('/'))
       .catch(err => {
-         if (err.response.status == 400) {
-           this.$parent.loginAlert = "This E-Mail is already registered!"
-         } else {
-           this.$parent.loginAlert = err
-         }
-       })
+          this.errors = err.response.data;
+          for (const property in this.errors) {
+            console.log(`${this.errors[property]}`);
+          }
+        });
     }
   }
 };

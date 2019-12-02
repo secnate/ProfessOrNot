@@ -4,6 +4,7 @@ from .models import User
 from django.contrib.auth import authenticate
 from schools.serializers import SchoolSerializer
 from schools.models import School
+from rest_framework.validators import UniqueValidator
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -12,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'name', 'school')
 class UserUpdateSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=False)
+    email = serializers.EmailField(required=False, validators=[UniqueValidator(queryset=User.objects.all(), message="E-Mail already associated with another account!")])
     name = serializers.CharField(required=False)
     password = serializers.CharField(required=False)
     school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', write_only=True, required=False)
@@ -28,6 +29,8 @@ class UserUpdateSerializer(serializers.Serializer):
 
 # Register Serializer
 class RegisterSerialzer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=False, validators=[
+        UniqueValidator(queryset=User.objects.all(), message="E-Mail already associated with another account!")])
     school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', default=School.objects.get(pk=1))
     class Meta:
         model = User

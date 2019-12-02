@@ -16,12 +16,12 @@
 
     <li id="bordered-list" v-for="(item, index) in filteredList" :key="index">
       <div v-if='item.type === "COURSE"'>
-        <router-link :to="{name: 'course', params: {courseId : item.id }}">
+        <router-link :to="{name: 'course', params: {id : item.id }}">
           <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
         </router-link>
       </div>
       <div v-else-if='item.type === "PROFESSOR"'> 
-        <router-link :to="{name: 'professor', params: {profId : item.id }}">
+        <router-link :to="{name: 'professor', params: {id : item.id }}">
           <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
         </router-link>
       </div>
