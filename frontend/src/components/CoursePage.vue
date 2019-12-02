@@ -40,7 +40,7 @@
         </b-container>
 
         <!-- Popovers to display -->
-        <CreateReview courseDisabled :propCourse="course" />
+        <CreateReview courseDisabled :propCourse="course" @add-new-review="addNewReview"/>
     </div>
 </template>
 
@@ -85,6 +85,9 @@ export default {
     displayReviewModal() {
       // is invoked when I need to click a link to pull it up instead of a button
       this.$bvModal.show('review-modal')
+    },
+    addNewReview(review) {
+      this.courseReviews.unshift(review)
     }
   },
   computed: {

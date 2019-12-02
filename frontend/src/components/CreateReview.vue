@@ -103,7 +103,7 @@ export default {
         this.status = "loading"; // We can show a loading wheel while in this state
         axios({ url: "/reviews", data: this.new_review, method: "POST" })
           .then(resp => {
-            console.log(resp);
+            this.$emit('add-new-review', resp.data)
             this.status = "success";
             resolve(resp);
           })
