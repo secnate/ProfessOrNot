@@ -1,11 +1,11 @@
 from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import permissions
 from .models import School
 from .serializers import SchoolSerializer
 
 # List all schools
 class SchoolView(ListAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = SchoolSerializer
     def get_queryset(self):
         queryset = School.objects.all()

@@ -6,9 +6,8 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
 import store from "./store";
 import Axios from "axios";
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css';
-
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 
 require("axios-base-url")("https://dev-api.professornot.com");
 //require("axios-base-url")("http://localhost:8000");
@@ -25,7 +24,7 @@ if (store.getters.isAuthenticated && !store.getters.getUser.name) {
   store.dispatch("fetch_user");
 }
 Vue.use(BootstrapVue);
-Vue.component('v-select', vSelect)
+Vue.component("v-select", vSelect);
 var EventBus = new Vue({
   router,
   store,

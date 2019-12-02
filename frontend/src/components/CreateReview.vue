@@ -7,6 +7,7 @@
       ok-title="Next"
       v-bind:hideFooter="true"
       @hide="closeModal"
+      @show="show"
     >
       <b-form @submit="submit">
         <label>Professor's Name</label>
@@ -78,12 +79,12 @@ export default {
       }
     };
   },
-  mounted() {
-    this.loadProfessors();
-    this.loadCourses();
-  },
   computed: {},
   methods: {
+    show() {
+      this.loadProfessors();
+      this.loadCourses();
+    },
     submit(event) {
       event.preventDefault();
       this.saveReview();

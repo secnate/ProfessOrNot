@@ -8,7 +8,7 @@ class SearchView(APIView):
     def get(self,request, query):
         if len(query) < 1:
             return Response([])
-        prof_queryset = Professor.objects.filter(name__icontains=query)
-        course_queryset = Course.objects.filter(name__icontains=query)
+        prof_queryset = Professor.objects.filter(name__icontains=query, school__id=request.user.school_id)
+        course_queryset = Course.objects.filter(name__icontains=query, school__id=request.user.school_id)
         resp = SearchResultSerialzer(course_queryset, many=True).data + SearchResultSerialzer(prof_queryset, many=True).data
         return Response(resp)

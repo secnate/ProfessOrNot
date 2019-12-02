@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-modal id="profile-modal" title="Profile Settings" hideFooter @hidden="clear">
+    <b-modal id="profile-modal" title="Profile Settings" hideFooter @hidden="clear" @show="show">
+      <b-form-group label="Name">
+        <b-form-input id="user-name" v-model="name" type="text" required></b-form-input>
+      </b-form-group>
       <b-form @submit="handleSubmit">
         <b-form-group label="Email Address">
           <b-form-input
@@ -13,8 +16,18 @@
           ></b-form-input>
           <b-form-invalid-feedback id="email-error">{{get_error('email')}}</b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group label="Name">
-          <b-form-input id="user-name" v-model="name" type="text" required></b-form-input>
+        <b-form-group label="New Password">
+          <b-form-input id="user-password" v-model="password" type="password"></b-form-input>
+        </b-form-group>
+        <b-form-group label="School">
+          <v-select
+            :options="schools"
+            :value="school"
+            label="name"
+            @input="setSchool"
+            :clearable="false"
+            placeholder="School"
+          ></v-select>
         </b-form-group>
         <div>
           <b-button type="submit" block variant="outline-primary">Update Profile</b-button>
@@ -25,11 +38,13 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   /* eslint-disable no-console */
   name: "Profile",
   data() {
     return {
+      schools: [],
       changes: {},
       errors: {}
     };
@@ -50,14 +65,56 @@ export default {
       set(value) {
         this.changes.name = value;
       }
+    },
+    school: {
+      get() {
+        return this.$store.getters.getUser.school;
+      }
+    },
+    password: {
+      get() {
+        return ""
+      },
+      set(value) {
+        if(value.length > 0) {
+          this.changes.password = value
+        } else {
+          delete this.changes.password
+        }
+      }
     }
   },
   methods: {
+    show() {
+      this.loadSchools();
+    },
+    loadSchools() {
+      new Promise((resolve, reject) => {
+        this.status = "loading"; // we can show a loading wheel while in this state
+        axios({
+          url: "/schools",
+          method: "GET"
+        })
+          .then(resp => {
+            this.schools = resp.data;
+            this.status = "success";
+            resolve(resp);
+          })
+          .catch(err => {
+            console.log(err);
+            this.status = "error";
+            reject(err);
+          });
+      });
+    },
+    setSchool(value) {
+      this.changes.school_id = value.id;
+    },
     check_error(error) {
       return this.errors[error] ? false : null;
     },
     get_error(error) {
-      return `${this.errors[error]}`
+      return `${this.errors[error]}`;
     },
     handleSubmit(evt) {
       evt.preventDefault();
