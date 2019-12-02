@@ -19,7 +19,7 @@
         label="name"
         @input="setSchool"
         :clearable="false"
-        placeholder="School"
+        placeholder=" School"
       ></v-select>
       <br />
       <b-form-input

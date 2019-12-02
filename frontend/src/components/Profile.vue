@@ -22,11 +22,10 @@
         <b-form-group label="School">
           <v-select
             :options="schools"
-            :value="school"
             label="name"
             @input="setSchool"
             :clearable="false"
-            placeholder="School"
+            :placeholder="school.name"
           ></v-select>
         </b-form-group>
         <div>
