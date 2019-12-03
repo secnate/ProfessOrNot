@@ -64,10 +64,10 @@ export default {
 
           // it exists in the filtered list. we now programmatically go to the page
           if (this.filteredList[i].type === "PROFESSOR" && this.filteredList[i].id != this.newProfOrCourseDefaultID) {
-            router.push({ name: 'professor', params: { profId: this.filteredList[i].id }})
+            router.push({ name: 'professor', params: { id: this.filteredList[i].id }})
           }
           else if (this.filteredList[i].type === "COURSE" && this.filteredList[i].id != this.newProfOrCourseDefaultID) {
-            router.push({ name: 'course', params: { courseId: this.filteredList[i].id }})
+            router.push({ name: 'course', params: { id: this.filteredList[i].id }})
           }
         }
       }
