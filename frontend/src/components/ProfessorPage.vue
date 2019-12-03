@@ -1,143 +1,142 @@
 <template>
-    <div>
-        <Navbar/>
-          <h1 class="professorTitle"> 
-            <b> {{ this.professor != null ? this.professor.name : ""}} </b>
-          </h1>
+  <div>
+    <Navbar />
+    <!-- Popovers to display -->
+    <CreateReview :propProfessor="professor" @add-new-review="addNewReview" />
+    <div v-if="loadSuccess">
+      <h1 class="professorTitle">
+        <b>{{ this.professor != null ? this.professor.name : ""}}</b>
+      </h1>
 
-        <!-- If the professor didn't teach any classes, then we just display a default message -->
-        <div v-if="this.professorCourses.length == 0 && this.loadedData">
-          <h1>
-            No Reviews Have Been Created.
-          </h1>
-          <h1>
-            Would You Like To <div v-on:click="displayReviewModal" class="makeNewReview">Make One?</div>
-          </h1>
-        </div>
+      <!-- If the professor doesn't have any reviews, then we just display a default message -->
+      <div v-if="!this.hasReviews">
+        <h1>No Reviews Have Been Created.</h1>
+        <h1>
+          Would You Like To
+          <div v-on:click="displayReviewModal" class="makeNewReview">Make One?</div>
+        </h1>
+      </div>
 
-        <!-- If the professor taught some classes, then we know we have data to display, like reviews -->
-        <b-container class="professorInfoBody" v-if="this.professorCourses.length != 0 && this.loadedData">
+      <!-- If there are reviews -->
+      <div v-if="this.hasReviews">
+        <b-container class="professorInfoBody">
           <b-row>
             <b-col cols="8">
               <h2 align="left">Average Rating: {{this.professor.avg_rating}} / 5</h2>
             </b-col>
             <b-col cols="4">
               <b-button pill variant="info" size="lg" align="right" v-b-modal.review-modal>
-                <b> Add Review </b>
+                <b>Add Review</b>
               </b-button>
             </b-col>
           </b-row>
 
           <b-row>
-            <HR WIDTH="100%" COLOR="black" SIZE="4"/>
+            <HR width="100%" color="black" size="4" />
           </b-row>
-            
-          <div v-show="this.professorReviews.length != 0">
-            <h2 align="left"> Reviews: </h2>
-            <Review v-for="review in this.professorReviews" :key="review.id" :review="review" hideProfessorName />
-          </div> 
 
+          <div>
+            <h2 align="left">Reviews:</h2>
+            <Review
+              v-for="review in this.professorReviews"
+              :key="review.id"
+              :review="review"
+              hideProfessorName
+            />
+          </div>
         </b-container>
-
-        <!-- Popovers to display -->
-        <CreateReview :propProfessor="professor" @add-new-review="addNewReview"/> 
-
+      </div>
     </div>
-
+  </div>
 </template>
 
 <script>
-
-import Navbar from "./Navbar.vue"
-import CreateReview from "./CreateReview.vue"
-import Review from "./Review.vue"
+import Navbar from "./Navbar.vue";
+import CreateReview from "./CreateReview.vue";
+import Review from "./Review.vue";
 import axios from "axios"; // used to communicate with backend database
 
 export default {
   name: "ProfessorPage",
   components: {
-    Navbar, CreateReview, Review
+    Navbar,
+    CreateReview,
+    Review
   },
   data() {
     return {
+      status: "",
       professor: null,
       professorName: "",
       professorCourses: [],
       professorReviews: [],
-      profId: -1,
-      loadedData: false
-    }
+      profId: -1
+    };
   },
   methods: {
     resetData() {
-      this.professor = null
-      this.professorCourses = []
-      this.professorReviews = []
-      this.profId = -1
-      this.loadedData = false
+      this.status = "";
+      this.professor = null;
+      this.professorCourses = [];
+      this.professorReviews = [];
+      this.profId = -1;
     },
     getRatingString(value) {
-      return "Rating: " + JSON.stringify(value)
+      return "Rating: " + JSON.stringify(value);
     },
     convertDateStringToDateRepresentation(date_str) {
-      var dateObj = new Date(date_str)
+      var dateObj = new Date(date_str);
 
-      return dateObj.toLocaleDateString("en-US")
+      return dateObj.toLocaleDateString("en-US");
     },
     displayReviewModal() {
       // is invoked when I need to click a link to pull it up instead of a button
-      this.$bvModal.show('review-modal')
+      this.$bvModal.show("review-modal");
     },
-    addNewReview(review) {
-      this.professorReviews.unshift(review)
+    addNewReview() {
+      this.retrieveData();
+    },
+    retrieveData() {
+      new Promise((resolve, reject) => {
+        this.status = "loading"; // we can show a loading wheel while in this state
+
+        axios({ url: "/professors/" + this.profId, method: "GET" })
+          .then(resp => {
+            this.professor = resp.data.professor;
+            this.professorName = this.professor.name;
+            this.profId = this.professor.id;
+            this.professorCourses = resp.data.courses;
+            this.professorReviews = resp.data.reviews;
+
+            this.status = "success";
+
+            resolve(resp);
+          })
+          .catch(err => {
+            console.log(err); /* eslint-disable-line no-console */
+            this.status = "error";
+
+            reject(err);
+          });
+      });
     }
   },
   computed: {
-    hasReviews : function() {
-      return this.professorCourses.length > 0
+    loadSuccess() {
+      if (this.status === "success") {
+        return true;
+      }
+      return false;
+    },
+    hasReviews: function() {
+      return this.professorReviews.length > 0;
     }
   },
   mounted() {
-
     // query the backend for the data. If It is "not found," act appropriately
     // otherwise, display it
-
-    this.profId = Number(this.$route.params.id)
-
-    new Promise( (resolve, reject) => {
-      this.status = 'loading' // we can show a loading wheel while in this state 
-
-      axios({ url: "/professors/" + this.profId, method: "GET" })
-          .then( resp => {
-              console.log(resp) /* eslint-disable-line no-console */
-
-              if (resp.detail === "Not found.") {
-                // we searched for an invalid professor
-                this.resetData()
-
-              }
-              else {
-                // we got a legitimate professor. extract the data, and save it
-                this.professor = resp.data.professor;
-                this.professorName = this.professor.name
-                this.profId = this.professor.id
-                this.professorCourses = resp.data.courses;
-                this.professorReviews = resp.data.reviews;
-                this.loadedData = true
-              }
-
-              this.status = 'success'
-
-              resolve(resp)
-          })
-          .catch( err => {
-            console.log(err); /* eslint-disable-line no-console */
-            this.status = 'error'
-
-            reject(err)
-        });
-    });
-
+    this.profId = Number(this.$route.params.id);
+    this.retrieveData();
   }
 };
 </script>
@@ -197,5 +196,4 @@ export default {
   background-color: lightblue;
   text-align: left;
 }
-
 </style>
