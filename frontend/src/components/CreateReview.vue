@@ -69,6 +69,7 @@ export default {
   data() {
     return {
       status: "",
+      
       professors: [],
       courses: [],
       new_review: {
@@ -79,26 +80,43 @@ export default {
       }
     };
   },
-  computed: {},
+  computed: {
+    professorDisabled() {
+      if (this.propProfessor != null) {
+        return true
+      }
+      return false
+    },
+    courseDisabled() {
+      if (this.propCourse != null) {
+        return true
+      }
+      return false
+    },
+  },
   methods: {
     show() {
-      this.loadProfessors();
-      this.loadCourses();
+      this.resetModal();
+      if (this.propProfessor != null) {
+        this.new_review.professor_id = this.propProfessor.id;
+
+        this.loadCourses()
+      }
+      else if (this.propCourse != null) {
+        this.new_review.course_id = this.propCourse.id;
+        this.loadProfessors()
+      }
+      else {
+        this.loadCourses()
+        this.loadProfessors()
+      }
     },
     submit(event) {
       event.preventDefault();
       this.saveReview();
       this.closeModal();
-      // clean the modal's data and close the window
-      this.resetModal();
     },
     saveReview() {
-      if (this.propProfessor != null) {
-        this.new_review.professor_id = this.propProfessor.id;
-      }
-      if (this.propCourse != null) {
-        this.new_review.course_id = this.propCourse.id;
-      }
       return new Promise((resolve, reject) => {
         this.status = "loading"; // We can show a loading wheel while in this state
         axios({ url: "/reviews", data: this.new_review, method: "POST" })
@@ -123,6 +141,7 @@ export default {
         rating: 0,
         comment: ""
       };
+      this.status = "";
     },
     closeModal() {
       // close the window
@@ -183,6 +202,7 @@ export default {
         })
           .then(resp => {
             this.professors.push(resp.data);
+            this.new_review.professor_id = resp.data.id
             this.status = "success";
             resolve(resp);
           })
@@ -204,6 +224,7 @@ export default {
         })
           .then(resp => {
             this.courses.push(resp.data);
+            this.new_review.course_id = resp.data.id
             this.status = "success";
             resolve(resp);
           })
@@ -216,8 +237,6 @@ export default {
     }
   },
   props: {
-    professorDisabled: Boolean,
-    courseDisabled: Boolean,
     propProfessor: Object,
     propCourse: Object
   },

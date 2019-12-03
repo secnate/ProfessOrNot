@@ -40,7 +40,7 @@
         </b-container>
 
         <!-- Popovers to display -->
-        <CreateReview professorDisabled :propProfessor="professor" @add-new-review="addNewReview"/> 
+        <CreateReview :propProfessor="professor" @add-new-review="addNewReview"/> 
 
     </div>
 

@@ -40,7 +40,7 @@
         </b-container>
 
         <!-- Popovers to display -->
-        <CreateReview courseDisabled :propCourse="course" @add-new-review="addNewReview"/>
+        <CreateReview :propCourse="course" @add-new-review="addNewReview"/>
     </div>
 </template>
 
