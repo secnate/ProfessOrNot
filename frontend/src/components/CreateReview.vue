@@ -114,9 +114,12 @@ export default {
     },
     submit(event) {
       event.preventDefault();
-
-      // Check if the fields were entered in a valid fashion, 
-      // otherwise display notification that it was entered incorrectly
+      if(this.validateFields()){
+      this.saveReview();
+      this.closeModal();
+      }
+    },
+    validateFields() {
       if (this.new_review.professor_id == 0) {
         this.$bvToast.toast('No Professor Entered', {
                 title: `Required Professor  Name Not Entered`,
@@ -126,7 +129,7 @@ export default {
         })
 
         // don't do anything
-        return;
+        return false;
       }
 
       if (this.new_review.course_id == 0) {
@@ -138,7 +141,7 @@ export default {
         })
 
         // don't do anything
-        return;
+        return false
       }
 
       if (this.new_review.rating == 0) {
@@ -151,12 +154,9 @@ export default {
         })
 
         // don't do anything
-        return;
+        return false
       }
-
-      // All is good -- can save the fields and close it up
-      /*this.saveReview();
-      this.closeModal();*/
+      return true
     },
     saveReview() {
       return new Promise((resolve, reject) => {
@@ -256,11 +256,9 @@ export default {
       });
     },
     createCourse(newOption) {
-      console.log(newOption);
-
       // check to see if the new option fits our regular expression
       var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$")
-      if (!courseRE.test(newOption)) {
+      if (!courseRE.test(newOption.name)) {
         this.$bvToast.toast('Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number', {
           title: `Invalid Course Name`,
           variant: 'warning',
