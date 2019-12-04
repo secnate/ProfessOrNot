@@ -97,6 +97,7 @@ export default {
   methods: {
     show() {
       this.resetModal();
+
       if (this.propProfessor != null) {
         this.new_review.professor_id = this.propProfessor.id;
 
@@ -113,8 +114,49 @@ export default {
     },
     submit(event) {
       event.preventDefault();
-      this.saveReview();
-      this.closeModal();
+
+      // Check if the fields were entered in a valid fashion, 
+      // otherwise display notification that it was entered incorrectly
+      if (this.new_review.professor_id == 0) {
+        this.$bvToast.toast('No Professor Entered', {
+                title: `Required Professor  Name Not Entered`,
+                variant: 'warning',
+                solid: true,
+                toaster:'b-toaster-top-full'
+        })
+
+        // don't do anything
+        return;
+      }
+
+      if (this.new_review.course_id == 0) {
+        this.$bvToast.toast('No Course Entered', {
+                title: `Required Course  Name Not Entered`,
+                variant: 'warning',
+                solid: true,
+                toaster:'b-toaster-top-full'
+        })
+
+        // don't do anything
+        return;
+      }
+
+      if (this.new_review.rating == 0) {
+
+        this.$bvToast.toast('Enter Your Rating On The Scale Of 1-5 Stars', {
+                title: `Required Rating Not Entered`,
+                variant: 'warning',
+                solid: true,
+                toaster:'b-toaster-top-full'
+        })
+
+        // don't do anything
+        return;
+      }
+
+      // All is good -- can save the fields and close it up
+      /*this.saveReview();
+      this.closeModal();*/
     },
     saveReview() {
       return new Promise((resolve, reject) => {
@@ -215,25 +257,39 @@ export default {
     },
     createCourse(newOption) {
       console.log(newOption);
-      new Promise((resolve, reject) => {
-        this.status = "loading"; // we can show a loading wheel while in this state
-        axios({
-          url: "/courses",
-          method: "POST",
-          data: newOption
+
+      // check to see if the new option fits our regular expression
+      var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$")
+      if (!courseRE.test(newOption)) {
+        this.$bvToast.toast('Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number', {
+          title: `Invalid Course Name`,
+          variant: 'warning',
+          solid: true
         })
-          .then(resp => {
-            this.courses.push(resp.data);
-            this.new_review.course_id = resp.data.id
-            this.status = "success";
-            resolve(resp);
+
+        return;
+      }
+      else {
+        new Promise((resolve, reject) => {
+          this.status = "loading"; // we can show a loading wheel while in this state
+          axios({
+            url: "/courses",
+            method: "POST",
+            data: newOption
           })
-          .catch(err => {
-            console.log(err);
-            this.status = "error";
-            reject(err);
-          });
-      });
+            .then(resp => {
+              this.courses.push(resp.data);
+              this.new_review.course_id = resp.data.id
+              this.status = "success";
+              resolve(resp);
+            })
+            .catch(err => {
+              console.log(err);
+              this.status = "error";
+              reject(err);
+            });
+        });
+      }
     }
   },
   props: {
