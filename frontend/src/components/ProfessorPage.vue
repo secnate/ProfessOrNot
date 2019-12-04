@@ -93,8 +93,9 @@ export default {
       // is invoked when I need to click a link to pull it up instead of a button
       this.$bvModal.show("review-modal");
     },
-    addNewReview() {
-      this.retrieveData();
+    addNewReview(review) {
+      this.professorReviews.unshift(review)
+      this.professor.avg_rating = review.professor.avg_rating
     },
     retrieveData() {
       new Promise((resolve, reject) => {
