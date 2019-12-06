@@ -99,6 +99,7 @@ export default {
     },
     addNewReview(review) {
       this.professorReviews.unshift(review)
+      this.professor.avg_rating = review.professor.avg_rating
     }
   },
   computed: {
