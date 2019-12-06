@@ -3,7 +3,7 @@
         <Navbar/>
 		<div>
   <b-jumbotron>
-    <template v-slot:header><b-img src="..\assets\logotitle_2.svg" width="600%" height= auto alt="Fluid-grow image"></b-img></template>
+    <template v-slot:header><b-img src="../assets/logotitle_2.svg" width="600%" height= auto alt="Fluid-grow image"></b-img></template>
 
     <template v-slot:lead>
       Your professors. Your choice.

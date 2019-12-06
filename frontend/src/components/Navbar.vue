@@ -3,7 +3,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
 	<div class="container">
-	<a class="navbar-brand" href="/">ProfessOrNot</a>
+	<b-navbar-brand to="/" left>ProfessOrNot</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -12,7 +12,7 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>{{ getUser.name }}</template>
-            <b-dropdown-item v-b-modal.my-modal>Profile</b-dropdown-item>
+            <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
             <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
