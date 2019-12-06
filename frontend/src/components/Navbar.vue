@@ -3,9 +3,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
 	<div class="container">
-	<a class="navbar-brand" href="/">
-	<img src="..\assets\logotitle.svg" width="300" alt="bb">
-	</a>
+	<a class="navbar-brand" href="/">ProfessOrNot</a>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
