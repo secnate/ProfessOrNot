@@ -1,12 +1,12 @@
 <template>
-  <div class="login-card">
-    <b-card
+  <div class="login-card" >
+    <b-card 
       :title="cardTitle"
-      img-src="../assets/logotitle.svg"
+      img-src="../assets/logotitle_2.svg"
       img-alt="Image"
       img-topb
-      style= "padding: 15px; min-width: 350px; max-width: 350px;"
-      class="mb-2"
+      style= "padding: 20px; min-width: 350px; max-width: 350px;"
+      class="mb-3 bg- text-primary"
     >
       <div v-if="loginAlert">
         <b-alert show variant="danger">{{loginAlert}}</b-alert>
@@ -18,7 +18,7 @@
         <Login />
       </div>
       <br>
-      <b-link v-on:click="toggleLogin" variant="primary">{{switchButtonText}}</b-link>
+      <button type="button" class="btn btn-outline-primary" v-on:click="toggleLogin" variant="light">{{switchButtonText}}</button>
     </b-card>
   </div>
 </template>
@@ -62,4 +62,5 @@ export default {
   justify-content: center;
   height: 80vh;
 }
+
 </style>

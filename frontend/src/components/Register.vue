@@ -18,8 +18,8 @@
         :options="schools"
         label="name"
         @input="setSchool"
-        :clearable="false"
         placeholder=" School"
+		solo
       ></v-select>
       <br />
       <b-form-input
@@ -30,7 +30,7 @@
         placeholder="Password"
       ></b-form-input>
       <br />
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="submit" variant="light">Submit</b-button>
     </b-form>
   </div>
 </template>

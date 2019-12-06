@@ -70,7 +70,7 @@ export default {
                                 resolve(resp)
 
                                 // go to the next page
-                                router.push({ name: 'course', params: { id: newCourseID }})
+                                router.push({ name: 'course', params: { courseId: newCourseID }})
                             })
                             .catch( err => {
                                 console.log(err);
@@ -106,7 +106,7 @@ export default {
                                 this.status = 'success'
                                 var newInputProfId = resp.data.id
 
-                                 router.push({ name: 'professor', params: { id: newInputProfId }})
+                                 router.push({ name: 'professor', params: { profId: newInputProfId }})
 
                                 resolve(resp)
                             })

@@ -5,10 +5,14 @@
     <CreateReview :propCourse="course" @add-new-review="addNewReview" />
     <!-- If loaded successfully -->
     <div v-if="loadSuccess">
+	
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
       <h1 class="courseTitle">
         <b>{{ this.course != null ? this.course.name : ""}}</b>
       </h1>
-
+	  </div>
+</div>
       <!-- If the course doesn't have any reviews, then we just display a default message -->
       <div v-if="!this.hasReviews">
         <h1>No Reviews Have Been Created.</h1>
@@ -26,14 +30,10 @@
               <h2 align="left">Average Rating: {{this.course.avg_rating}} / 5</h2>
             </b-col>
             <b-col cols="4">
-              <b-button pill variant="info" size="lg" align="right" v-b-modal.review-modal>
+              <b-button pill variant="primary" size="lg" align="right" v-b-modal.review-modal>
                 <b>Add Review</b>
               </b-button>
             </b-col>
-          </b-row>
-
-          <b-row>
-            <HR width="100%" color="black" size="4" />
           </b-row>
 
           <div>
@@ -142,8 +142,15 @@ export default {
 </script>
 
 <style scoped>
+
+.container{
+height: 50px;
+width: auto;
+}
+
 .courseTitle {
-  font-size: 40pt;
+  font-size: 45pt;
+  text-align: left;
 }
 
 .courseInfoBody {
@@ -154,16 +161,6 @@ export default {
   border: 1px black solid;
 }
 
-.review_left_col {
-  font-style: bold;
-  background-color: lightblue;
-}
-
-.review_right_col {
-  font-style: bold;
-  background-color: lightblue;
-  border-left: black 2px solid;
-}
 
 .review_comment {
   font-size: 15pt;
@@ -176,6 +173,7 @@ export default {
   font-size: 15pt;
   text-align: center;
   margin-left: 3px;
+  margin-top: 3px;
 }
 
 .rating_string {
@@ -195,4 +193,11 @@ export default {
   background-color: lightblue;
   text-align: left;
 }
+
+.container-fluid {
+text-align: left;
+margin-bottom: 20px;
+margin-left:10%;
+}
+
 </style>
