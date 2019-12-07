@@ -18,7 +18,7 @@
         :options="schools"
         label="name"
         @input="setSchool"
-        :clearable="false"
+        :clearable="false"		
         placeholder=" School"
       ></v-select>
       <br />

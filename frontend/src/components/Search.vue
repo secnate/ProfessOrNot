@@ -14,22 +14,21 @@
 
     <!-- Filtered List -->
 
-    <li id="bordered-list" v-for="(item, index) in filteredList" :key="index">
+    <li id="list" v-for="(item, index) in filteredList" :key="index">
       <div v-if='item.type === "COURSE"'>
         <router-link :to="{name: 'course', params: {id : item.id }}">
-          <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
+          <b-button id="button" squared variant="light">{{ item.name }}</b-button>
         </router-link>
       </div>
       <div v-else-if='item.type === "PROFESSOR"'> 
         <router-link :to="{name: 'professor', params: {id : item.id }}">
-          <b-button id="button" squared variant="outline-dark">{{ item.name }}</b-button>
+          <b-button id="button" squared variant="light">{{ item.name }}</b-button>
         </router-link>
       </div>
       <div v-else>
         <!-- this option reflects what the user currently has typed -->
-        <b-button id="button" @click="openNewTypedText()" squared variant="outline-dark" v-b-modal.new-course-prof-modal>Create New: "{{ item.name }}"</b-button>
+        <b-button id="button" @click="openNewTypedText()" squared variant="light" v-b-modal.new-course-prof-modal>Create New: "{{ item.name }}"</b-button>
       </div>
-      
     </li>
 
     <NewCourseOrProf :enteredText="text"/>
@@ -181,20 +180,20 @@ export default {
 
 <style scoped>
 #search-bar {
+  border-radius: 20px;
   width: 80%;
   height: 40px;
-  margin: 0 auto;
-  color: black;
-  border: 1px solid black;
+  margin-top: 20 px;
   text-indent: 5px;
   font-size: 15pt;
 }
 li {
-  width: 80%;
+  margin-top: -2px;
+  border: 2px solid #0090FF;
+  color: light;
+  width: 77%;
   list-style-type: none;
-  margin: 0 auto;
-  color: black;
-  border: 1px solid black;
+  margin-left: 11%;
 }
 #button {
   width: 100%;
