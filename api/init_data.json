@@ -1,0 +1,54 @@
+[
+  {
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T20:28:08.364Z",
+      "name": "TEST101",
+      "school": 1
+    }
+  },
+  {
+    "model": "schools.school",
+    "pk": 1,
+    "fields": {
+      "name": "DEFAULT_SCHOOL"
+    }
+  },
+  {
+    "model": "professors.professor",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T19:30:16.644Z",
+      "name": "DEFAULT_PROFESSOR",
+      "school": 1
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$k4jZLXbdMDO5$krBYTzEvTNt66cpBlqvfIgWSWPHqJnMQOu7pXTu1ivY=",
+      "last_login": "2019-11-07T15:28:41.545Z",
+      "is_superuser": false,
+      "email": "defaultuser@professornot.com",
+      "name": "DEFAULT_USER",
+      "school": 1,
+      "is_active": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T20:29:50.081Z",
+      "reviewer": 1,
+      "professor": 1,
+      "course": 1,
+      "rating": 5,
+      "comment": "DEFAULT_REVIEW_COMMENT"
+    }
+  }
+]
