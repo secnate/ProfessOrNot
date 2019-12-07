@@ -18,7 +18,7 @@
         <Login />
       </div>
       <br>
-      <button type="button" class="btn btn-outline-primary" v-on:click="toggleLogin" variant="light">{{switchButtonText}}</button>
+       <b-link v-on:click="toggleLogin" variant="primary">{{switchButtonText}}</b-link>
     </b-card>
   </div>
 </template>
