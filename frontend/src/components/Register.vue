@@ -18,8 +18,8 @@
         :options="schools"
         label="name"
         @input="setSchool"
+        :clearable="false"		
         placeholder=" School"
-		solo
       ></v-select>
       <br />
       <b-form-input
