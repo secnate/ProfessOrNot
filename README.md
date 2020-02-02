@@ -31,6 +31,23 @@ When reviewing a PR, check that the person isn't going to break your code or som
 
 *The goal of PRs is to keep someone else from breaking your code by accident!*
 
+### Testing
+
+#### Unit Testing
+
+* Django
+  * Unit testing is performed with the built in Django testing framework
+  * The tests are located in the tests.py file inside of each Django "application" eg. api/schools/tests.py
+  * To run the unit tests, pipenv is required to create a virtual python enviroment to install dependencies
+    * 1. Install Pipenv
+      2. In the api folder type `pipenv shell`
+      3. In the virtual env shell, type `./manage.py test`
+* Vue
+  * TBD
+
 #### Behavioral Testing
 
-Behavior testing is being done with selenium and selenium IDE. Tests are located in Professornot/fronend/test. You will need to install selenium IDE in your browser (I use firefox) and then open the file(s) in the selenium IDE.
+(Only for Vue)
+
+--- We need a command line test & instructions here --
+
