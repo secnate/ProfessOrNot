@@ -31,7 +31,7 @@ class UserUpdateSerializer(serializers.Serializer):
 class RegisterSerialzer(serializers.ModelSerializer):
     email = serializers.EmailField(required=False, validators=[
         UniqueValidator(queryset=User.objects.all(), message="E-Mail already associated with another account!")])
-    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', default=School.objects.get(pk=1))
+    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school')
     class Meta:
         model = User
         fields = ('id','email','password', 'name', 'school_id', 'school')
