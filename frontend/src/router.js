@@ -4,6 +4,7 @@ import LoginPanel from "./components/LoginPanel.vue";
 import Main from "./components/Main.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
+import SurveyPage from "./components/SurveyPage.vue";
 import store from "./store"
 
 Vue.use(Router);
@@ -47,6 +48,14 @@ let router = new Router({
           requiresAuth: true
       },
       props: true 
+    },
+    {
+      path: "/usersurvey",
+      name: "usersurvey",
+      component: SurveyPage,
+      meta : {
+          requiresAuth: true
+      }
     }
   ]
 });
