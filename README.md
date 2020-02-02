@@ -30,3 +30,7 @@ When making a pull request you need to add someone as a reviewer. If your code c
 When reviewing a PR, check that the person isn't going to break your code or someone elses. If you see something that changes someone elses code, add them as a reviewer and let them know.
 
 *The goal of PRs is to keep someone else from breaking your code by accident!*
+
+#### Behavioral Testing
+
+Behavior testing is being done with selenium and selenium IDE. Tests are located in Professornot/fronend/test. You will need to install selenium IDE in your browser (I use firefox) and then open the file(s) in the selenium IDE.
