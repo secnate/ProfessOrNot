@@ -48,6 +48,8 @@ When reviewing a PR, check that the person isn't going to break your code or som
 #### Behavioral Testing
 
 (Only for Vue)
-
---- We need a command line test & instructions here --
+* Frontend
+  *Selenium
+  To run via command line. Ensure you have the proper prereqs. installed, such as npm, node, selenium, the proper browser driver, and     selenium web runner. Navigate to the tests directory, and type: selenium-side-runner targetfile.side 
+  If you have issues, visit https://selenium.dev/selenium-ide/docs/en/introduction/command-line-runner
 
