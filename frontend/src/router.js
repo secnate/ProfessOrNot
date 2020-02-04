@@ -5,7 +5,7 @@ import Main from "./components/Main.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
 import store from "./store"
-
+import AboutUs from "./components/AboutUs.vue"
 Vue.use(Router);
 
 
@@ -47,6 +47,14 @@ let router = new Router({
           requiresAuth: true
       },
       props: true 
+     },
+     {
+        path: "/AboutUs",
+        name: "AboutUs",
+        component: AboutUs,
+        meta: {
+            requiresAuth: false
+        }
     }
   ]
 });
