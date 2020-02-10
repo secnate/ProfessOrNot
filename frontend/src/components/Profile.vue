@@ -20,6 +20,7 @@
           <b-form-input id="user-password" v-model="password" type="password"></b-form-input>
         </b-form-group>
         <b-form-group label="School">
+          <div v-if="status === 'success'">
           <v-select
             :options="schools"
             label="name"
@@ -27,6 +28,8 @@
             :clearable="false"
             :placeholder="school.name"
           ></v-select>
+          </div>
+          <!--- add loading wheel here --->
         </b-form-group>
         <div>
           <b-button type="submit" block variant="outline-primary">Update Profile</b-button>
@@ -43,6 +46,7 @@ export default {
   name: "Profile",
   data() {
     return {
+      status: "undefined",
       schools: [],
       changes: {},
       errors: {}
