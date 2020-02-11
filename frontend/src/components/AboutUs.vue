@@ -12,24 +12,27 @@
                 <Search />
             </b-jumbotron>
             <div class="page-title">Everything You Should Know About Us</div>
-            <div class="container-fluid">
-                ProfessOrNot is a new and innovative online destinations for professor
-                ratings. Any user has the ability to search a professor that teaches
-                at any university in any state throughout the United States. ProfessOrNot 
-                is a website build by students for students and it helps ensure that students
-                are taking the best possible professor for their needs. This website relies
-                on user generated responses and heuristics to make sure we are providing
-                our clients with a reliable and consistent experience.
-                <br /><br />
-                After
-                searching a professor the user can then view user-generated ratings
-                that have been posted by students that have taken a class with the
-                same professor before. Users also have the option to add tags to
-                the teacher such as Homework Heavy, Lecture Intensive or
-                Difficult Exams. By combining all of these features with a 
-                new and improved heuristics quiz system it allows for us to 
-                help predict what professors we think would be the best option
-                for each and every user!
+            <div class="card" style="margin = 40px">
+            <!-- <div class="card-md-6"> -->
+                <div class="card-body" align="center" style="margin=40px">
+                    ProfessOrNot is a new and innovative online destinations for professor
+                    ratings. Any user has the ability to search a professor that teaches
+                    at any university in any state throughout the United States. ProfessOrNot 
+                    is a website build by students for students and it helps ensure that students
+                    are taking the best possible professor for their needs. This website relies
+                    on user generated responses and heuristics to make sure we are providing
+                    our clients with a reliable and consistent experience.
+                    <br /><br />
+                    After
+                    searching a professor the user can then view user-generated ratings
+                    that have been posted by students that have taken a class with the
+                    same professor before. Users also have the option to add tags to
+                    the teacher such as <i>Homework Heavy, Lecture Intensive or
+                    Difficult Exams</i>. By combining all of these features with a 
+                    new and improved heuristics quiz system it allows for us to 
+                    help predict what professors we think would be the best option
+                    for each and every user!
+                </div>
             </div>
             <!--<h1 class="card-title">What Features do you have access to?</h1>-->
 
@@ -49,6 +52,7 @@
         },
         data() {
             return {};
+            
         },
         methods: {},
         computed: {}
@@ -60,12 +64,19 @@
         margin: 0 auto;
         width: 80%;
     }
-
+    .page-title {
+        font-weight: bold;
+    }
+    /* .card-text {
+        font-style: italic;
+    } */
     .container-fluid {
-        
-        background-color:lightgray;
+        background-color:white;
         font-size: 22px;
         margin-bottom: 5%;
+    }
+    .card-body {
+        margin: 20px;
     }
     /*.page-title {*/
     /*width: 100%;*/
