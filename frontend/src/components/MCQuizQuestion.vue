@@ -50,7 +50,8 @@ export default {
   },
   methods: {
     saveChange() {
-      this.$emit('updateChoices', JSON.stringify(this.questionId)+":"+JSON.stringify(this.selected));
+      // we will need to update this to have the vuex event save.
+      this.$store.dispatch('set_user_answer',{ question_id: this.questionId, answer_index: this.selected })
     },
     answered() {
       return this.selected !== '';

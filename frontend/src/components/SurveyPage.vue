@@ -10,14 +10,22 @@
 
     <h1> Learning Style Quiz </h1>
 
-    <span v-for="questionObj in this.questions" v-bind:key="questionObj.id">
+    <div v-show="!can_display">
+      <h1 id="loadingText"> Loading Questions... </h1>
+      <b-spinner 
+          label="Loading Questions..." variant="primary" type="grow" 
+           style="width: 3rem; height: 3rem;">
+      </b-spinner>
+    </div>
+
+    <div v-show="can_display">
+      <span v-for="questionObj in this.questions_to_display" v-bind:key="questionObj.id">
 
       <div v-if='questionObj.type=="mc"'>
         <MCQuizQuestion 
           :questionId="questionObj.id"
           :choicesArray="questionObj.choices" 
           :question="questionObj.text"
-          v-on:updateChoices="handleUpdateChoices"
         />
       </div>
 
@@ -26,20 +34,22 @@
         <ScaleQuizQuestion 
           :questionId="questionObj.id"
           :question="questionObj.text"
-          v-on:updateChoices="handleUpdateChoices"
         />
       </div>
 
-    </span>
+      </span>
 
-    <br/>
-    <b-button v-on:click="submitAnswers" 
+      <br/>
+        <b-button v-on:click="submitAnswers" 
               variant="primary" 
               className="submitButton"
               style="width: 80%; font-size: 20pt;"
-    >
+        >
         Submit
     </b-button>
+    </div>
+
+    
 
   </div>
 
@@ -61,47 +71,23 @@ export default {
   mounted: function() {
     console.log("Entered and mounted SurveyPage. Generating the array of user responses.");
 
-    // creating an empty thing
-    this.user_selections = [];
-    for (var i = 0; i < this.questions.length; i++) {
-      this.user_selections.push( {id: this.questions[i].id, choice: -1} ); // -1 is an invalid value
+    this.$store.dispatch('get_questions_from_backend');
+  },
+  computed: {
+    can_display: function() {
+      var toReturn = this.$store.state.question_status == "success";
+      console.log("DEBUG: the can_display return value is: " + toReturn)
+      return toReturn;
+    },
+    questions_to_display: function() {
+      return this.$store.state.questions_to_answer;
+    },
+    all_question_responses: function() {
+      return this.$store.state.question_responses;
     }
   },
   data() {
     return {
-      // a complete array representing the questions involved.
-      // questions can be either of type "mc" (multiple choice) or "sc" (scale)
-      // If the question is a scale, we do not have any choices to give because
-      // they all range from 1 (strongly disagree) to 5 (strongly agree)
-      questions: [
-        {
-          id: 1, type: "mc", text: "The Most Important Quality In A Professor To Me Is", 
-          choices: [
-            {id: 1, text: "No Homework"},
-            {id: 2, text: "No Class"},
-            {id: 3, text: "Hands-On Projects"},
-            {id: 4, text: "No Papers"}
-          ]
-        },
-        {
-          id: 2, type: "sc", text: "I Like A Professor Who Gives Easy A's"
-        },
-        {
-          id: 3, type: "mc", text: "My Preferred Learning Style Is", 
-          choices: [
-            {id: 1, text: "Hands-On"},
-            {id: 2, text: "Visual"},
-            {id: 3, text: "Audio"},
-            {id: 4, text: "Lecture"}
-          ]
-        },
-        {
-          id: 4, type: "sc", text: "The Stricter The Professor Is, The Better"
-        }
-      ],
-      // this is all that the user has selected
-      // each position in the array corresponds to the question in the questions array
-      user_selections: []
     };
   },
   methods: {
@@ -125,35 +111,14 @@ export default {
       }
     },
     allQuestionsAnswered() {
-      for (var i = 0; i < this.user_selections.length; i++) {
-        if (this.user_selections[i].choice == -1) {
+      var i = 0;
+      for ( i = 0; i < this.all_question_responses.length; i++) {
+        if (this.all_question_responses[i].choice == -1) {
           return false;
         }
       }
+
       return true;
-    },
-    handleUpdateChoices(data) {
-
-      // due to technical reasons, the data is passed in the 
-      // format of "#:#", where the first number represents 
-      // the question id and the second represents the selected index
-      // extract them for further processing
-      var splitArray = data.split(':');
-
-      var question_id = JSON.parse(splitArray[0]);
-      var selected_index = JSON.parse(splitArray[1]);
-
-      if (this.user_selections.length != 0) {
-
-        for (var i = 0; i < this.user_selections.length; i++) {
-          if (this.user_selections[i].id == question_id) {
-            this.user_selections[i].choice = selected_index;
-
-            break; // I assume only one user for each index
-          }
-        }
-      }
-     
     }
   }
 };
@@ -161,5 +126,12 @@ export default {
 
 
 <style scoped>
+
+#loadingText {
+  margin-top: 100px; 
+  font-size: 30pt; 
+  font-style: bold; 
+  color: red;
+}
 
 </style>
