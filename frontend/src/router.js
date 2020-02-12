@@ -4,11 +4,9 @@ import LoginPanel from "./components/LoginPanel.vue";
 import Main from "./components/Main.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
-import store from "./store"
-import AboutUs from "./components/AboutUs.vue"
+import store from "./store";
+import AboutUs from "./components/AboutUs.vue";
 Vue.use(Router);
-
-
 
 let router = new Router({
   mode: "history",
@@ -18,8 +16,8 @@ let router = new Router({
       path: "/",
       name: "main",
       component: Main,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -34,8 +32,8 @@ let router = new Router({
       path: "/professor/:id",
       name: "professor",
       component: ProfessorPage,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       },
       props: true
     },
@@ -43,38 +41,38 @@ let router = new Router({
       path: "/course/:id",
       name: "course",
       component: CoursePage,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       },
-      props: true 
-     },
-     {
-        path: "/AboutUs",
-        name: "AboutUs",
-        component: AboutUs,
-        meta: {
-            requiresAuth: false
-        }
+      props: true
+    },
+    {
+      path: "/AboutUs",
+      name: "AboutUs",
+      component: AboutUs,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (store.getters.isAuthenticated) {
-        next()
-        return
-      }
-      next('/login') 
-    } else {
-      next() 
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isAuthenticated) {
+      next();
+      return;
     }
-    if(to.matched.some(record => record.meta.unauth)) {
-      if (store.getters.isAuthenticated) {
-        next('/')
-        return
-      }
-    } 
-  })
+    next("/login");
+  } else {
+    next();
+  }
+  if (to.matched.some(record => record.meta.unauth)) {
+    if (store.getters.isAuthenticated) {
+      next("/");
+      return;
+    }
+  }
+});
 
-export default router
+export default router;
