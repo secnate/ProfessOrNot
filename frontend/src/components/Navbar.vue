@@ -3,8 +3,8 @@
 <div>
   <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
 
-    <b-navbar-brand to = "/">
-    <img src = "../assets/logotitle.svg" horizontal-align="left" alt="bb" width="300">
+    <b-navbar-brand to = "/" class="pl-4">
+    <img src = "../assets/logotitle.svg"  margin-left= "10" alt="bb" width="300">
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse">
@@ -14,7 +14,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right>
+        <b-nav-item-dropdown right class="pr-4">
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>{{getUser.name}}</template>
           <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
@@ -61,9 +61,12 @@ export default {
 /* .app {
   text-align: left;
 } */
-.b_navbar{
+/* .b_navbar{
 	background_color: "black";
-}
+} */
+/* .b-navbar-brand {
+  padding-left:100%;
+} */
 .alignleft {
   text-align: left;
 }
