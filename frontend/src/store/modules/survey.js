@@ -1,20 +1,19 @@
 import axios from "axios";
-import router from "../../router";
 
 const state = {
   status: "",
   questions: []
 };
-const getters = {};
+const getters = {
+  getQuestions: state => state.questions
+};
 const actions = {
   load_questions({ commit }) {
     return new Promise((resolve, reject) => {
-      commit("auth_request");
+      commit("questions_request");
       axios({
-        url:
-          "https://gist.githubusercontent.com/willbootle/4026f0d30e9c9f6509c1aa3f506d52e3/raw/b656965120212353b6d8b6ee7a9157ffaebeba17/qs.txt",
-        data: user,
-        method: "POST"
+        url: "/debug/testqs",
+        method: "GET"
       })
         .then(resp => {
           const payload = resp.data;
@@ -22,8 +21,7 @@ const actions = {
           resolve(resp);
         })
         .catch(err => {
-          commit("auth_error");
-          localStorage.removeItem("token");
+          commit("questions_error");
           reject(err);
         });
     });
@@ -32,6 +30,9 @@ const actions = {
 const mutations = {
   questions_request(state) {
     state.status = "loading";
+  },
+  questions_error(state) {
+    state.status = "error";
   },
   questions_retrieved(state, payload) {
     state.status = "retrieved";

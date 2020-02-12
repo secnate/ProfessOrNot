@@ -1,12 +1,13 @@
-import Vuex from 'vuex'
-import Vue from 'vue'
-import auth from './modules/auth'
-import survey_questions from './modules/survey_questions';
+import Vuex from "vuex";
+import Vue from "vue";
+import auth from "./modules/auth";
+import survey from "./modules/survey";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-        auth, survey_questions
-    }
-})
+  modules: {
+    auth,
+    survey
+  }
+});
