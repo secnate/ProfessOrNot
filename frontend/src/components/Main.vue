@@ -26,7 +26,9 @@
       <div class="card-body">
         <h5 class="card-title">Learn More about ProfessOrNot</h5>
         <p class="card-text">Learn more about our team and our misson here.</p>
-        <b-button href="#" disabled size="lg" variant="primary">Our about page >></b-button>
+        <router-link to="/AboutUs">
+            <b-button size ="lg" variant="primary"> Our About Page </b-button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -48,18 +50,17 @@
 import Navbar from "./Navbar.vue";
 import Search from "./Search.vue";
 
-export default {
-  name: "Main",
-  components: {
-    Navbar,
-    Search
-  },
-  data() {
-    return {};
-  },
-  methods: {},
-  computed: {}
-  
+    export default {
+        name: "Main",
+        components: {
+            Navbar,
+            Search
+        },
+        data() {
+            return {};
+        },
+        methods: {},
+        computed: {}
 };
 </script>
 
