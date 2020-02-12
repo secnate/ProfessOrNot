@@ -1,27 +1,33 @@
   
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
-	<div class="container">
-	<b-navbar-brand to="/" left><img src="../assets/logotitle.svg" width="300" alt="bb"></b-navbar-brand>
+<div>
+  <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
+
+    <b-navbar-brand to = "/">
+    <img src = "../assets/logotitle.svg" horizontal-align="left" alt="bb" width="300">
+    </b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse">
+
+    </b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template v-slot:button-content>{{getUser.name}}</template>
+          <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
+          <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-collapse>
     
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>{{ getUser.name }}</template>
-            <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-</div>
     </b-navbar>
     <Profile />
-  </div>
+</div>
 </template>
+
 
 <script>
 import Profile from "./Profile";
@@ -49,7 +55,16 @@ export default {
 </script>
 
 <style scoped>
+.pictureAlign {
+  float: left;
+}
+/* .app {
+  text-align: left;
+} */
 .b_navbar{
 	background_color: "black";
+}
+.alignleft {
+  text-align: left;
 }
 </style>
