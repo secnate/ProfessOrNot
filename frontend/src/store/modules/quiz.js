@@ -41,6 +41,8 @@ const actions = {
 const mutations = {
   quiz_request(state) {
     state.status = "loading";
+    // Clear response array on quiz_request to prevent lingering answers from incomplete survey.
+    state.responses = [];
   },
   quiz_error(state) {
     state.status = "error";

@@ -15,18 +15,6 @@
 
         <b-button href="#" size="lg" variant="primary" to="quiz">To The Quiz >></b-button>
       </b-jumbotron>
-</div>
-		<div class="container-fluid">
-		<div class="row">
-  <div class="col-sm-6">
-    <div class="card" style="margin = 20px">
-      <div class="card-body">
-        <h5 class="card-title">Learn More about ProfessOrNot</h5>
-        <p class="card-text">Learn more about our team and our misson here.</p>
-        <router-link to="/AboutUs">
-            <b-button size ="lg" variant="primary"> Our About Page </b-button>
-        </router-link>
-      </div>
     </div>
 
     <div class="container-fluid">
@@ -34,9 +22,11 @@
         <div class="col-sm-6">
           <div class="card" style="margin = 20px">
             <div class="card-body">
-              <h5 class="card-title">Learn More About ProfessOrNot</h5>
-              <p class="card-text">Learn More About Our Team And Our Misson Here.</p>
-              <b-button href="#" disabled size="lg" variant="primary">Our About Page >></b-button>
+              <h5 class="card-title">Learn More about ProfessOrNot</h5>
+              <p class="card-text">Learn more about our team and our misson here.</p>
+              <router-link to="/about">
+                <b-button size="lg" variant="primary">Our About Page</b-button>
+              </router-link>
             </div>
           </div>
         </div>
