@@ -4,9 +4,9 @@ import LoginPanel from "./components/LoginPanel.vue";
 import Main from "./components/Main.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
+import AboutUs from "./components/AboutUs.vue";
 import QuizPage from "./components/QuizPage.vue";
 import store from "./store";
-
 Vue.use(Router);
 
 let router = new Router({
@@ -54,7 +54,14 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    {
+      path: "/about",
+      name: "about",
+      component: AboutUs,
+      meta: {
+        requiresAuth: true
+      }
   ]
 });
 
