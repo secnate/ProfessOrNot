@@ -11,7 +11,6 @@
     <h1>Learning Style Quiz</h1>
 
     <div v-if="status == 'loading'">
-      <h1 id="loadingText">Loading Questions...</h1>
       <b-spinner
         label="Loading Questions..."
         variant="primary"
@@ -23,25 +22,27 @@
     <div v-if="status == 'retrieved'">
       <span v-for="questionObj in this.$store.getters.getQuestions" v-bind:key="questionObj.id">
         <div v-if="questionObj.type == 'mc' ">
-          <MCQuizQuestion
+          <QuizQuestion
             :questionId="questionObj.id"
-            :choicesArray="questionObj.choices"
             :question="questionObj.text"
+            :choicesArray="questionObj.choices"
           />
         </div>
 
         <!--The Scale Question goes from 1 through 5, strongly disagree to strongly agree-->
         <div v-if="questionObj.type == 'sc'">
-          <ScaleQuizQuestion :questionId="questionObj.id" :question="questionObj.text" />
+          <QuizQuestion :questionId="questionObj.id" :question="questionObj.text" scale />
         </div>
       </span>
 
       <br />
+      <!-- button will activate when allQuestionsAnswered is true -->
       <b-button
         v-on:click="submitAnswers"
         variant="primary"
         class="submitButton"
         style="width: 80%; font-size: 20pt;"
+        :disabled="!this.$store.getters.allQuestionsAnswered"
       >Submit</b-button>
     </div>
   </div>
@@ -49,15 +50,13 @@
 
 <script>
 import NavBar from "./Navbar.vue";
-import MCQuizQuestion from "./MCQuizQuestion.vue";
-import ScaleQuizQuestion from "./ScaleQuizQuestion.vue";
+import QuizQuestion from "./QuizQuestion.vue";
 
 export default {
   name: "SurveyPage",
   components: {
     NavBar,
-    MCQuizQuestion,
-    ScaleQuizQuestion
+    QuizQuestion
   },
   mounted: function() {
     this.$store.dispatch("load_questions");

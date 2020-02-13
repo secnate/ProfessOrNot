@@ -2,10 +2,18 @@ import axios from "axios";
 
 const state = {
   status: "",
-  questions: []
+  questions: [],
+  responses: []
 };
 const getters = {
-  getQuestions: state => state.questions
+  getQuestions: state => state.questions,
+  // {questions, responses} pull them out of state object
+  allQuestionsAnswered: ({ questions, responses }) => {
+    if (questions.length == responses.length) {
+      return true;
+    }
+    return false;
+  }
 };
 const actions = {
   load_questions({ commit }) {
@@ -25,6 +33,9 @@ const actions = {
           reject(err);
         });
     });
+  },
+  response_selected({ commit }, payload) {
+    commit("questions_response", payload);
   }
 };
 const mutations = {
@@ -37,6 +48,18 @@ const mutations = {
   questions_retrieved(state, payload) {
     state.status = "retrieved";
     state.questions = payload;
+  },
+  questions_response(state, payload) {
+    // Search through existing responses and if found update selection
+    var existingIndex = state.responses.findIndex(
+      responses => responses.questionId == payload.questionId
+    );
+    if (existingIndex != -1) {
+      state.responses[existingIndex].responseId = payload.responseId;
+    } else {
+      // Otherwise push the new selection onto the array
+      state.responses.push(payload);
+    }
   }
 };
 

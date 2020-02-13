@@ -5,11 +5,9 @@ import Main from "./components/Main.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
 import SurveyPage from "./components/SurveyPage.vue";
-import store from "./store"
+import store from "./store";
 
 Vue.use(Router);
-
-
 
 let router = new Router({
   mode: "history",
@@ -19,8 +17,8 @@ let router = new Router({
       path: "/",
       name: "main",
       component: Main,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -35,8 +33,8 @@ let router = new Router({
       path: "/professor/:id",
       name: "professor",
       component: ProfessorPage,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       },
       props: true
     },
@@ -44,38 +42,38 @@ let router = new Router({
       path: "/course/:id",
       name: "course",
       component: CoursePage,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       },
-      props: true 
+      props: true
     },
     {
-      path: "/usersurvey",
-      name: "usersurvey",
+      path: "/survey",
+      name: "survey",
       component: SurveyPage,
-      meta : {
-          requiresAuth: true
+      meta: {
+        requiresAuth: true
       }
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (store.getters.isAuthenticated) {
-        next()
-        return
-      }
-      next('/login') 
-    } else {
-      next() 
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isAuthenticated) {
+      next();
+      return;
     }
-    if(to.matched.some(record => record.meta.unauth)) {
-      if (store.getters.isAuthenticated) {
-        next('/')
-        return
-      }
-    } 
-  })
+    next("/login");
+  } else {
+    next();
+  }
+  if (to.matched.some(record => record.meta.unauth)) {
+    if (store.getters.isAuthenticated) {
+      next("/");
+      return;
+    }
+  }
+});
 
-export default router
+export default router;
