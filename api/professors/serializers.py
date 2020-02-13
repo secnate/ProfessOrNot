@@ -12,7 +12,7 @@ class ProfessorSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Professor.objects.all(),
-                fields=['name', 'school']
+                fields=['name', 'school_id']
             )
         ]
     def create(self, validated_data):

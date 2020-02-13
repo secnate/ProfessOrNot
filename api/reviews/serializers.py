@@ -12,6 +12,7 @@ from rest_framework.validators import UniqueTogetherValidator
 
 class ReviewSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
+    reviewer = UserSerializer(write_only=True, required=False)
     reviewer_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='reviewer', write_only=True,
                                                      required=True)
     created = serializers.DateTimeField(read_only=True)

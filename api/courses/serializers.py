@@ -13,7 +13,7 @@ class CourseSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Course.objects.all(),
-                fields=['name', 'school']
+                fields=['name', 'school_id']
             )
         ]
 
