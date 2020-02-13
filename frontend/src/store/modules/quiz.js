@@ -16,40 +16,40 @@ const getters = {
   }
 };
 const actions = {
-  load_questions({ commit }) {
+  quiz_load({ commit }) {
     return new Promise((resolve, reject) => {
-      commit("questions_request");
+      commit("quiz_request");
       axios({
         url: "/debug/testqs",
         method: "GET"
       })
         .then(resp => {
           const payload = resp.data;
-          commit("questions_retrieved", payload);
+          commit("quiz_retrieved", payload);
           resolve(resp);
         })
         .catch(err => {
-          commit("questions_error");
+          commit("quiz_error");
           reject(err);
         });
     });
   },
-  response_selected({ commit }, payload) {
-    commit("questions_response", payload);
+  quiz_selection({ commit }, payload) {
+    commit("quiz_response", payload);
   }
 };
 const mutations = {
-  questions_request(state) {
+  quiz_request(state) {
     state.status = "loading";
   },
-  questions_error(state) {
+  quiz_error(state) {
     state.status = "error";
   },
-  questions_retrieved(state, payload) {
+  quiz_retrieved(state, payload) {
     state.status = "retrieved";
     state.questions = payload;
   },
-  questions_response(state, payload) {
+  quiz_response(state, payload) {
     // Search through existing responses and if found update selection
     var existingIndex = state.responses.findIndex(
       responses => responses.questionId == payload.questionId

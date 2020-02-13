@@ -53,17 +53,17 @@ import NavBar from "./Navbar.vue";
 import QuizQuestion from "./QuizQuestion.vue";
 
 export default {
-  name: "SurveyPage",
+  name: "QuizPage",
   components: {
     NavBar,
     QuizQuestion
   },
   mounted: function() {
-    this.$store.dispatch("load_questions");
+    this.$store.dispatch("quiz_load");
   },
   computed: {
     status: function() {
-      return this.$store.state.survey.status;
+      return this.$store.state.quiz.status;
     }
   },
   data() {

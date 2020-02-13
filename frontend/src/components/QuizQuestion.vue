@@ -62,7 +62,7 @@ export default {
           responseId: this.selected
         };
         // Dispatch selection to Vuex
-        this.$store.dispatch("response_selected", payload);
+        this.$store.dispatch("quiz_selection", payload);
       }, 200);
     }
   },

@@ -13,7 +13,7 @@
 
         <p>Take Our Quiz To Find Your Perfect Professor Here:</p>
 
-        <b-button href="#" size="lg" variant="primary" to="survey">To The Quiz >></b-button>
+        <b-button href="#" size="lg" variant="primary" to="quiz">To The Quiz >></b-button>
       </b-jumbotron>
     </div>
 
