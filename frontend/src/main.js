@@ -9,8 +9,12 @@ import Axios from "axios";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
-//require("axios-base-url")("https://dev-api.professornot.com");
-require("axios-base-url")("http://localhost:8000");
+if (process.env.NODE_ENV === "production") {
+  require("axios-base-url")("https://dev-api.professornot.com");
+} else {
+  //require("axios-base-url")("https://dev-api.professornot.com");
+  require("axios-base-url")("http://localhost:8000");
+}
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 const accessToken = localStorage.getItem("token");
