@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'professors',
     'reviews',
     'search',
+    'quiz'
 ]
 # Enable Docs only in DEBUG
 DEFAULT_RENDERER_CLASSES = (
@@ -123,10 +124,16 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 if os.environ['PON_ENV'] == 'local':
+    """"
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+    """
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['PON_DB_NAME'],
         }
     }
 else:
