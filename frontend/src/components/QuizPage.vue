@@ -21,18 +21,7 @@
 
     <div v-if="status == 'retrieved'">
       <span v-for="questionObj in this.$store.getters.getQuestions" v-bind:key="questionObj.id">
-        <div v-if="questionObj.type == 'mc' ">
-          <QuizQuestion
-            :questionId="questionObj.id"
-            :question="questionObj.text"
-            :choicesArray="questionObj.choices"
-          />
-        </div>
-
-        <!--The Scale Question goes from 1 through 5, strongly disagree to strongly agree-->
-        <div v-if="questionObj.type == 'sc'">
-          <QuizQuestion :questionId="questionObj.id" :question="questionObj.text" scale />
-        </div>
+        <QuizQuestion :question="questionObj" />
       </span>
 
       <br />

@@ -3,7 +3,7 @@
 <template>
   <div>
     <b-card border-variant="secondary" style="margin-left: 10%; width: 80%;">
-      <b-card-title class="cardTitle">{{ this.question }}</b-card-title>
+      <b-card-title class="cardTitle">{{ this.question.text }}</b-card-title>
       <div v-if="scale">
         <b-form-radio-group v-model="selected" size="lg">
           <span v-for="option in this.scaledOptions" v-bind:key="option.id">
@@ -19,7 +19,7 @@
       </div>
       <div v-else>
         <b-form-radio-group v-model="selected" size="lg" stacked>
-          <span v-for="option in this.scaledOptions" v-bind:key="option.id">
+          <span v-for="option in this.question.options" v-bind:key="option.id">
             <b-form-radio
               v-model="selected"
               name="mc-radios"
@@ -42,7 +42,6 @@ export default {
     return {
       selected: {},
       // The options array allows for the dynamic generation of the options in an easiliy-updatable fashion
-      options: [],
       scaledOptions: [
         { text: "Strongly Disagree", id: 1 },
         { text: "Disagree", id: 2 },
@@ -58,7 +57,7 @@ export default {
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         var payload = {
-          questionId: this.questionId,
+          questionId: this.question.id,
           responseId: this.selected
         };
         // Dispatch selection to Vuex
@@ -66,16 +65,16 @@ export default {
       }, 200);
     }
   },
-  computed: {},
+  computed: {
+    scale() {
+      if (this.question.type === "sc") {
+        return true;
+      }
+      return false;
+    }
+  },
   props: {
-    // this is an array containing the four possible choices
-    // with an "id" for each option and the "text" or the value
-    // the array is of length four and format [ {id: #, text: ...}, ...]
-    // this will be used to then work with the options array
-    scale: Boolean,
-    choicesArray: Array,
-    question: String,
-    questionId: Number
+    question: Object
   }
 };
 </script>

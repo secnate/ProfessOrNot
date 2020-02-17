@@ -20,7 +20,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit("quiz_request");
       axios({
-        url: "/debug/testqs",
+        url: "/quiz",
         method: "GET"
       })
         .then(resp => {
