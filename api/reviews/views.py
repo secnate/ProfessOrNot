@@ -18,7 +18,7 @@ class ReviewList(ListCreateAPIView):
     def post(self, request):
         new_review_data = request.data
         new_review_data['reviewer_id'] = request.user.id
-        serializer = self.get_serializer(data=new_review_data)
+        serializer = self.get_serializer(data=new_review_data, user=request.user)
         serializer.is_valid(raise_exception=True)
         review = serializer.save()
         return Response(ReviewSerializer(review, context=self.get_serializer_context()).data,

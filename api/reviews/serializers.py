@@ -15,6 +15,7 @@ class ReviewSerializer(serializers.Serializer):
     reviewer = UserSerializer(write_only=True, required=False)
     reviewer_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='reviewer', write_only=True,
                                                      required=True)
+    my_review = serializers.SerializerMethodField(read_only=True)
     created = serializers.DateTimeField(read_only=True)
     professor = ProfessorSerializer(read_only=True)
     professor_id = serializers.PrimaryKeyRelatedField(queryset=Professor.objects.all(), source='professor',
@@ -24,11 +25,19 @@ class ReviewSerializer(serializers.Serializer):
                                                    required=True)
     rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
     comment = serializers.CharField(max_length=255, required=False, allow_blank=True)
-
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
         return review
-
+    # https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields
+    def __init__(self,*args,**kwargs):
+        self.requesting_user = kwargs.pop('user', None)
+        if self.requesting_user is None:
+            raise Exception("User not provided for review serializer to match if my_review")
+        super(ReviewSerializer, self).__init__(*args, **kwargs)
+    def get_my_review(self, obj):
+        if obj.reviewer.id == self.requesting_user.id:
+            return True
+        return False
     class Meta:
         validators = [
             UniqueTogetherValidator(
