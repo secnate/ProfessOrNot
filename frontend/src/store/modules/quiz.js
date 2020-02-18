@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "..";
 
 const state = {
   status: "",
@@ -30,7 +29,7 @@ const actions = {
           resolve(resp);
         })
         .catch(err => {
-          commit("quiz_error");
+          commit("quiz_loaderror");
           reject(err);
         });
     });
@@ -56,7 +55,7 @@ const actions = {
           resolve(resp);
         })
         .catch(err => {
-          commit("quiz_error");
+          commit("quiz_submiterror");
           reject(err);
         });
     });
@@ -68,11 +67,14 @@ const mutations = {
     // Clear response array on quiz_request to prevent lingering answers from incomplete survey.
     state.responses = [];
   },
-  quiz_error(state) {
-    state.status = "error";
+  quiz_loaderror(state) {
+    state.status = "load error";
   },
   quiz_submitting(state) {
     state.status = "submitting";
+  },
+  quiz_submiterror(state) {
+    state.status = "submit error";
   },
   quiz_submitted(state) {
     state.status = "submitted";

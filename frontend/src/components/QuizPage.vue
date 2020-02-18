@@ -9,6 +9,7 @@
     <br />
 
     <h1>Learning Style Quiz</h1>
+    <div v-if="status == 'load error'">Error retrieveing questions from server</div>
 
     <div v-if="status == 'loading'">
       <b-spinner
@@ -27,13 +28,17 @@
       <br />
       <!-- button will activate when allQuestionsAnswered is true -->
       <b-button
-        v-on:click="submitAnswers"
+        @click="submitAnswers"
         variant="primary"
         class="submitButton"
         style="width: 80%; font-size: 20pt;"
         :disabled="!this.$store.getters.allQuestionsAnswered"
       >Submit</b-button>
     </div>
+
+    <div v-if="status == 'submitting'">Sending to server...</div>
+    <div v-if="status == 'submit error'">Error submitting to server</div>
+    <div v-if="status == 'submitted'">Successfully submitted to server</div>
   </div>
 </template>
 
