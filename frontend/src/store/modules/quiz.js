@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "..";
 
 const state = {
   status: "",
@@ -36,6 +37,29 @@ const actions = {
   },
   quiz_selection({ commit }, payload) {
     commit("quiz_response", payload);
+  },
+  quiz_submit({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      commit("quiz_submitting");
+      var submit = {
+        responses: state.responses
+      };
+      console.log(state.responses);
+      console.log(submit);
+      axios({
+        url: "/quiz/submit",
+        data: submit,
+        method: "POST"
+      })
+        .then(resp => {
+          commit("quiz_submitted");
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("quiz_error");
+          reject(err);
+        });
+    });
   }
 };
 const mutations = {
@@ -46,6 +70,12 @@ const mutations = {
   },
   quiz_error(state) {
     state.status = "error";
+  },
+  quiz_submitting(state) {
+    state.status = "submitting";
+  },
+  quiz_submitted(state) {
+    state.status = "submitted";
   },
   quiz_retrieved(state, payload) {
     state.status = "retrieved";

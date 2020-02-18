@@ -9,9 +9,15 @@ from rest_framework.validators import UniqueValidator
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     school = SchoolSerializer()
+    survey_complete = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'school')
+        fields = ('id', 'email', 'name', 'school', 'survey_complete')
+    # This serializer method checks to see if the user has completed the survey
+    def get_survey_complete(self, obj):
+        if hasattr(obj, 'QuizResponses'):
+            return True
+        return False
 class UserUpdateSerializer(serializers.Serializer):
     email = serializers.EmailField(required=False, validators=[UniqueValidator(queryset=User.objects.all(), message="E-Mail already associated with another account!")])
     name = serializers.CharField(required=False)

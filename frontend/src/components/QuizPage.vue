@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     submitAnswers() {
-      // todo
+      this.$store.dispatch("quiz_submit");
     }
   }
 };
