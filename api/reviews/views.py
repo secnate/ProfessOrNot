@@ -6,6 +6,7 @@ from rest_framework import status
 
 
 class ReviewList(ListCreateAPIView):
+    # get_serializer_context sends in the request automatically
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -16,14 +17,11 @@ class ReviewList(ListCreateAPIView):
         return queryset
 
     def post(self, request):
-        new_review_data = request.data
-        new_review_data['reviewer_id'] = request.user.id
-        serializer = self.get_serializer(data=new_review_data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         review = serializer.save()
         return Response(ReviewSerializer(review, context=self.get_serializer_context()).data,
                         status=status.HTTP_201_CREATED)
-
 
 class ReviewDetail(RetrieveAPIView):
     queryset = Review.objects.all()

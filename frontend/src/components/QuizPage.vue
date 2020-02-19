@@ -9,6 +9,7 @@
     <br />
 
     <h1>Learning Style Quiz</h1>
+    <div v-if="status == 'load error'">Error retrieveing questions from server</div>
 
     <div v-if="status == 'loading'">
       <b-spinner
@@ -21,30 +22,23 @@
 
     <div v-if="status == 'retrieved'">
       <span v-for="questionObj in this.$store.getters.getQuestions" v-bind:key="questionObj.id">
-        <div v-if="questionObj.type == 'mc' ">
-          <QuizQuestion
-            :questionId="questionObj.id"
-            :question="questionObj.text"
-            :choicesArray="questionObj.choices"
-          />
-        </div>
-
-        <!--The Scale Question goes from 1 through 5, strongly disagree to strongly agree-->
-        <div v-if="questionObj.type == 'sc'">
-          <QuizQuestion :questionId="questionObj.id" :question="questionObj.text" scale />
-        </div>
+        <QuizQuestion :question="questionObj" />
       </span>
 
       <br />
       <!-- button will activate when allQuestionsAnswered is true -->
       <b-button
-        v-on:click="submitAnswers"
+        @click="submitAnswers"
         variant="primary"
         class="submitButton"
         style="width: 80%; font-size: 20pt;"
         :disabled="!this.$store.getters.allQuestionsAnswered"
       >Submit</b-button>
     </div>
+
+    <div v-if="status == 'submitting'">Sending to server...</div>
+    <div v-if="status == 'submit error'">Error submitting to server</div>
+    <div v-if="status == 'submitted'">Successfully submitted to server</div>
   </div>
 </template>
 
@@ -71,7 +65,7 @@ export default {
   },
   methods: {
     submitAnswers() {
-      // todo
+      this.$store.dispatch("quiz_submit");
     }
   }
 };

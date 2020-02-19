@@ -20,7 +20,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit("quiz_request");
       axios({
-        url: "/debug/testqs",
+        url: "/quiz",
         method: "GET"
       })
         .then(resp => {
@@ -29,13 +29,36 @@ const actions = {
           resolve(resp);
         })
         .catch(err => {
-          commit("quiz_error");
+          commit("quiz_loaderror");
           reject(err);
         });
     });
   },
   quiz_selection({ commit }, payload) {
     commit("quiz_response", payload);
+  },
+  quiz_submit({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      commit("quiz_submitting");
+      var submit = {
+        responses: state.responses
+      };
+      console.log(state.responses);
+      console.log(submit);
+      axios({
+        url: "/quiz/submit",
+        data: submit,
+        method: "POST"
+      })
+        .then(resp => {
+          commit("quiz_submitted");
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("quiz_submiterror");
+          reject(err);
+        });
+    });
   }
 };
 const mutations = {
@@ -44,8 +67,17 @@ const mutations = {
     // Clear response array on quiz_request to prevent lingering answers from incomplete survey.
     state.responses = [];
   },
-  quiz_error(state) {
-    state.status = "error";
+  quiz_loaderror(state) {
+    state.status = "load error";
+  },
+  quiz_submitting(state) {
+    state.status = "submitting";
+  },
+  quiz_submiterror(state) {
+    state.status = "submit error";
+  },
+  quiz_submitted(state) {
+    state.status = "submitted";
   },
   quiz_retrieved(state, payload) {
     state.status = "retrieved";
