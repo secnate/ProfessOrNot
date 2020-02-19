@@ -12,9 +12,9 @@ from rest_framework.validators import UniqueTogetherValidator
 
 class ReviewSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    reviewer = UserSerializer(write_only=True, required=False)
-    reviewer_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='reviewer', write_only=True,
-                                                     required=True)
+    # Reviewer is retrieved by current user default method from context
+    # https://www.django-rest-framework.org/api-guide/validators/#advanced-field-defaults
+    reviewer = serializers.HiddenField(default=serializers.CurrentUserDefault())
     my_review = serializers.SerializerMethodField(read_only=True)
     created = serializers.DateTimeField(read_only=True)
     professor = ProfessorSerializer(read_only=True)
@@ -28,14 +28,9 @@ class ReviewSerializer(serializers.Serializer):
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
         return review
-    # https://www.django-rest-framework.org/api-guide/serializers/#dynamically-modifying-fields
-    def __init__(self,*args,**kwargs):
-        self.requesting_user = kwargs.pop('user', None)
-        if self.requesting_user is None:
-            raise Exception("User not provided for review serializer to match if my_review")
-        super(ReviewSerializer, self).__init__(*args, **kwargs)
+    # Getting the user through the context dict
     def get_my_review(self, obj):
-        if obj.reviewer.id == self.requesting_user.id:
+        if obj.reviewer == self.context['request'].user:
             return True
         return False
     class Meta:

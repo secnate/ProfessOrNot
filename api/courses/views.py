@@ -48,7 +48,7 @@ class CourseDetail(APIView):
             professor = Professor.objects.get(pk=review.professor.pk)
             if not professor in professors:
                 professors.append(professor)
-        reviews_serialized = ReviewSerializer(reviews, many=True, user=request.user)
+        reviews_serialized = ReviewSerializer(reviews, many=True, context={'request':request})
         professors_serialized = ProfessorSerializer(professors, many=True)
         return Response({
             "course": courses_serialized.data,
