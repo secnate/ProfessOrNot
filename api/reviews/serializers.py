@@ -25,14 +25,20 @@ class ReviewSerializer(serializers.Serializer):
                                                    required=True)
     rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
     comment = serializers.CharField(max_length=255, required=False, allow_blank=True)
-    def create(self, validated_data):
-        review = Review.objects.create(**validated_data)
-        return review
-    # Getting the user through the context dict
     def get_my_review(self, obj):
         if obj.reviewer == self.context['request'].user:
             return True
         return False
+    def create(self, validated_data):
+        review = Review.objects.create(**validated_data)
+        return review
+    # Override the update function so we are just changing rating & comment fields
+    def update(self, instance, validated_data):
+        instance.rating = validated_data.get('rating', instance.rating)
+        instance.comment = validated_data.get('comment', instance.comment)
+        instance.save()
+        return instance
+    # Getting the user through the context dict
     class Meta:
         validators = [
             UniqueTogetherValidator(
@@ -40,11 +46,3 @@ class ReviewSerializer(serializers.Serializer):
                 fields=['course', 'professor', 'reviewer'],
             )
         ]
-
-"""
-class ReviewSlimSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    created = serializers.DateTimeField(read_only=True)
-    rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
-    comment = serializers.CharField(max_length=255, required=False)
-"""
