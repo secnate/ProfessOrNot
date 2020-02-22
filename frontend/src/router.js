@@ -69,7 +69,15 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters.isAuthenticated) {
-      next();
+
+      if (to.path != "/quiz" && !store.getters.getUser.survey_complete) {
+        // we are going to a page other than the quiz page but haven't taken quiz yet
+        // force them to take the quiz.
+        next("/quiz"); 
+      }
+      else {
+        next();
+      }
       return;
     }
     next("/login");

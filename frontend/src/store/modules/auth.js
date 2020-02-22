@@ -50,7 +50,9 @@ const actions = {
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = "Token " + token;
           const payload = [token, user];
+
           commit("auth_success", payload);
+
           resolve(resp);
         })
         .catch(err => {
@@ -84,6 +86,7 @@ const actions = {
         .then(resp => {
           const payload = resp.data;
           commit("update_user", payload);
+
           resolve(resp);
         })
         .catch(err => {
