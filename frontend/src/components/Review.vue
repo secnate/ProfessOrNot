@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :key="review.id+0"> 
+    <div class="card" :key="review.id+0" v-if="!is_deleted"> 
                   <div class="card-text" :key="review.id+1">
                     <div class="card-text" :key="review.id+2">
 					<div class="card-header">
@@ -15,6 +15,12 @@
                           <b>{{ review.course.name }}</b>
                         </router-link>
                       </p>
+
+            <!-- Button will need to be repositioned and reformatted -->
+            <b-button size="lg" variant="danger" class="mb-2" @click="delete_review">
+              Delete
+            </b-button>
+
 					  <h2 class="rating_string"> Ranking: {{review.rating }} / 5 </h2>
 					  </div>
 					  
@@ -34,19 +40,47 @@
 
 
 <script>
+import axios from "axios";  // used to communicate with backend database
+
 export default {
     name: "Review",
     methods: {
-    convertDateStringToDateRepresentation(date_str) {
-      var dateObj = new Date(date_str)
-      return dateObj.toLocaleDateString("en-US")
-    }
+      convertDateStringToDateRepresentation(date_str) {
+        var dateObj = new Date(date_str)
+        return dateObj.toLocaleDateString("en-US")
+      },
+      delete_review() {
+        // deletes the review from the backend and saves change in backend
+        console.log("DEBUG: DELETING REVIEW");
+        console.log("DEBUG: this.review.id is: " + JSON.stringify(this.review.id));
+
+        new Promise((resolve, reject) => {
+        this.status = "loading"; // we can show a loading wheel while in this state
+        axios({ url: "/reviews/" + this.review.id, method: "DELETE" })
+          .then(resp => {
+            this.is_deleted = true;
+            this.status = "success";
+            resolve(resp);
+          })
+          .catch(err => {
+            console.log(err); /* eslint-disable-line no-console */
+            this.status = "error";
+            reject(err);
+          });
+      });
+      }
     },
     props: {
         hideProfessorName: Boolean,
         hideCourseName: Boolean,
         review: Object
-    }
+    },
+    data() {
+      return {
+        is_deleted: false
+      }
+    },
+    
 }
 </script>
 <style scoped>
