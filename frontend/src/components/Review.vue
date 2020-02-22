@@ -3,7 +3,7 @@
                   <div class="card-text" :key="review.id+1">
                     <div class="card-text" :key="review.id+2">
 					<div class="card-header">
-					<p class="review_prof_name" v-if="!hideProfessorName"> <b>Professor: </b>
+					  <p class="review_prof_name" v-if="!hideProfessorName"> <b>Professor: </b>
 					
                         <router-link :to="{name: 'professor', params: {id : review.professor.id }}">
                           <b>{{ review.professor.name }}</b>
@@ -16,20 +16,44 @@
                         </router-link>
                       </p>
 
-            <!-- Button will need to be repositioned and reformatted -->
-            <b-button size="lg" variant="danger" class="mb-2" @click="delete_review">
-              Delete
-            </b-button>
+              <!-- Button will need to be repositioned and reformatted -->
+              <b-button size="lg" variant="primary" class="mb-2" @click="this.edit_review" v-if="!is_editing_review">
+                Edit
+              </b-button>
+              <b-button size="lg" variant="primary" class="mb-2" @click="this.cancel_review_edit" v-if="is_editing_review">
+                Cancel Edit
+              </b-button>
+              <b-button size="lg" variant="primary" class="mb-2" @click="save_edit_changes" v-if="is_editing_review">
+                Save Changes
+              </b-button>
 
-					  <h2 class="rating_string"> Ranking: {{review.rating }} / 5 </h2>
+              <b-button size="lg" variant="danger" class="mb-2" @click="delete_review">
+                Delete
+              </b-button>
+
+					    <h2 class="rating_string" v-if="!is_editing_review"> Ranking: {{review.rating }} / 5 </h2>
+              <h2 class="rating_string" v-if="is_editing_review"> Ranking: <StarRating v-model="rating_edit" v-bind:star-size="30" /> </h2>
 					  </div>
 					  
 					  
 						<footer class="footer">
                       <!-- Display any comments -->
-                      <p class="review_comment" v-if="review.comment.length != 0 "> <b>Student Comments:</b> <br/> {{review.comment }} </p>
-                      <p class="review_comment" v-else> <b>Student Comments:</b> <br/> <i>No Comments Were Submitted</i> </p>
-					  <div class="card-body" :key="review.id+3">
+                      <div v-if="!is_editing_review">
+                        <p class="review_comment" v-if="review.comment.length != 0 "> <b>Student Comments:</b> <br/> {{review.comment }} </p>
+                        <p class="review_comment" v-else> <b>Student Comments:</b> <br/> <i>No Comments Were Submitted</i> </p>
+                      </div>
+                      <div v-if="is_editing_review">
+                        <b-form-textarea
+                          id="comment_edit"
+                          v-model="comment_edit"
+                          placeholder="Enter Comments..."
+                          rows="3"
+                        max-rows="6"
+                      />
+                      </div>
+            
+            
+            <div class="card-body" :key="review.id+3">
                         <h2 class="date_string"> {{ convertDateStringToDateRepresentation(review.created) }}</h2>
 						</div>
 					  </footer>
@@ -41,6 +65,7 @@
 
 <script>
 import axios from "axios";  // used to communicate with backend database
+import StarRating from "vue-star-rating";
 
 export default {
     name: "Review",
@@ -67,6 +92,42 @@ export default {
             this.status = "error";
             reject(err);
           });
+        });
+      },
+      edit_review() {
+        console.log("DEBUG: setting groundwork for editing review");
+
+        // resetting data
+        this.comment_edit = this.review.comment;  // we set the edited comment text to what we already have
+        this.rating_edit = this.review.rating;    // we set the editable rating component's rating to current rating 
+
+        this.is_editing_review = true;
+      },
+      cancel_review_edit() {
+        console.log("DEBUG: canceling review edit");
+        this.is_editing_review = false;
+      },
+      save_edit_changes() {
+        console.log("DEBUG: saving edit changes");
+        
+
+        new Promise((resolve, reject) => {
+        this.status = "loading"; // We can show a loading wheel while in this state
+        axios({ url: "/reviews/" + this.review.id, data: {rating: this.rating_edit, comment: this.comment_edit}, method: "PATCH" })
+          .then(resp => {
+            this.status = "success";
+
+            // save our edits so that they could be displayed on the frontend in addition to already being stored in backend
+            this.review.comment = this.comment_edit;
+            this.review.rating = this.rating_edit
+            this.is_editing_review = false;
+            resolve(resp);
+          })
+          .catch(err => {
+            console.log(err);
+            this.status = "error";
+            reject(err);
+          });
       });
       }
     },
@@ -77,9 +138,15 @@ export default {
     },
     data() {
       return {
-        is_deleted: false
+        is_deleted: false,
+        is_editing_review: false,
+        comment_edit: "",
+        rating_edit: 0
       }
     },
+    components: {
+      StarRating
+    }
     
 }
 </script>
