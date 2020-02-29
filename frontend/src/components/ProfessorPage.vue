@@ -42,6 +42,7 @@
               v-for="review in this.professorReviews"
               :key="review.id"
               :review="review"
+              v-on:delete="deleteReview"
               hideProfessorName
             />
           </div>
@@ -115,6 +116,15 @@ export default {
             reject(err);
           });
       });
+    },
+    deleteReview(id_to_delete) {
+      // we recieve event from the child Review component and update our data accordingly
+      var i = 0;
+      for ( i = 0; i < this.professorReviews.length; i++) {
+        if (this.professorReviews[i].id == id_to_delete) {
+          this.professorReviews.splice(i, 1); // remove one element at index i
+        }
+      }
     }
   },
   computed: {

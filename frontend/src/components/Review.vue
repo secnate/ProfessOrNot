@@ -76,8 +76,8 @@ export default {
       },
       delete_review() {
         // deletes the review from the backend and saves change in backend
-        console.log("DEBUG: DELETING REVIEW");
-        console.log("DEBUG: this.review.id is: " + JSON.stringify(this.review.id));
+
+        var id_of_deleted_review = this.review.id;
 
         new Promise((resolve, reject) => {
         this.status = "loading"; // we can show a loading wheel while in this state
@@ -85,6 +85,10 @@ export default {
           .then(resp => {
             this.is_deleted = true;
             this.status = "success";
+
+            // we let the parent know that we deleted it by emitting event to parent component
+            this.$emit('delete', id_of_deleted_review);
+
             resolve(resp);
           })
           .catch(err => {
@@ -93,9 +97,9 @@ export default {
             reject(err);
           });
         });
+
       },
       edit_review() {
-        console.log("DEBUG: setting groundwork for editing review");
 
         // resetting data
         this.comment_edit = this.review.comment;  // we set the edited comment text to what we already have
@@ -104,12 +108,9 @@ export default {
         this.is_editing_review = true;
       },
       cancel_review_edit() {
-        console.log("DEBUG: canceling review edit");
         this.is_editing_review = false;
       },
       save_edit_changes() {
-        console.log("DEBUG: saving edit changes");
-        
 
         new Promise((resolve, reject) => {
         this.status = "loading"; // We can show a loading wheel while in this state
