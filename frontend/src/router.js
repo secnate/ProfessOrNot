@@ -6,7 +6,9 @@ import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
 import AboutUs from "./components/AboutUs.vue";
 import QuizPage from "./components/QuizPage.vue";
+import MyReviews from "./components/MyReviews.vue";
 import store from "./store";
+import { FormCheckboxPlugin } from "bootstrap-vue";
 Vue.use(Router);
 
 let router = new Router({
@@ -59,6 +61,14 @@ let router = new Router({
       path: "/about",
       name: "about",
       component: AboutUs,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/myreviews",
+      name: "myreviews",
+      component: MyReviews,
       meta: {
         requiresAuth: true
       }
