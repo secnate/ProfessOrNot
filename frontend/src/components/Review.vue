@@ -17,17 +17,17 @@
                       </p>
 
               <!-- Button will need to be repositioned and reformatted -->
-              <b-button size="lg" variant="primary" class="mb-2" @click="this.edit_review" v-if="!is_editing_review">
+              <b-button size="lg" variant="primary" class="mb-2" @click="this.edit_review" v-if="this.review.my_review && !is_editing_review">
                 Edit
               </b-button>
-              <b-button size="lg" variant="primary" class="mb-2" @click="this.cancel_review_edit" v-if="is_editing_review">
+              <b-button size="lg" variant="primary" class="mb-2" @click="this.cancel_review_edit" v-if="this.review.my_review && is_editing_review">
                 Cancel Edit
               </b-button>
-              <b-button size="lg" variant="primary" class="mb-2" @click="save_edit_changes" v-if="is_editing_review">
+              <b-button size="lg" variant="primary" class="mb-2" @click="save_edit_changes" v-if="this.review.my_review && is_editing_review">
                 Save Changes
               </b-button>
 
-              <b-button size="lg" variant="danger" class="mb-2" @click="delete_review">
+              <b-button v-if="this.review.my_review" size="lg" variant="danger" class="mb-2" @click="delete_review">
                 Delete
               </b-button>
 
