@@ -52,6 +52,7 @@ const actions = {
       })
         .then(resp => {
           commit("quiz_submitted");
+          commit("set_quiz_complete");
           resolve(resp);
         })
         .catch(err => {

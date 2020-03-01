@@ -16,10 +16,7 @@ let router = new Router({
     {
       path: "/",
       name: "main",
-      component: Main,
-      meta: {
-        requiresAuth: true
-      }
+      component: Main
     },
     {
       path: "/login",
@@ -33,53 +30,42 @@ let router = new Router({
       path: "/professor/:id",
       name: "professor",
       component: ProfessorPage,
-      meta: {
-        requiresAuth: true
-      },
       props: true
     },
     {
       path: "/course/:id",
       name: "course",
       component: CoursePage,
-      meta: {
-        requiresAuth: true
-      },
       props: true
     },
     {
       path: "/quiz",
       name: "quiz",
-      component: QuizPage,
-      meta: {
-        requiresAuth: true
-      }
+      component: QuizPage
     },
     {
       path: "/about",
       name: "about",
-      component: AboutUs,
-      meta: {
-        requiresAuth: true
-      }
+      component: AboutUs
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isAuthenticated) {
-      next();
-      return;
-    }
-    next("/login");
-  } else {
-    next();
-  }
-  if (to.matched.some(record => record.meta.unauth)) {
-    if (store.getters.isAuthenticated) {
+  console.log(store.getters.getUser.survey_complete);
+  if (store.getters.isAuthenticated) {
+    if (to.matched.some(record => record.meta.unauth)) {
       next("/");
-      return;
+    } else if (!store.getters.getUser.quiz_complete && to.path != "/quiz") {
+      next("/quiz");
+    } else {
+      next();
+    }
+  } else {
+    if (to.matched.some(record => record.meta.unauth)) {
+      next();
+    } else {
+      next("/login");
     }
   }
 });
