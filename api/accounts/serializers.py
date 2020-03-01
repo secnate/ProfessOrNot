@@ -9,12 +9,12 @@ from rest_framework.validators import UniqueValidator
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     school = SchoolSerializer()
-    survey_complete = serializers.SerializerMethodField(read_only=True)
+    quiz_complete = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'name', 'school', 'survey_complete')
-    # This serializer method checks to see if the user has completed the survey
-    def get_survey_complete(self, obj):
+        fields = ('id', 'email', 'name', 'school', 'quiz_complete')
+    # This serializer method checks to see if the user has completed the quiz
+    def get_quiz_complete(self, obj):
         if hasattr(obj, 'QuizResponses'):
             return True
         return False
