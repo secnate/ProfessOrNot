@@ -8,7 +8,6 @@ import AboutUs from "./components/AboutUs.vue";
 import QuizPage from "./components/QuizPage.vue";
 import MyReviews from "./components/MyReviews.vue";
 import store from "./store";
-import { FormCheckboxPlugin } from "bootstrap-vue";
 Vue.use(Router);
 
 let router = new Router({
@@ -54,6 +53,7 @@ let router = new Router({
       path: "/myreviews",
       name: "myreviews",
       component: MyReviews
+    }
   ]
 });
 
