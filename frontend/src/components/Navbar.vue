@@ -18,6 +18,7 @@
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>{{getUser.name}}</template>
           <b-dropdown-item v-b-modal.profile-modal>Profile</b-dropdown-item>
+          <b-dropdown-item @click="openMyReviews">My Reviews</b-dropdown-item>
           <b-dropdown-item v-on:click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -32,7 +33,9 @@
 <script>
 import Profile from "./Profile";
 import Search from "./Search";
+import router from "../router.js";
 import { mapGetters } from "vuex";
+
 export default {
   name: "Navbar",
   components: {
@@ -43,6 +46,13 @@ export default {
       this.$store
         .dispatch("logout")
         .catch(err => alert(err.response));
+    },
+    openMyReviews : function() {
+      // if we are not on the myreviews page, go to it, otherwise, no reaction
+      if (this.$route.name != "myreviews")
+      {
+        router.push({path: "/myreviews"});
+      }
     }
   },
   props: {

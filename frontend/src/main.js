@@ -21,6 +21,8 @@ if (process.env.NODE_ENV === "production") {
   require("axios-base-url")("https://dev-api.professornot.com");
 } else {
   //require("axios-base-url")("https://dev-api.professornot.com");
+
+  //This line needs to be uncommented and the other needs to be commented
   require("axios-base-url")("http://localhost:8000");
 }
 // Look for token
