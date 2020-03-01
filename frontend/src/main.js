@@ -6,33 +6,45 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
 import store from "./store";
 import Axios from "axios";
+import "./axios-intercept";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
+// Vue settings
+Vue.config.productionTip = false;
+Vue.prototype.$http = Axios;
+Vue.use(BootstrapVue);
+
+// Axios Setup
+// Set base url (the api server)
 if (process.env.NODE_ENV === "production") {
   require("axios-base-url")("https://dev-api.professornot.com");
 } else {
   //require("axios-base-url")("https://dev-api.professornot.com");
   require("axios-base-url")("http://localhost:8000");
 }
-Vue.config.productionTip = false;
-Vue.prototype.$http = Axios;
+// Look for token
 const accessToken = localStorage.getItem("token");
-
 if (accessToken) {
+  // If token exists, set it in header
   Vue.prototype.$http.defaults.headers.common["Authorization"] =
     "Token " + accessToken;
+  // Fetch user object from server using the token
+  store
+    .dispatch("fetch_user")
+    .then(() => mountRoot())
+    .catch(() => mountRoot());
+} else {
+  mountRoot();
 }
-// If token is present but user object is not, fetch the user
-if (store.getters.isAuthenticated && !store.getters.getUser.name) {
-  store.dispatch("fetch_user");
+// Mount the main vue object (event bus)
+function mountRoot() {
+  var EventBus = new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount("#app");
 }
-Vue.use(BootstrapVue);
+// Initialize imported components
 Vue.component("v-select", vSelect);
-var EventBus = new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
-
-export default EventBus;
+export default async () => EventBus;
