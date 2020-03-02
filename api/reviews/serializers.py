@@ -8,7 +8,8 @@ from professors.models import Professor
 from .models import Review
 from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework.validators import UniqueTogetherValidator
-
+from django.core.exceptions import ObjectDoesNotExist
+from statistics import mean
 
 class ReviewSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -25,10 +26,20 @@ class ReviewSerializer(serializers.Serializer):
                                                    required=True)
     rating = serializers.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], required=True)
     comment = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    similarity_score = serializers.SerializerMethodField(read_only=True)
     def get_my_review(self, obj):
         if obj.reviewer == self.context['request'].user:
             return True
         return False
+    def get_similarity_score(self, obj):
+        try:
+            requester_responses = self.context['request'].user.QuizResponses.responses
+            reviewer_responses = obj.reviewer.QuizResponses.responses
+            intersection = [(i['responseId'] - j['responseId']) for i in requester_responses for j in reviewer_responses if i['questionId']==j['questionId']]
+            result = round(1/(mean(intersection) + 1),2)
+            return result
+        except ObjectDoesNotExist:
+            return None
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
         return review
