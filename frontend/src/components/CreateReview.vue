@@ -166,11 +166,31 @@ export default {
             this.$emit('add-new-review', resp.data)
             this.status = "success";
             resolve(resp);
-          })
-          .catch(err => {
+
+          }).catch(err => {
             console.log(err);
             this.status = "error";
-            reject(err);
+
+            // we have an error. this could be caused by the user trying to make a 
+            // review for the same (Professor, Class, <User>) tuple. 
+            // If so, we display an error saying that this does not work
+            console.log(JSON.stringify(err));
+
+            // we now take the error string with the status code and split it up 
+            // to extract the status code
+            var error_code = JSON.stringify( err.message.substring(err.message.length - 3) );
+
+            console.log("DEBUG: error_code is: " + error_code);
+            
+            // decision statement is failing right now
+            if ( JSON.stringify(error_code) === JSON.stringify(400) ) {
+              // we display toaster explaining that we already have made a 
+              // review for this (Professor, Class, <User>) tuple.
+              console.log("DEBUG: displaying toaster");
+            }
+            else {
+              reject(err);
+            }
           });
       });
     },
