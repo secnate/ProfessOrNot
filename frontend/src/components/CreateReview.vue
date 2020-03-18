@@ -134,7 +134,7 @@ export default {
       }
 
       if (this.new_review.rating == 0) {
-        this.errors.push("Rating Not Selected");
+        this.errors.push("Ranking Not Selected");
 
         // don't do anything
         ret = false;
@@ -167,7 +167,7 @@ export default {
             ) {
               console.log("yes");
               this.errors.push(
-                "You've already reviewed this professor & course!"
+                "You've Already Reviewed This Professor & Course!"
               );
             } else {
               this.errors.push("Error!");
