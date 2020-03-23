@@ -9,6 +9,7 @@
       @hide="closeModal"
       @show="show"
     >
+      <b-alert v-for="error in errors" :key="error" show variant="danger">{{error}}</b-alert>
       <b-form @submit="submit">
         <label>Professor's Name</label>
         <v-select
@@ -69,7 +70,7 @@ export default {
   data() {
     return {
       status: "",
-      
+      errors: [],
       professors: [],
       courses: [],
       new_review: {
@@ -83,16 +84,16 @@ export default {
   computed: {
     professorDisabled() {
       if (this.propProfessor != null) {
-        return true
+        return true;
       }
-      return false
+      return false;
     },
     courseDisabled() {
       if (this.propCourse != null) {
-        return true
+        return true;
       }
-      return false
-    },
+      return false;
+    }
   },
   methods: {
     show() {
@@ -101,76 +102,76 @@ export default {
       if (this.propProfessor != null) {
         this.new_review.professor_id = this.propProfessor.id;
 
-        this.loadCourses()
-      }
-      else if (this.propCourse != null) {
+        this.loadCourses();
+      } else if (this.propCourse != null) {
         this.new_review.course_id = this.propCourse.id;
-        this.loadProfessors()
-      }
-      else {
-        this.loadCourses()
-        this.loadProfessors()
+        this.loadProfessors();
+      } else {
+        this.loadCourses();
+        this.loadProfessors();
       }
     },
     submit(event) {
       event.preventDefault();
-      if(this.validateFields()){
-      this.saveReview();
-      this.closeModal();
+      this.errors = [];
+      if (this.validateFields()) {
+        this.saveReview();
       }
     },
     validateFields() {
+      var ret = true;
       if (this.new_review.professor_id == 0) {
-        this.$bvToast.toast('No Professor Entered', {
-                title: `Required Professor  Name Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
-
+        this.errors.push("Professor Not Selected");
         // don't do anything
-        return false;
+        ret = false;
       }
 
       if (this.new_review.course_id == 0) {
-        this.$bvToast.toast('No Course Entered', {
-                title: `Required Course  Name Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
+        this.errors.push("Course Not Selected");
 
         // don't do anything
-        return false
+        ret = false;
       }
 
       if (this.new_review.rating == 0) {
-
-        this.$bvToast.toast('Enter Your Rating On The Scale Of 1-5 Stars', {
-                title: `Required Rating Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
+        this.errors.push("Ranking Not Selected");
 
         // don't do anything
-        return false
+        ret = false;
       }
-      return true
+      return ret;
     },
     saveReview() {
       return new Promise((resolve, reject) => {
         this.status = "loading"; // We can show a loading wheel while in this state
         axios({ url: "/reviews", data: this.new_review, method: "POST" })
           .then(resp => {
-            this.$emit('add-new-review', resp.data)
+            this.$emit("add-new-review", resp.data);
             this.status = "success";
             resolve(resp);
+            this.closeModal();
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
-            reject(err);
+            var resp = err.response;
+            console.log(resp);
+            console.log(resp.data);
+            if (
+              (resp.status == 400) &
+              (JSON.stringify(resp.data) ===
+                JSON.stringify({
+                  non_field_errors: [
+                    "The fields course, professor, reviewer must make a unique set."
+                  ]
+                }))
+            ) {
+              console.log("yes");
+              this.errors.push(
+                "You've Already Reviewed This Professor & Course!"
+              );
+            } else {
+              this.errors.push("Error!");
+            }
           });
       });
     },
@@ -184,6 +185,7 @@ export default {
         comment: ""
       };
       this.status = "";
+      this.errors = [];
     },
     closeModal() {
       // close the window
@@ -244,7 +246,7 @@ export default {
         })
           .then(resp => {
             this.professors.push(resp.data);
-            this.new_review.professor_id = resp.data.id
+            this.new_review.professor_id = resp.data.id;
             this.status = "success";
             resolve(resp);
           })
@@ -257,17 +259,19 @@ export default {
     },
     createCourse(newOption) {
       // check to see if the new option fits our regular expression
-      var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$")
+      var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$");
       if (!courseRE.test(newOption.name)) {
-        this.$bvToast.toast('Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number', {
-          title: `Invalid Course Name`,
-          variant: 'warning',
-          solid: true
-        })
+        this.$bvToast.toast(
+          "Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number",
+          {
+            title: `Invalid Course Name`,
+            variant: "warning",
+            solid: true
+          }
+        );
 
         return;
-      }
-      else {
+      } else {
         new Promise((resolve, reject) => {
           this.status = "loading"; // we can show a loading wheel while in this state
           axios({
@@ -277,7 +281,7 @@ export default {
           })
             .then(resp => {
               this.courses.push(resp.data);
-              this.new_review.course_id = resp.data.id
+              this.new_review.course_id = resp.data.id;
               this.status = "success";
               resolve(resp);
             })
