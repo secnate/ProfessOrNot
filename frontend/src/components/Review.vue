@@ -3,57 +3,83 @@
     <div class="card-text" :key="review.id+1">
       <div class="card-text" :key="review.id+2">
         <div class="card-header">
-          <p class="review_prof_name" v-if="!hideProfessorName">
-            <b>Professor:</b>
 
-            <router-link :to="{name: 'professor', params: {id : review.professor.id }}">
-              <b>{{ review.professor.name }}</b>
-            </router-link>
-          </p>
-          <p class="review_course_name" v-if="!hideCourseName">
-            <b>Course:</b>
+          <b-container>
+            <b-row>
+              <b-col>
+                <p class="review_prof_name" v-if="!hideProfessorName">
+                  <b>Professor:</b>
 
-            <router-link :to="{name: 'course', params: {id : review.course.id }}">
-              <b>{{ review.course.name }}</b>
-            </router-link>
-          </p>
-          <div v-if="!this.review.my_review">Similarity Score = {{review.similarity_score}}</div>
-          <!-- Button will need to be repositioned and reformatted -->
-          <b-button
-            size="lg"
-            variant="primary"
-            class="mb-2"
-            @click="this.edit_review"
-            v-if="this.review.my_review && !is_editing_review"
-          >Edit</b-button>
-          <b-button
-            size="lg"
-            variant="primary"
-            class="mb-2"
-            @click="this.cancel_review_edit"
-            v-if="this.review.my_review && is_editing_review"
-          >Cancel Edit</b-button>
-          <b-button
-            size="lg"
-            variant="primary"
-            class="mb-2"
-            @click="save_edit_changes"
-            v-if="this.review.my_review && is_editing_review"
-          >Save Changes</b-button>
+                  <router-link :to="{name: 'professor', params: {id : review.professor.id }}">
+                    <b>{{ review.professor.name }}</b>
+                  </router-link>
+                </p>
+                <p class="review_course_name" v-if="!hideCourseName">
+                  <b>Course:</b>
 
-          <b-button
-            v-if="this.review.my_review"
-            size="lg"
-            variant="danger"
-            class="mb-2"
-            @click="delete_review"
-          >Delete</b-button>
+                  <router-link :to="{name: 'course', params: {id : review.course.id }}">
+                    <b>{{ review.course.name }}</b>
+                  </router-link>
+                </p>
+              </b-col>
 
-          <h2 class="rating_string" v-if="!is_editing_review">Ranking: {{review.rating }} / 5</h2>
-          <h2 class="rating_string" v-if="is_editing_review">
-            Ranking:
-            <StarRating v-model="rating_edit" v-bind:star-size="30" />
-          </h2>
+              <b-col>
+                <!-- Buttons for performing CRUD operations on user-created reviews -->
+                <b-button
+                  size="lg"
+                  variant="primary"
+                  class="mb-2"
+                  @click="this.edit_review"
+                  v-if="this.review.my_review && !is_editing_review"
+                >
+                  Edit
+                </b-button>
+
+                <b-button
+                  size="lg"
+                  variant="primary"
+                  class="mb-2"
+                  @click="this.cancel_review_edit"
+                  v-if="this.review.my_review && is_editing_review"
+                >
+                  Cancel Edit
+                </b-button>
+                <b-button
+                  size="lg"
+                  variant="primary"
+                  class="mb-2"
+                  @click="save_edit_changes"
+                  v-if="this.review.my_review && is_editing_review"
+                >Save Changes</b-button>
+
+                <b-button
+                  v-if="this.review.my_review"
+                  size="lg"
+                  variant="danger"
+                  class="mb-2"
+                  @click="delete_review"
+                >
+                  Delete
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-container>
+
+          <b-container>
+            <b-row>
+              <b-col>
+                <h2 class="rating_string" v-if="!is_editing_review">Ranking: {{review.rating }} / 5</h2>
+                <h2 class="rating_string" v-if="is_editing_review">
+                  Ranking:
+                <StarRating v-model="rating_edit" v-bind:star-size="30" />
+                </h2>
+              </b-col>
+              <b-col>
+                <h2 class="rating_string" v-if="!this.review.my_review">Similarity Score = {{review.similarity_score}}</h2>
+              </b-col>
+            </b-row>
+          </b-container>
+
         </div>
 
         <footer class="footer">
