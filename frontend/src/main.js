@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import BootstrapVue from "bootstrap-vue";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
@@ -14,16 +14,17 @@ import "vue-select/dist/vue-select.css";
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 
 // Axios Setup
 // Set base url (the api server)
 if (process.env.NODE_ENV === "production") {
   require("axios-base-url")("https://dev-api.professornot.com");
 } else {
-  require("axios-base-url")("https://dev-api.professornot.com");
+  //require("axios-base-url")("https://dev-api.professornot.com");
 
   //This line needs to be uncommented and the other needs to be commented
-  //require("axios-base-url")("http://localhost:8000");
+  require("axios-base-url")("http://localhost:8000");
 }
 // Look for token
 const accessToken = localStorage.getItem("token");
