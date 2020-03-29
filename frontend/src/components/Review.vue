@@ -59,8 +59,11 @@
                   class="mb-2"
                   @click="delete_review"
                 >
+                  <b-icon icon="trash">
+                  </b-icon>
                   Delete
                 </b-button>
+                
               </b-col>
             </b-row>
           </b-container>

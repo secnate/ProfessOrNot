@@ -13,6 +13,7 @@ import "vue-select/dist/vue-select.css";
 // Vue settings
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
+
 Vue.use(BootstrapVue);
 
 // Axios Setup
