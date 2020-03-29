@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import BootstrapVue from "bootstrap-vue";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
@@ -15,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 
 // Axios Setup
 // Set base url (the api server)
