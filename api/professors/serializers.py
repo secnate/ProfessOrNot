@@ -5,7 +5,7 @@ from .models import Professor
 from rest_framework.validators import UniqueTogetherValidator
 
 class ProfessorSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer(read_only=True, default=custom_fields.GetSchool())
+    school = SchoolSerializer(default=custom_fields.GetSchool())
     class Meta:
         model = Professor
         fields = ['id', 'name', 'avg_rating', 'school']
