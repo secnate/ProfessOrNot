@@ -35,8 +35,8 @@ class ReviewSerializer(serializers.Serializer):
         try:
             requester_responses = self.context['request'].user.QuizResponses.responses
             reviewer_responses = obj.reviewer.QuizResponses.responses
-            intersection = [(i['responseId'] - j['responseId']) for i in requester_responses for j in reviewer_responses if i['questionId']==j['questionId']]
-            result = round(1/(mean(intersection) + 1),2)
+            intersection = [abs(i['responseId'] - j['responseId']) for i in requester_responses for j in reviewer_responses if i['questionId']==j['questionId']]
+            result = round(1/(mean(intersection) + 1),2) * 100
             return result
         except ObjectDoesNotExist:
             return None
