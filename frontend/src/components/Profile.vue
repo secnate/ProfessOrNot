@@ -35,6 +35,10 @@
           <b-button type="submit" block variant="outline-primary">Update Profile</b-button>
         </div>
       </b-form>
+
+      <hr/>
+      <b-button block variant="info" @click="update_learning_preferences"> Click To Update Learning Preferences </b-button>
+
     </b-modal>
   </div>
 </template>
@@ -143,6 +147,13 @@ export default {
     clear() {
       this.changes = {};
       this.errors = {};
+    },
+    update_learning_preferences() {
+      // the user is redirected to the quiz page, where they
+      // can retake the quiz and update learning preference info 
+      this.$bvModal.hide("profile-modal");
+      this.clear();
+      this.$router.push('/quiz');
     }
   },
   props: {}

@@ -6,7 +6,8 @@
 
           <b-container>
             <b-row>
-              <b-col>
+
+              <b-col sm="9">
                 <p class="review_prof_name" v-if="!hideProfessorName">
                   <b>Professor:</b>
 
@@ -15,71 +16,96 @@
                   </router-link>
                 </p>
                 <p class="review_course_name" v-if="!hideCourseName">
-                  <b>Course:</b>
+                  <b>Course: </b>
 
                   <router-link :to="{name: 'course', params: {id : review.course.id }}">
                     <b>{{ review.course.name }}</b>
                   </router-link>
                 </p>
-              </b-col>
 
-              <b-col>
-                <!-- Buttons for performing CRUD operations on user-created reviews -->
-                <b-button
-                  size="lg"
-                  variant="primary"
-                  class="mb-2"
-                  @click="this.edit_review"
-                  v-if="this.review.my_review && !is_editing_review"
-                >
-                  Edit
-                </b-button>
-
-                <b-button
-                  size="lg"
-                  variant="primary"
-                  class="mb-2"
-                  @click="this.cancel_review_edit"
-                  v-if="this.review.my_review && is_editing_review"
-                >
-                  Cancel Edit
-                </b-button>
-                <b-button
-                  size="lg"
-                  variant="primary"
-                  class="mb-2"
-                  @click="save_edit_changes"
-                  v-if="this.review.my_review && is_editing_review"
-                >Save Changes</b-button>
-
-                <b-button
-                  v-if="this.review.my_review"
-                  size="lg"
-                  variant="danger"
-                  class="mb-2"
-                  @click="delete_review"
-                >
-                  <b-icon icon="trash">
-                  </b-icon>
-                  Delete
-                </b-button>
-                
-              </b-col>
-            </b-row>
-          </b-container>
-
-          <b-container>
-            <b-row>
-              <b-col>
                 <h2 class="rating_string" v-if="!is_editing_review">Ranking: {{review.rating }} / 5</h2>
                 <h2 class="rating_string" v-if="is_editing_review">
                   Ranking:
                 <StarRating v-model="rating_edit" v-bind:star-size="30" />
                 </h2>
+
               </b-col>
-              <b-col>
-                <h2 class="rating_string" v-if="!this.review.my_review">Similarity Score = {{review.similarity_score}}</h2>
+
+              <b-col sm="3">
+
+                <!-- If this is a review made by me, I display buttons for CRUD operations -->
+                <b-button-toolbar v-if="this.review.my_review">
+
+                  <b-button-group class="mx-1">
+
+                    <!-- Buttons for performing CRUD operations on user-created reviews -->
+                    <b-button
+                      size="lg"
+                      variant="outline-primary"
+                      class="mb-2"
+                      @click="this.edit_review"
+                      v-if="!is_editing_review"
+                    >
+                      <b-icon icon="pencil-square">
+                      </b-icon>
+                    </b-button>
+
+                    <b-button
+                      size="lg"
+                      variant="outline-primary"
+                      class="mb-2"
+                      @click="save_edit_changes"
+                      v-if="is_editing_review"
+                    >
+                      <b-icon icon="file-check">
+                      </b-icon>
+                    </b-button>
+
+                    <b-button
+                      size="lg"
+                      variant="outline-primary"
+                      class="mb-2"
+                      @click="this.cancel_review_edit"
+                      v-if="is_editing_review"
+                    >
+                      <b-icon icon="x-circle-fill">
+                      </b-icon>
+                    </b-button>
+
+                    <b-button
+                      size="lg"
+                      variant="outline-danger"
+                      class="mb-2"
+                      @click="delete_review"
+                    >
+                      <b-icon icon="trash">
+                      </b-icon>
+                    </b-button>
+
+                  </b-button-group>
+                
+                </b-button-toolbar>
+
+                <!-- If this is a review not made by us, we show the similarity percentage -->
+                <div v-else class="similarity_div">
+                  <h2>
+                    Similarity
+                    
+                    <!-- We show information about what this means -->
+                    <b-icon v-b-tooltip.hover 
+                      title="The Similarity score shows the degree to which the reviewer matches your preferences" 
+                      icon="info-circle"
+                      style="width: 20px; height: 20px;"
+                      shift-v="4"
+                      variant="primary"/>
+                  </h2>
+                  <h2>
+                    {{review.similarity_score}}%
+                  </h2>
+                </div>
               </b-col>
+
+
             </b-row>
           </b-container>
 
@@ -208,6 +234,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .card {
   margin-top: 15px;
 }
@@ -241,11 +268,6 @@ export default {
   text-align: right;
 }
 
-.rating_string {
-  font-size: 18pt;
-  text-align: left;
-}
-
 .makeNewReview {
   color: blue;
   font-style: underline;
@@ -262,4 +284,15 @@ export default {
   background-color: light;
   text-align: left;
 }
+
+.rating_string {
+  text-align: left;
+  font-size: 18pt;
+}
+
+.similarity_div {
+  background-color: #ffff80;
+  border-radius: 10px;
+}
+
 </style>
