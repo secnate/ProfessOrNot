@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import LoginPanel from "./components/LoginPanel.vue";
-import Main from "./components/Main.vue";
+import LoginPage from "./components/LoginPage.vue";
+import Home from "./components/Home.vue";
 import ProfessorPage from "./components/ProfessorPage.vue";
 import CoursePage from "./components/CoursePage.vue";
 import AboutUs from "./components/AboutUs.vue";
@@ -16,13 +16,8 @@ let router = new Router({
   routes: [
     {
       path: "/",
-      name: "main",
-      component: Main
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: LoginPanel,
+      name: "Home",
+      component: Home,
       meta: {
         unauth: true
       }
@@ -58,11 +53,8 @@ let router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(store.getters.getUser.survey_complete);
   if (store.getters.isAuthenticated) {
-    if (to.matched.some(record => record.meta.unauth)) {
-      next("/");
-    } else if (!store.getters.getUser.quiz_complete && to.path != "/quiz") {
+    if (!store.getters.getUser.quiz_complete && to.path != "/quiz") {
       next("/quiz");
     } else {
       next();
@@ -71,7 +63,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.unauth)) {
       next();
     } else {
-      next("/login");
+      next("/");
     }
   }
 });

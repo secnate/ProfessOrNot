@@ -22,6 +22,7 @@ const actions = {
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = "Token " + token;
           commit("auth_success", user);
+          router.push("/quiz");
           resolve(resp);
         })
         .catch(err => {
@@ -48,7 +49,9 @@ const actions = {
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = "Token " + token;
           commit("auth_success", user);
-
+          if (!user.quiz_complete) {
+            router.push("/quiz");
+          }
           resolve(resp);
         })
         .catch(err => {
@@ -66,7 +69,7 @@ const actions = {
           commit("logout");
           localStorage.removeItem("token");
           delete axios.defaults.headers.common["Authorization"];
-          router.push("/login");
+          router.push("/");
           resolve(resp);
         })
         .catch(err => {
@@ -89,7 +92,7 @@ const actions = {
           commit("auth_error");
           localStorage.removeItem("token");
           delete axios.defaults.headers.common["Authorization"];
-          router.push("/login");
+          router.push("/");
           reject(err);
         });
     });
