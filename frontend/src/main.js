@@ -7,7 +7,7 @@ import router from "./router";
 import store from "./store";
 import Axios from "axios";
 import "./axios-intercept";
-import vSelect from "vue-select";
+import vSelect, { VueSelect } from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 // Vue settings
@@ -15,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.component("v-select", vSelect);
 
 // Axios Setup
 // Set base url (the api server)
@@ -49,5 +50,4 @@ function mountRoot() {
   }).$mount("#app");
 }
 // Initialize imported components
-Vue.component("v-select", vSelect);
 export default async () => EventBus;
