@@ -126,7 +126,7 @@
                 <b-col cols="1">
                 </b-col>
 
-                <b-col>
+                <b-col cols="8">
                   <div v-if="!is_editing_review">
                     <p class="review_comment" v-if="review.comment.length != 0 ">
                       <b>Student Comments:</b>
@@ -148,7 +148,9 @@
                       max-rows="6"
                     />
                   </div>
+                </b-col>
 
+                <b-col> 
                   <div class="card-body" :key="review.id+3">
                     <h2 class="date_string">{{ convertDateStringToDateRepresentation(review.created) }}</h2>
                   </div>
