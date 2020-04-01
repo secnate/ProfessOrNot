@@ -7,7 +7,10 @@
           <b-container>
             <b-row>
 
-              <b-col sm="9">
+              <b-col cols="1">
+              </b-col>
+
+              <b-col sm="7">
                 <p class="review_prof_name" v-if="!hideProfessorName">
                   <b>Professor:</b>
 
@@ -105,6 +108,8 @@
                 </div>
               </b-col>
 
+              <b-col cols="1">
+              </b-col>
 
             </b-row>
           </b-container>
@@ -113,31 +118,46 @@
 
         <footer class="footer">
           <!-- Display any comments -->
-          <div v-if="!is_editing_review">
-            <p class="review_comment" v-if="review.comment.length != 0 ">
-              <b>Student Comments:</b>
-              <br />
-              {{review.comment }}
-            </p>
-            <p class="review_comment" v-else>
-              <b>Student Comments:</b>
-              <br />
-              <i>No Comments Were Submitted</i>
-            </p>
-          </div>
-          <div v-if="is_editing_review">
-            <b-form-textarea
-              id="comment_edit"
-              v-model="comment_edit"
-              placeholder="Enter Comments..."
-              rows="3"
-              max-rows="6"
-            />
-          </div>
 
-          <div class="card-body" :key="review.id+3">
-            <h2 class="date_string">{{ convertDateStringToDateRepresentation(review.created) }}</h2>
-          </div>
+          <b-container>
+            <b-row>
+
+                <b-col cols="1">
+                </b-col>
+
+                <b-col>
+                  <div v-if="!is_editing_review">
+                    <p class="review_comment" v-if="review.comment.length != 0 ">
+                      <b>Student Comments:</b>
+                      <br />
+                      {{review.comment }}
+                    </p>
+                    <p class="review_comment" v-else>
+                      <b>Student Comments:</b>
+                      <br />
+                      <i>No Comments Were Submitted</i>
+                    </p>
+                  </div>
+                  <div v-if="is_editing_review">
+                    <b-form-textarea
+                      id="comment_edit"
+                      v-model="comment_edit"
+                      placeholder="Enter Comments..."
+                      rows="3"
+                      max-rows="6"
+                    />
+                  </div>
+
+                  <div class="card-body" :key="review.id+3">
+                    <h2 class="date_string">{{ convertDateStringToDateRepresentation(review.created) }}</h2>
+                  </div>
+                </b-col>
+
+                <b-col cols="1">
+                </b-col>
+
+              </b-row>
+            </b-container>
         </footer>
       </div>
     </div>
