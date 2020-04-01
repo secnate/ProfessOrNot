@@ -8,7 +8,7 @@
       <h1> Loading Your Reviews </h1>
       <b-spinner variant="primary" label="Spinning"/>
     </div>
-    <div v-else> 
+    <div v-else class="reviews"> 
       <h1> Your Reviews </h1>
 
       <Review
@@ -77,5 +77,9 @@ export default {
 
 
 <style scoped>
-
+.reviews {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
 </style>
