@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import ModalPlugin from "bootstrap-vue";
 
 export default {
   /* eslint-disable no-console */

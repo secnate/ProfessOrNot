@@ -81,7 +81,6 @@
                       size="lg"
                       variant="outline-danger"
                       class="mb-2"
-                      @click="delete_review"
                       v-if="!is_editing_review"
                       v-b-modal.sure-to-delete-modal
                     >
@@ -188,6 +187,8 @@ export default {
       return dateObj.toLocaleDateString("en-US");
     },
     delete_review() {
+      console.log("DEBUG: we are in the REEVIEW component and we are deleting.");
+      
       // we now delete the review
       var id_of_deleted_review = this.review.id;
 
