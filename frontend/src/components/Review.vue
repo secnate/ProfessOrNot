@@ -1,4 +1,6 @@
 <template>
+
+
   <div class="card" :key="review.id+0" v-if="!is_deleted">
     <div class="card-text" :key="review.id+1">
       <div class="card-text" :key="review.id+2">
@@ -81,6 +83,7 @@
                       class="mb-2"
                       @click="delete_review"
                       v-if="!is_editing_review"
+                      v-b-modal.sure-to-delete-modal
                     >
                       <b-icon icon="trash">
                       </b-icon>
@@ -164,13 +167,18 @@
         </footer>
       </div>
     </div>
+
+    <!-- Popovers to display -->
+    <DeleteModal v-on:confirm-delete="delete_review"/>
+
   </div>
 </template>
 
 
 <script>
-import axios from "axios"; // used to communicate with backend database
+import axios from "axios";                  // used to communicate with backend database
 import StarRating from "vue-star-rating";
+import DeleteModal from "./DeleteModal";  // used to get confirmation about whether we want to delete
 
 export default {
   name: "Review",
@@ -180,8 +188,7 @@ export default {
       return dateObj.toLocaleDateString("en-US");
     },
     delete_review() {
-      // deletes the review from the backend and saves change in backend
-
+      // we now delete the review
       var id_of_deleted_review = this.review.id;
 
       new Promise((resolve, reject) => {
@@ -190,10 +197,10 @@ export default {
           .then(resp => {
             this.is_deleted = true;
             this.status = "success";
-
+      
             // we let the parent know that we deleted it by emitting event to parent component
             this.$emit("delete", id_of_deleted_review);
-
+      
             resolve(resp);
           })
           .catch(err => {
@@ -202,6 +209,7 @@ export default {
             reject(err);
           });
       });
+      
     },
     edit_review() {
       // resetting data
@@ -252,7 +260,7 @@ export default {
     };
   },
   components: {
-    StarRating
+    StarRating, DeleteModal
   }
 };
 </script>
