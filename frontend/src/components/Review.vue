@@ -80,6 +80,7 @@
                       variant="outline-danger"
                       class="mb-2"
                       @click="delete_review"
+                      v-if="!is_editing_review"
                     >
                       <b-icon icon="trash">
                       </b-icon>
