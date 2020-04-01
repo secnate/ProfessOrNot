@@ -82,7 +82,7 @@
                       variant="outline-danger"
                       class="mb-2"
                       v-if="!is_editing_review"
-                      v-b-modal.sure-to-delete-modal
+                      @click="delete_review"
                     >
                       <b-icon icon="trash">
                       </b-icon>
@@ -167,9 +167,6 @@
       </div>
     </div>
 
-    <!-- Popovers to display -->
-    <DeleteModal v-on:confirm-delete="delete_review"/>
-
   </div>
 </template>
 
@@ -177,7 +174,6 @@
 <script>
 import axios from "axios";                  // used to communicate with backend database
 import StarRating from "vue-star-rating";
-import DeleteModal from "./DeleteModal";  // used to get confirmation about whether we want to delete
 
 export default {
   name: "Review",
@@ -188,7 +184,7 @@ export default {
     },
     delete_review() {
       console.log("DEBUG: we are in the REEVIEW component and we are deleting.");
-      
+
       // we now delete the review
       var id_of_deleted_review = this.review.id;
 
@@ -261,7 +257,7 @@ export default {
     };
   },
   components: {
-    StarRating, DeleteModal
+    StarRating
   }
 };
 </script>
