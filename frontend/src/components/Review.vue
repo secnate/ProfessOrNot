@@ -82,7 +82,7 @@
                       variant="outline-danger"
                       class="mb-2"
                       v-if="!is_editing_review"
-                      @click="delete_review"
+                      @click="$bvModal.show('delete-modal-' + review.id)"
                     >
                       <b-icon icon="trash">
                       </b-icon>
@@ -167,7 +167,12 @@
       </div>
     </div>
 
+      <b-modal :id="'delete-modal-' + review.id" title="BootstrapVue">
+        <p class="my-4">Hello from modal!</p>
+      </b-modal>
+
   </div>
+
 </template>
 
 
