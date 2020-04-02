@@ -17,11 +17,19 @@
           label="name"
           @input="setProfessor"
           :clearable="false"
-          taggable
-          @option:created="createProfessor"
           :disabled="professorDisabled"
-          :value="propProfessor"
-        ></v-select>
+          :value="profVal || propProfessor"
+        >
+          <template v-slot:no-options="{ search, searching }">
+            <template v-if="searching">
+              <div v-on:click="createProfessor(search)" class="vs__dropdown-option">
+                Create New Professor:
+                <em>{{ search }}</em>
+                <b-icon icon="arrow-right" class="ml-1"></b-icon>
+              </div>
+            </template>
+          </template>
+        </v-select>
 
         <label>Course Name (Three or Four Uppercase Letters + Three Digits)</label>
         <v-select
@@ -29,11 +37,19 @@
           label="name"
           @input="setCourse"
           :clearable="false"
-          taggable
-          @option:created="createCourse"
           :disabled="courseDisabled"
-          :value="propCourse"
-        ></v-select>
+          :value="courseVal || propCourse"
+        >
+          <template v-slot:no-options="{ search, searching }">
+            <template v-if="searching">
+              <div v-on:click="createCourse(search)" class="vs__dropdown-option">
+                Create New Course:
+                <em>{{ search }}</em>
+                <b-icon icon="arrow-right" class="ml-1"></b-icon>
+              </div>
+            </template>
+          </template>
+        </v-select>
 
         <b-form-group label="Ranking">
           <StarRating v-model="new_review.rating" v-bind:star-size="30" />
@@ -70,6 +86,8 @@ export default {
   data() {
     return {
       status: "",
+      profVal: "",
+      courseVal: "",
       errors: [],
       professors: [],
       courses: [],
@@ -154,8 +172,6 @@ export default {
           .catch(err => {
             this.status = "error";
             var resp = err.response;
-            console.log(resp);
-            console.log(resp.data);
             if (
               (resp.status == 400) &
               (JSON.stringify(resp.data) ===
@@ -165,7 +181,6 @@ export default {
                   ]
                 }))
             ) {
-              console.log("yes");
               this.errors.push(
                 "You've Already Reviewed This Professor & Course!"
               );
@@ -204,7 +219,6 @@ export default {
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -223,7 +237,6 @@ export default {
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -236,22 +249,23 @@ export default {
       this.new_review.course_id = value.id;
     },
     createProfessor(newOption) {
-      console.log(newOption);
       new Promise((resolve, reject) => {
         this.status = "loading"; // we can show a loading wheel while in this state
         axios({
           url: "/professors",
           method: "POST",
-          data: newOption
+          data: {
+            name: newOption
+          }
         })
           .then(resp => {
             this.professors.push(resp.data);
+            this.profVal = resp.data.name;
             this.new_review.professor_id = resp.data.id;
             this.status = "success";
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -260,7 +274,7 @@ export default {
     createCourse(newOption) {
       // check to see if the new option fits our regular expression
       var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$");
-      if (!courseRE.test(newOption.name)) {
+      if (!courseRE.test(newOption)) {
         this.$bvToast.toast(
           "Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number",
           {
@@ -277,16 +291,18 @@ export default {
           axios({
             url: "/courses",
             method: "POST",
-            data: newOption
+            data: {
+              name: newOption
+            }
           })
             .then(resp => {
               this.courses.push(resp.data);
+              this.courseVal = resp.data.name;
               this.new_review.course_id = resp.data.id;
               this.status = "success";
               resolve(resp);
             })
             .catch(err => {
-              console.log(err);
               this.status = "error";
               reject(err);
             });
