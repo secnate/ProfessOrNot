@@ -370,7 +370,6 @@ export default {
 
 .confirmation_text {
   font-size: 20pt;
-  text-align: justify;
   margin-left: 0px;
   margin-right: 0px;
   margin-top: 0px;
