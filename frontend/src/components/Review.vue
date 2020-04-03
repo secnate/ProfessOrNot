@@ -93,7 +93,10 @@
                 </b-button-toolbar>
 
                 <!-- If this is a review not made by us, we show the similarity percentage -->
-                <div v-else class="similarity_div">
+                <div 
+                  v-else-if="review.similarity_score != null" 
+                  class="similarity_div"
+                >
                   <h2>
                     Similarity
                     
