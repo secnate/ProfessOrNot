@@ -167,9 +167,38 @@
       </div>
     </div>
 
-      <b-modal :id="'delete-modal-' + review.id" title="BootstrapVue">
-        <p class="my-4">Hello from modal!</p>
-      </b-modal>
+    <!-- Modal to display to confirm if someone wants to delete -->
+    <b-modal
+      title="Confirmation Needed"
+      centered
+      header-bg-variant="dark"
+      header-text-variant="light"
+      :id="'delete-modal-' + review.id"
+    >
+      <!-- Customized formatting of the header -->
+      <template v-slot:modal-header>
+          <b-icon-exclamation-triangle-fill variant="warning" font-scale="2"/>
+          <h1 class="confirmation_title"> Confirmation Needed </h1>
+          <b-icon-exclamation-triangle-fill variant="warning" font-scale="2"/>
+      </template>
+
+      <h1 class="confirmation_text"> 
+        Are You Sure You Want To Delete? This Can Not Be Undone.
+      </h1>
+
+      <!-- Customized formatting of the footer -->
+      <template v-slot:modal-footer="{ok, cancel}">
+        <b-button size="lg" 
+                  variant="outline-secondary" 
+                  @click="$bvModal.hide('delete-modal-' + review.id)">
+          No
+        </b-button>
+        <b-button size="lg" variant="danger" @click="clicked_ok()">
+          Yes
+        </b-button>
+      </template>
+
+    </b-modal>
 
   </div>
 
@@ -187,9 +216,13 @@ export default {
       var dateObj = new Date(date_str);
       return dateObj.toLocaleDateString("en-US");
     },
+    clicked_ok() {
+      // we clicked the confirmation modal and now are going to 
+      // perform the deletion and close the modal
+      this.delete_review();
+      this.$bvModal.hide('delete-modal-' + this.review.id)
+    },
     delete_review() {
-      console.log("DEBUG: we are in the REEVIEW component and we are deleting.");
-
       // we now delete the review
       var id_of_deleted_review = this.review.id;
 
@@ -327,5 +360,22 @@ export default {
   background-color: #ffff80;
   border-radius: 10px;
 }
+
+/* The following is for the portion that confirms the delection */ 
+
+.confirmation_title {
+  font-size: 25pt;
+  text-align: left;
+}
+
+.confirmation_text {
+  font-size: 20pt;
+  text-align: justify;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 
 </style>
