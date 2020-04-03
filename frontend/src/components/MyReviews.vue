@@ -63,7 +63,6 @@ export default {
       });
     },
     deleteReview(id_to_delete) {
-      console.log("DEBUG: i am in myreviews page and I'm gonna delete");
       
       // we recieve event from the child Review component and update our data accordingly
       var i = 0;
