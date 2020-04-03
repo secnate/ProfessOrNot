@@ -95,7 +95,7 @@
                 <!-- If this is a review not made by us, we show the similarity percentage -->
                 <div 
                   v-else-if="review.similarity_score != null" 
-                  class="similarity_div"
+                  :style="similarity_style"
                 >
                   <h2>
                     Similarity
@@ -223,7 +223,7 @@ export default {
       // we clicked the confirmation modal and now are going to 
       // perform the deletion and close the modal
       this.delete_review();
-      this.$bvModal.hide('delete-modal-' + this.review.id)
+      this.$bvModal.hide('delete-modal-' + this.review.id);
     },
     delete_review() {
       // we now delete the review
@@ -289,12 +289,43 @@ export default {
     hideCourseName: Boolean,
     review: Object
   },
+  computed: {
+    similarity_style: function() {
+      // This returns the style that corresponds to the similarity percentage
+      if (this.review.similarity_score != null) {
+        if (0 <= this.review.similarity_score && this.review.similarity_score <= 33) {
+          return {
+            'background-color': '#ff8080', // red
+            'border-radius': '10px'
+          };
+        }
+        else if (34 <= this.review.similarity_score && this.review.similarity_score <= 66) {
+          return {
+            'background-color': '#ffb366', // orange
+            'border-radius': '10px'
+          };
+        } else {
+          // 67% to 100%
+          return {
+            'background-color': '#70db70', // green
+            'border-radius': '10px'
+          };
+        }
+      } 
+      else {
+        return {
+            'background-color': '#000000', // black
+            'border-radius': '10px'
+        };
+      }
+    }
+  },
   data() {
     return {
       is_deleted: false,
       is_editing_review: false,
       comment_edit: "",
-      rating_edit: 0
+      rating_edit: 0,
     };
   },
   components: {
@@ -359,11 +390,6 @@ export default {
   font-size: 18pt;
 }
 
-.similarity_div {
-  background-color: #ffff80;
-  border-radius: 10px;
-}
-
 /* The following is for the portion that confirms the delection */ 
 
 .confirmation_title {
@@ -377,6 +403,12 @@ export default {
   margin-right: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
+}
+
+/* The following is for the group devoted to the similarity score */
+.similarity_div {
+  border-radius: 10px;
+  background-color: #ffffb3;
 }
 
 
