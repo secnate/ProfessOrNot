@@ -7,6 +7,7 @@ import CoursePage from "./components/CoursePage.vue";
 import AboutUs from "./components/AboutUs.vue";
 import QuizPage from "./components/QuizPage.vue";
 import MyReviews from "./components/MyReviews.vue";
+import ContactPage from "./components/ContactPage.vue";
 import store from "./store";
 Vue.use(Router);
 
@@ -48,6 +49,11 @@ let router = new Router({
       path: "/myreviews",
       name: "myreviews",
       component: MyReviews
+    },
+    {
+      path: "/contact",
+      name: "contact",
+      component: ContactPage
     }
   ]
 });

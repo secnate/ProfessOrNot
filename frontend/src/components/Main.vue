@@ -35,7 +35,11 @@
             <div class="card-body">
               <h5 class="card-title">Need More help?</h5>
               <p class="card-text">Contact Us If You Need More Help With Our Website.</p>
-              <b-button href="#" disabled size="lg" variant="primary">Contact Us >></b-button>
+              <router-link to="/contact">
+                <b-button size="lg" variant="primary">
+                  Contact Us 
+                </b-button>
+              </router-link>
             </div>
           </div>
         </div>
