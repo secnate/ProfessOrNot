@@ -87,6 +87,26 @@ export default {
     submitAnswers() {
       this.$store.dispatch("quiz_submit");
     }
+  },
+  created: function() {
+    // When this component is created, I use a subscripton to vuex
+    // so that I can monitor when the quiz is finally submitted and
+    // can transfer the user to the homepage. 
+    // The created function is called each time I am entering this page,
+    // so we set the appropriate lifecycle hooks to listen for lifecycle changes
+    //
+    // the const unsubscribe is the unsubscribing function returned by the
+    // subscribe function. This allows us to stop listening when needed
+    const unsubscribe = this.$store.subscribe( (mutation, state) => {
+
+      if (mutation.type === "set_quiz_complete" && 
+          this.status === 'submitted') {
+        unsubscribe();  // we are leaving the page, so don't need to listen anymore
+        
+        // we now wait 1.5 seconds before redirecting the user to the home page
+        setTimeout(() => {  this.$router.push("/"); }, 2000);
+      }
+    });
   }
 };
 
