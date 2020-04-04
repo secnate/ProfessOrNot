@@ -23,7 +23,7 @@
           <div class="card" style="margin = 20px">
             <div class="card-body">
               <h5 class="card-title">Learn More about ProfessOrNot</h5>
-              <p class="card-text">Learn more about our team and our misson here.</p>
+              <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
               <router-link to="/about">
                 <b-button size="lg" variant="primary">Our About Page</b-button>
               </router-link>
@@ -34,8 +34,12 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Need More help?</h5>
-              <p class="card-text">Contact us if you need more help with our website.</p>
-              <b-button href="#" disabled size="lg" variant="primary">Contact Us >></b-button>
+              <p class="card-text">Contact Us If You Need More Help With Our Website.</p>
+              <router-link to="/contact">
+                <b-button size="lg" variant="primary">
+                  Contact Us 
+                </b-button>
+              </router-link>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@
           <div class="card" style="margin = 20px">
             <div class="card-body">
               <h5 class="card-title">Learn More about ProfessOrNot</h5>
-              <p class="card-text">Learn more about our team and our misson here.</p>
+              <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
             </div>
           </div>
         </div>
