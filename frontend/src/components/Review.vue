@@ -14,7 +14,7 @@
 
               <b-col sm="7">
                 <p class="review_prof_name" v-if="!hideProfessorName">
-                  <b>Professor:</b>
+                  <b>Professor: </b>
 
                   <router-link :to="{name: 'professor', params: {id : review.professor.id }}">
                     <b>{{ review.professor.name }}</b>
@@ -55,16 +55,6 @@
                       </b-icon>
                     </b-button>
 
-                    <b-button
-                      size="lg"
-                      variant="outline-primary"
-                      class="mb-2"
-                      @click="save_edit_changes"
-                      v-if="is_editing_review"
-                    >
-                      <b-icon icon="file-check">
-                      </b-icon>
-                    </b-button>
 
                     <b-button
                       size="lg"
@@ -74,6 +64,17 @@
                       v-if="is_editing_review"
                     >
                       <b-icon icon="x-circle-fill">
+                      </b-icon>
+                    </b-button>
+
+                    <b-button
+                      size="lg"
+                      variant="outline-success"
+                      class="mb-2"
+                      @click="save_edit_changes"
+                      v-if="is_editing_review"
+                    >
+                      <b-icon icon="file-check">
                       </b-icon>
                     </b-button>
 
