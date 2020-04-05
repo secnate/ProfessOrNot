@@ -3,16 +3,20 @@
     <Navbar />
     <!-- Popovers to display -->
     <CreateReview :propCourse="course" @add-new-review="addNewReview" />
+    <!-- Loading -->
+    <div v-if="status ==='loading'">
+      <br />
+      <b-spinner variant="primary" label="Spinning" />
+    </div>
     <!-- If loaded successfully -->
     <div v-if="loadSuccess">
-	
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-      <h1 class="courseTitle">
-        <b>{{ this.course != null ? this.course.name : ""}}</b>
-      </h1>
-	  </div>
-</div>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="courseTitle">
+            <b>{{ this.course != null ? this.course.name : ""}}</b>
+          </h1>
+        </div>
+      </div>
       <!-- If the course doesn't have any reviews, then we just display a default message -->
       <div v-if="!this.hasReviews">
         <h1>No Reviews Have Been Created.</h1>
@@ -97,8 +101,8 @@ export default {
       this.$bvModal.show("review-modal");
     },
     addNewReview(review) {
-      this.courseReviews.unshift(review)
-      this.course.avg_rating = review.course.avg_rating
+      this.courseReviews.unshift(review);
+      this.course.avg_rating = review.course.avg_rating;
     },
     retrieveData() {
       new Promise((resolve, reject) => {
@@ -126,7 +130,7 @@ export default {
     deleteReview(id_to_delete) {
       // we recieve event from the child Review component and update our data accordingly
       var i = 0;
-      for ( i = 0; i < this.courseReviews.length; i++) {
+      for (i = 0; i < this.courseReviews.length; i++) {
         if (this.courseReviews[i].id == id_to_delete) {
           this.courseReviews.splice(i, 1); // remove one element at index i
         }
@@ -152,10 +156,9 @@ export default {
 </script>
 
 <style scoped>
-
-.container{
-height: 50px;
-width: auto;
+.container {
+  height: 50px;
+  width: auto;
 }
 
 .courseTitle {
@@ -170,7 +173,6 @@ width: auto;
 .review_box {
   border: 1px black solid;
 }
-
 
 .review_comment {
   font-size: 15pt;
@@ -205,9 +207,8 @@ width: auto;
 }
 
 .container-fluid {
-text-align: left;
-margin-bottom: 20px;
-margin-left:10%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-left: 10%;
 }
-
 </style>

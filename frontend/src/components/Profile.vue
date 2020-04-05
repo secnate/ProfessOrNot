@@ -21,24 +21,32 @@
         </b-form-group>
         <b-form-group label="School">
           <div v-if="status === 'success'">
-          <v-select
-            :options="schools"
-            label="name"
-            @input="setSchool"
-            :clearable="false"
-            :placeholder="school.name"
-          ></v-select>
+            <v-select
+              :options="schools"
+              label="name"
+              @input="setSchool"
+              :clearable="false"
+              :placeholder="school.name"
+            ></v-select>
           </div>
           <!--- add loading wheel here --->
         </b-form-group>
         <div>
-          <b-button type="submit" block variant="outline-primary">Update Profile</b-button>
+          <b-button type="submit" block variant="outline-primary">
+            <div v-if="authStatus === 'loading'">
+              <b-icon icon="arrow-clockwise" animation="spin"></b-icon>
+            </div>
+            <div v-else>Update Profile</div>
+          </b-button>
         </div>
       </b-form>
 
-      <hr/>
-      <b-button block variant="info" @click="update_learning_preferences"> Click To Update Learning Preferences </b-button>
-
+      <hr />
+      <b-button
+        block
+        variant="info"
+        @click="update_learning_preferences"
+      >Click To Update Learning Preferences</b-button>
     </b-modal>
   </div>
 </template>
@@ -80,15 +88,18 @@ export default {
     },
     password: {
       get() {
-        return ""
+        return "";
       },
       set(value) {
-        if(value.length > 0) {
-          this.changes.password = value
+        if (value.length > 0) {
+          this.changes.password = value;
         } else {
-          delete this.changes.password
+          delete this.changes.password;
         }
       }
+    },
+    authStatus() {
+      return this.$store.getters.authStatus;
     }
   },
   methods: {
@@ -150,10 +161,10 @@ export default {
     },
     update_learning_preferences() {
       // the user is redirected to the quiz page, where they
-      // can retake the quiz and update learning preference info 
+      // can retake the quiz and update learning preference info
       this.$bvModal.hide("profile-modal");
       this.clear();
-      this.$router.push('/quiz');
+      this.$router.push("/quiz");
     }
   },
   props: {}

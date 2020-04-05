@@ -1,18 +1,22 @@
 <template>
-<div>
+  <div>
     <Navbar />
     <!-- Popovers to display -->
     <CreateReview :propProfessor="professor" @add-new-review="addNewReview" />
+    <!-- Loading -->
+    <div v-if="status ==='loading'">
+      <br />
+      <b-spinner variant="primary" label="Spinning" />
+    </div>
     <!-- If loaded successfully -->
     <div v-if="loadSuccess">
-	
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-      <h1 class="professorTitle">
-        <b>{{ this.professor != null ? this.professor.name : ""}}</b>
-      </h1>
-	  </div>
-</div>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="professorTitle">
+            <b>{{ this.professor != null ? this.professor.name : ""}}</b>
+          </h1>
+        </div>
+      </div>
       <!-- If the course doesn't have any reviews, then we just display a default message -->
       <div v-if="!this.hasReviews">
         <h1>No Reviews Have Been Created.</h1>
@@ -94,8 +98,8 @@ export default {
       this.$bvModal.show("review-modal");
     },
     addNewReview(review) {
-      this.professorReviews.unshift(review)
-      this.professor.avg_rating = review.professor.avg_rating
+      this.professorReviews.unshift(review);
+      this.professor.avg_rating = review.professor.avg_rating;
     },
     retrieveData() {
       new Promise((resolve, reject) => {
@@ -120,7 +124,7 @@ export default {
     deleteReview(id_to_delete) {
       // we recieve event from the child Review component and update our data accordingly
       var i = 0;
-      for ( i = 0; i < this.professorReviews.length; i++) {
+      for (i = 0; i < this.professorReviews.length; i++) {
         if (this.professorReviews[i].id == id_to_delete) {
           this.professorReviews.splice(i, 1); // remove one element at index i
         }
@@ -149,10 +153,9 @@ export default {
 
 
 <style scoped>
-
-.container{
-height: 50px;
-width: auto;
+.container {
+  height: 50px;
+  width: auto;
 }
 
 .professorTitle {
@@ -201,9 +204,8 @@ width: auto;
 }
 
 .container-fluid {
-text-align: left;
-margin-bottom: 20px;
-margin-left:10%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-left: 10%;
 }
-
 </style>
