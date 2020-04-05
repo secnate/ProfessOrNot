@@ -7,6 +7,7 @@ import router from "./router";
 import store from "./store";
 import Axios from "axios";
 import "./axios-intercept";
+import backendRunup from "./backend-runup";
 import vSelect, { VueSelect } from "vue-select";
 import "vue-select/dist/vue-select.css";
 
@@ -28,26 +29,13 @@ if (process.env.NODE_ENV === "production") {
   //This line needs to be uncommented and the other needs to be commented
   require("axios-base-url")("http://localhost:8000");
 }
-// Look for token
-const accessToken = localStorage.getItem("token");
-if (accessToken) {
-  // If token exists, set it in header
-  Vue.prototype.$http.defaults.headers.common["Authorization"] =
-    "Token " + accessToken;
-  // Fetch user object from server using the token
-  store
-    .dispatch("fetch_user")
-    .then(() => mountRoot())
-    .catch(() => mountRoot());
-} else {
-  mountRoot();
-}
+backendRunup(Vue).then(() => mountRoot());
 // Mount the main vue object (event bus)
 function mountRoot() {
   var EventBus = new Vue({
     router,
     store,
-    render: h => h(App)
+    render: (h) => h(App),
   }).$mount("#app");
 }
 // Initialize imported components
