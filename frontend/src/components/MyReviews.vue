@@ -8,7 +8,7 @@
       <h1> Loading Your Reviews </h1>
       <b-spinner variant="primary" label="Spinning"/>
     </div>
-    <div v-else> 
+    <div v-else class="reviews"> 
       <h1> Your Reviews </h1>
 
       <Review
@@ -63,6 +63,7 @@ export default {
       });
     },
     deleteReview(id_to_delete) {
+      
       // we recieve event from the child Review component and update our data accordingly
       var i = 0;
       for ( i = 0; i < this.all_reviews.length; i++) {
@@ -77,5 +78,8 @@ export default {
 
 
 <style scoped>
-
+.reviews {
+  width: 65%;
+  margin: 0 auto;
+}
 </style>
