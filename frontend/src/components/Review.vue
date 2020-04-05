@@ -28,10 +28,13 @@
                   </router-link>
                 </p>
 
-                <h2 class="rating_string" v-if="!is_editing_review">Ranking: {{review.rating }} / 5</h2>
+                <h2 class="rating_string" v-if="!is_editing_review">
+                  Ranking: 
+                  <StarRating v-model="this.review.rating" v-bind:star-size="30" v-bind:read-only="true"/>
+                </h2>
                 <h2 class="rating_string" v-if="is_editing_review">
                   Ranking:
-                <StarRating v-model="rating_edit" v-bind:star-size="30" />
+                  <StarRating v-model="rating_edit" v-bind:star-size="30" />
                 </h2>
 
               </b-col>
