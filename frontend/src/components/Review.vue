@@ -164,21 +164,12 @@
 
     <!-- Modal to display to confirm if someone wants to delete -->
     <b-modal
-      title="Confirmation Needed"
       centered
-      header-bg-variant="dark"
-      header-text-variant="light"
       :id="'delete-modal-' + review.id"
     >
-      <!-- Customized formatting of the header -->
-      <template v-slot:modal-header>
-          <b-icon-exclamation-triangle-fill variant="warning" font-scale="2"/>
-          <h1 class="confirmation_title"> Confirmation Needed </h1>
-          <b-icon-exclamation-triangle-fill variant="warning" font-scale="2"/>
-      </template>
 
       <h1 class="confirmation_text"> 
-        Are You Sure You Want To Delete? This Can Not Be Undone.
+        Are You Sure You Want To Delete? <br/> This Can Not Be Undone.
       </h1>
 
       <!-- Customized formatting of the footer -->
