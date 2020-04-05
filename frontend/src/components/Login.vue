@@ -19,7 +19,12 @@
         required
         placeholder="Password"
       ></b-form-input>
-      <b-button size="sm" variant="info" type="submit">Log In</b-button>
+      <b-button size="sm" variant="info" type="submit">
+        <div v-if="authStatus === 'loading'">
+          <b-icon icon="arrow-clockwise" animation="spin"></b-icon>
+        </div>
+        <div v-else>Log In</div>
+      </b-button>
     </b-form>
   </div>
 </template>
@@ -34,6 +39,11 @@ export default {
         password: ""
       }
     };
+  },
+  computed: {
+    authStatus() {
+      return this.$store.getters.authStatus;
+    }
   },
   methods: {
     onSubmit(evt) {
