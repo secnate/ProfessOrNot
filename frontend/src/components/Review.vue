@@ -12,7 +12,7 @@
               <b-col cols="1">
               </b-col>
 
-              <b-col sm="7">
+              <b-col sm="">
                 <p class="review_prof_name" v-if="!hideProfessorName">
                   <b>Professor: </b>
 
@@ -36,7 +36,7 @@
 
               </b-col>
 
-              <b-col sm="3">
+              <b-col sm="2">
 
                 <!-- If this is a review made by me, I display buttons for CRUD operations -->
                 <b-button-toolbar v-if="this.review.my_review">

@@ -79,8 +79,7 @@ export default {
 
 <style scoped>
 .reviews {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 65%;
+  margin: 0 auto;
 }
 </style>
