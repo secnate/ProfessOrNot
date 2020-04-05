@@ -138,11 +138,6 @@
                       <br />
                       {{review.comment }}
                     </p>
-                    <p class="review_comment" v-else>
-                      <b>Student Comments:</b>
-                      <br />
-                      <i>No Comments Were Submitted</i>
-                    </p>
                   </div>
                   <div v-if="is_editing_review">
                     <b-form-textarea
@@ -155,13 +150,10 @@
                   </div>
                 </b-col>
 
-                <b-col> 
+                <b-col cols="3"> 
                   <div class="card-body" :key="review.id+3">
                     <h2 class="date_string">{{ convertDateStringToDateRepresentation(review.created) }}</h2>
                   </div>
-                </b-col>
-
-                <b-col cols="1">
                 </b-col>
 
               </b-row>
@@ -363,7 +355,7 @@ export default {
 }
 
 .date_string {
-  font-size: 12pt;
+  font-size: 14pt;
   margin-left: 3px;
   text-align: right;
 }
