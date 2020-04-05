@@ -98,7 +98,7 @@
                   v-else-if="review.similarity_score != null" 
                   :style="similarity_style"
                 >
-                  <h2>
+                  <h2 class="similarity_text">
                     Similarity
                     
                     <!-- We show information about what this means -->
@@ -106,7 +106,6 @@
                       title="The Similarity score shows the degree to which the reviewer matches your preferences" 
                       icon="info-circle"
                       style="width: 20px; height: 20px;"
-                      shift-v="4"
                       variant="primary"/>
                   </h2>
                   <h2>
@@ -406,10 +405,9 @@ export default {
   margin-bottom: 0px;
 }
 
-/* The following is for the group devoted to the similarity score */
-.similarity_div {
-  border-radius: 10px;
-  background-color: #ffffb3;
+.similarity_text {
+  font-size: 15pt;
+  padding-top: 10px;
 }
 
 
