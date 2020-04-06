@@ -11,10 +11,10 @@
 
     <!-- Adding in vertical offset so if the width of the website is adjusted -->
     <!-- that the navbar doesn't bleed over into the next element -->
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
+    <br />
 
     <div>
       <div v-if="loginAlert">
@@ -26,7 +26,10 @@
           <div class="card" style="margin-left: 20px;">
             <div class="card-body">
               <h5 class="card-title">Learn More about ProfessOrNot:</h5>
-              <b-img src="../assets/video_coming_soon.jpg" style="width: calc(90%); height: calc(100%);"/>
+              <b-img
+                src="../assets/video_coming_soon.jpg"
+                style="width: calc(90%); height: calc(90%);"
+              />
             </div>
           </div>
         </div>
@@ -55,7 +58,7 @@ export default {
   data() {
     return {
       registerSelected: false,
-      loginAlert: "",
+      loginAlert: ""
     };
   },
   mounted() {
@@ -82,7 +85,6 @@ export default {
 </script>
 
 <style scoped>
-
 .row {
   width: 100%;
 }
