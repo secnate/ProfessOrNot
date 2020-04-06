@@ -23,10 +23,10 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <div class="card" style="margin = 20px">
+          <div class="card" style="margin-left: 20px;">
             <div class="card-body">
               <h5 class="card-title">Learn More about ProfessOrNot:</h5>
-              <b-img src="../assets/video_coming_soon.jpg" style="width: calc(100%); height: calc(100%);"/>
+              <b-img src="../assets/video_coming_soon.jpg" style="width: calc(90%); height: calc(100%);"/>
             </div>
           </div>
         </div>
@@ -82,4 +82,8 @@ export default {
 </script>
 
 <style scoped>
+
+.row {
+  width: 100%;
+}
 </style>
