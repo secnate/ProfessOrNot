@@ -15,7 +15,6 @@ function checkHealth(Vue) {
         resolve(resp);
       })
       .catch((err) => {
-        console.log(err);
         Vue.prototype.$backendOnline = false;
         Vue.prototype.$backendError = err;
         reject(err);

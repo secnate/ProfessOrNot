@@ -10,7 +10,7 @@ class Main(APIView):
     def get(self, request):
         content = {
             'application': 'ProfessOrNot API',
-            'deployment': 'DEV',
+            'deployment': os.environ['PON_ENV'],
             'version': self.get_sha()
         }
         return Response(content)
