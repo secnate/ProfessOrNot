@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top">
+    <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top" ref="nav_bar">
       <b-navbar-brand to="/" class="pl-4">
         <img src="../assets/logotitle.svg" margin-left="10" alt="bb" width="300" />
       </b-navbar-brand>
@@ -8,16 +8,25 @@
         <Login @setLoginError="setLoginError" />
       </b-navbar-nav>
     </b-navbar>
-    <div class="container-fluid">
+
+    <!-- Adding in vertical offset so if the width of the website is adjusted -->
+    <!-- that the navbar doesn't bleed over into the next element -->
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div>
       <div v-if="loginAlert">
         <b-alert show variant="danger">{{loginAlert}}</b-alert>
       </div>
+
       <div class="row">
         <div class="col-sm-6">
           <div class="card" style="margin = 20px">
             <div class="card-body">
-              <h5 class="card-title">Learn More about ProfessOrNot</h5>
-              <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
+              <h5 class="card-title">Learn More about ProfessOrNot:</h5>
+              <b-img src="../assets/video_coming_soon.jpg" style="width: calc(100%); height: calc(100%);"/>
             </div>
           </div>
         </div>
@@ -46,8 +55,11 @@ export default {
   data() {
     return {
       registerSelected: false,
-      loginAlert: ""
+      loginAlert: "",
     };
+  },
+  mounted() {
+    this.mounted_yet = true;
   },
   methods: {
     toggleLogin: function() {
@@ -70,7 +82,4 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
-  margin-top: 5%;
-}
 </style>
