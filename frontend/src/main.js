@@ -15,12 +15,12 @@ import "vue-select/dist/vue-select.css";
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
 if (process.env.NODE_ENV === "production") {
-  Axios.defaults.baseURL = `"https://dev-api.professornot.com"`;
+  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
 } else {
-  //Axios.defaults.baseURL = `"https://dev-api.professornot.com"`;
+  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
 
   //This line needs to be uncommented and the other needs to be commented
-  Axios.defaults.baseURL = `http://localhost:8000`;
+  //Axios.defaults.baseURL = `http://localhost:8000`;
 }
 
 Vue.use(BootstrapVue);
