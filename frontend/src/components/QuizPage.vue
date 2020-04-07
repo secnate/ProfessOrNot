@@ -38,26 +38,22 @@
 
     <!-- Results of submission -->
     <div v-if="status == 'submitting'">
-      <h1> Sending to Server... </h1>
-
       <!-- This is a circulating spinner -->
-      <b-spinner 
-        variant="success" type="grow" 
+      <b-spinner
+        variant="success"
+        type="grow"
         style="margin-top: 150px; width: 55px; height: 55px; color: #7ac142;"
       />
     </div>
     <div v-if="status == 'submit error'">
-      <h1> Error Submitting to Server. </h1>
+      <h1>Error Submitting to Server.</h1>
     </div>
     <div v-if="status == 'submitted'">
-      <h1>  Successfully Submitted to Server! </h1>
-      
       <!-- Filling in the circular spinner when submission is successful -->
       <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-      </svg> 
-
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+      </svg>
     </div>
   </div>
 </template>
@@ -91,25 +87,27 @@ export default {
   created: function() {
     // When this component is created, I use a subscripton to vuex
     // so that I can monitor when the quiz is finally submitted and
-    // can transfer the user to the homepage. 
+    // can transfer the user to the homepage.
     // The created function is called each time I am entering this page,
     // so we set the appropriate lifecycle hooks to listen for lifecycle changes
     //
     // the const unsubscribe is the unsubscribing function returned by the
     // subscribe function. This allows us to stop listening when needed
-    const unsubscribe = this.$store.subscribe( (mutation, state) => {
+    const unsubscribe = this.$store.subscribe((mutation, state) => {
+      if (
+        mutation.type === "set_quiz_complete" &&
+        this.status === "submitted"
+      ) {
+        unsubscribe(); // we are leaving the page, so don't need to listen anymore
 
-      if (mutation.type === "set_quiz_complete" && 
-          this.status === 'submitted') {
-        unsubscribe();  // we are leaving the page, so don't need to listen anymore
-        
         // we now wait 1.5 seconds before redirecting the user to the home page
-        setTimeout(() => {  this.$router.push("/"); }, 2000);
+        setTimeout(() => {
+          this.$router.push("/");
+        }, 2000);
       }
     });
   }
 };
-
 </script>
 
 
@@ -147,7 +145,8 @@ export default {
   stroke-miterlimit: 10;
   margin: 10% auto;
   box-shadow: inset 0px 0px 0px #7ac142;
-  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+  animation: fill 0.4s ease-in-out 0.4s forwards,
+    scale 0.3s ease-in-out 0.9s both;
 }
 
 .checkmark__check {
@@ -163,7 +162,8 @@ export default {
   }
 }
 @keyframes scale {
-  0%, 100% {
+  0%,
+  100% {
     transform: none;
   }
   50% {
@@ -175,5 +175,4 @@ export default {
     box-shadow: inset 0px 0px 0px 30px #7ac142;
   }
 }
-
 </style>
