@@ -12,13 +12,14 @@
     <!-- Adding in vertical offset so if the width of the website is adjusted -->
     <!-- that the navbar doesn't bleed over into the next element -->
     <br />
-    <br />
-    <br />
-    <br />
 
     <div>
       <div v-if="loginAlert">
         <b-alert show variant="danger">{{loginAlert}}</b-alert>
+      </div>
+      <div v-else>
+        <br />
+        <br />
       </div>
 
       <div class="row">

@@ -4,10 +4,15 @@
       <b-alert
         class="position-fixed fixed-bottom m-0 rounded-0"
         style="z-index: 2000;"
-        variant="info"
+        :variant="alertColor"
         dismissible
         show
-      >Established Backend Connection to {{backendURL}} | Deployment: {{backendInfo.deployment}} | Version: {{backendInfo.version}}</b-alert>
+      >
+        Connected to API
+        <b-icon-cloud />
+        URL: {{backendURL}} | Deployment Mode: {{backendInfo.deployment}} | Version: {{backendInfo.version}}
+      </b-alert>
+      <!-- Enter the application (router) -->
       <router-view />
     </div>
     <div v-else>
@@ -38,6 +43,12 @@ export default {
     backendURL() {
       console.log(axios);
       return axios.defaults.baseURL;
+    },
+    alertColor() {
+      if (this.$backendInfo.deployment === "local") {
+        return "danger";
+      }
+      return "info";
     }
   }
 };
