@@ -1,7 +1,7 @@
 ## ProfessOrNot
 [![Build Status](https://travis-ci.com/SCCapstone/ProfessOrNot.svg?token=pYg6WhKK8Np7sPZkTLzW&branch=develop)](https://travis-ci.com/SCCapstone/ProfessOrNot)
 
-A better rate my professor that uses personality tests and heuristics to recommend classes based on your learning styles and preferences.
+A better rate my professor that uses personality tests and heuristics to recommend classes based on your learning styles and preferences. Its latest deployed version can be accessed at https://dev.professornot.com/ .
 
 ### Mission
 
