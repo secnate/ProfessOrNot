@@ -1,15 +1,17 @@
-// import the mount method from test utils
-// and the component to be tested.
-import { mount } from'@vue/test-utils'
-import AboutUs from '../src/components/AboutUs'
+import AboutUs from "@/components/AboutUs.vue"
+import { shallowMount, createLocalVue } from "@vue/test-utils"
+const localVue = createLocalVue()
 
-describe('AboutUs', () => {
-    // Now mount the component and you have the wrapper
-    const wrapper = mount(AboutUs)
-    const vm = wrapper.vm
-    console.log(wrapper)
-    
-    instanceof('renders card', () => {
-        expect(wrapper.html()).toContain('<div class="card-body"></div>')
+describe("AboutUs", () => {
+    let wrapper
+    beforeEach(() => {
+        wrapper = shallowMount(AboutUs, {
+            localVue 
+        })
+    }),
+
+    it("should init to a valid instance", () => {
+        expect(wrapper.isVueInstance).toBeTruthy()
     })
+
 })
