@@ -43,13 +43,21 @@ When reviewing a PR, check that the person isn't going to break your code or som
       2. In the api folder type `pipenv shell`
       3. In the virtual env shell, type `./manage.py test`
 * Vue
-  * TBD
+  * Jest
+   * Unit testing is dne with Vue.js's jest testing platform.
+   * Tests are located in the file.test.js file within the test folder in the frontend
+   * To run the test, assuming npm is installed. Use "npm run test"
 
 #### Behavioral Testing
 
-(Only for Vue)
-* Frontend
-  *Selenium
-  To run via command line. Ensure you have the proper prereqs. installed, such as npm, node, selenium, the proper browser driver, and     selenium web runner. Navigate to the tests directory, and type: selenium-side-runner targetfile.side 
-  If you have issues, visit https://selenium.dev/selenium-ide/docs/en/introduction/command-line-runner
+* Frontend(Vue)
+  * Selenium
+   * Behavioral testing is done with Selenium.
+   * Tests are located in .side files within the test folder.
+   * To run the behavioral tests
+    * 1. Install selenium. I used npm. "npm i selenium-webdriver"
+      2. Install the correct webdriver for your browser. I use the chrome webdriver. Can be downloaded here: https://www.npmjs.com/package/selenium-webdriver
+      3. Install selenium-side-runner. "npm i selenium-side-runner"
+      4. Run the test. "selenium-side-runner testfile.side" 
+   
 
