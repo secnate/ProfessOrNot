@@ -102,7 +102,7 @@ export default {
 
         // we now wait 1.5 seconds before redirecting the user to the home page
         setTimeout(() => {
-          this.$router.push("/");
+          this.$router.go(-1);    
         }, 2000);
       }
     });
