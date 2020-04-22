@@ -13,7 +13,7 @@
     <!-- that the navbar doesn't bleed over into the next element -->
     <br />
 
-    <div>
+    <div style="margin:.4rem">
       <div v-if="loginAlert">
         <b-alert show variant="danger">{{loginAlert}}</b-alert>
       </div>
@@ -24,24 +24,63 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <div class="card" style="margin-left: 20px;">
+          <h2>Find your perfect schedule, guaranteed.</h2>
+          <h3>It's super simple.</h3>
+          <ul style="list-style-type:none text-align:left;" class="h4">
+            <li>
+              <span><b-icon-check-box /></span> Take a simple learning style quiz to generate your profile.
+            </li>
+            <li>
+              <span><b-icon-file-earmark-break /></span> Our system scans your responses and compares it to those of other students.
+            </li>
+            <li>
+              <span><b-icon-book /></span> View your results and make an informed decision during registration.
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <img src="../assets/teacher.svg" width="60%" height="auto" />
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+          <img src="../assets/university.svg" width="60%" height="auto" />
+        </div>
+        <div class="col-sm-6">
+          <b-card
+          title="Join Us!"
+          style="">
+            <Register />
+          </b-card>
+        
+        </div>
+        </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card" style="margin = 20px">
             <div class="card-body">
-              <h5 class="card-title">Learn More about ProfessOrNot:</h5>
-              <b-img
-                src="../assets/video_coming_soon.jpg"
-                style="width: calc(90%); height: calc(90%);"
-              />
+              <h5 class="card-title">Learn More about ProfessOrNot</h5>
+              <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
+              <router-link to="/about">
+                <b-button size="lg" variant="primary">Our About Page</b-button>
+              </router-link>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="card">
             <div class="card-body">
-              <h2 class="card-title">Register</h2>
-              <Register />
+              <h5 class="card-title">Need More help?</h5>
+              <p class="card-text">Contact Us If You Need More Help With Our Website.</p>
+              <router-link to="/contact">
+                <b-button size="lg" variant="primary">
+                  Contact Us 
+                </b-button>
+              </router-link>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -88,5 +127,26 @@ export default {
 <style scoped>
 .row {
   width: 100%;
+  padding:10px;
+}
+ul {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0;
+  text-align: left;
+  padding-left: 1em;
+}
+ul>li {
+  position: relative;
+}
+span {
+  left: -2em;
+  position: absolute;
+  text-align: center;
+  width: 2em;
+  line-height: inherit;
+}
+li {
+  padding: .6em;
 }
 </style>
