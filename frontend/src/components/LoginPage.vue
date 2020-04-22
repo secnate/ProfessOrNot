@@ -9,19 +9,11 @@
       </b-navbar-nav>
     </b-navbar>
 
-    <!-- Adding in vertical offset so if the width of the website is adjusted -->
-    <!-- that the navbar doesn't bleed over into the next element -->
-    <br />
-
-    <div style="margin:.4rem">
+    <div style="margin:.4rem" class="pt-3">
       <div v-if="loginAlert">
         <b-alert show variant="danger">{{loginAlert}}</b-alert>
       </div>
-      <div v-else>
-        <br />
-        <br />
-      </div>
-      <div class="container-fluid">
+      <div class="container-fluid pt-2">
         <!-- First Row -->
         <div class="row">
           <div class="col-sm-6">
