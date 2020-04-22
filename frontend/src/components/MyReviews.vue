@@ -15,7 +15,7 @@
         <b-img src="../assets/empty_box.svg" class="mt-50" width="300" />
         </div>
                 <div class="mt-5 h2">
-        You have submitted no reviews. How sad 	&#128532;
+        You have not submitted any reviews. How sad &#128532;
         </div>
       </div>
       <Review

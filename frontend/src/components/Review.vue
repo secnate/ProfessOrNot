@@ -112,7 +112,7 @@
                       variant="primary"/>
                   </h2>
                   <h2>
-                    {{review.similarity_score}}%
+                    {{Math.trunc(review.similarity_score)}}%
                   </h2>
                 </div>
               </b-col>

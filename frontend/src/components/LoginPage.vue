@@ -22,13 +22,12 @@
         <br />
       </div>
       <div class="container-fluid">
-
         <!-- First Row -->
         <div class="row">
           <div class="col-sm-6">
             <h2>Find your perfect schedule, guaranteed.</h2>
             <h3>It's super simple.</h3>
-            <ul style="list-style-type:none text-align:left;" class="h4">
+            <ul style="list-style-type:none text-align:left;" class="h4 pt-3">
               <li>
                 <span>
                   <b-icon-check-box />
@@ -47,21 +46,75 @@
             </ul>
           </div>
           <div class="col-sm-6">
-            <img src="../assets/teacher.svg" width="60%" height="auto" />
-          </div>
-        </div>
-
-        <!-- Second Row -->
-        <div class="row">
-          <div class="col-sm-6">
-            <img src="../assets/university.svg" width="60%" height="auto" />
-          </div>
-          <div class="col-sm-6">
-            <b-card title="Join Us!" style>
+            <b-card title="Sign Up!" style>
+              <div style="max-width: 80%;" class="justify-content-center align-items-center container">
               <Register />
+              </div>
             </b-card>
           </div>
         </div>
+<hr class="my-4" />
+        <div class="row mt-4">
+          <h2>See How It Works</h2>
+        </div>
+        
+
+        <!-- Third Row -->
+        <div class="row">
+          <b-card-group deck class="mx-5">
+            <b-card
+              title="Take the Quiz"
+              img-src="../assets/QuizScreenshot.png"
+              img-alt="Image"
+              img-top
+              tag="article"
+              class="mb-2"
+              style="max-width:500px;"
+            >
+              <b-card-text>Our learning style quiz discovers the way you learn, and your preferences in a class.</b-card-text>
+            </b-card>
+            <b-card
+              title="Seach for Classes"
+              img-src="../assets/SearchScreenshot.png"
+              img-alt="Image"
+              img-top
+              tag="article"
+              class="mb-2"
+              style="max-width:500px;"
+            >
+              <b-card-text>Find reviews of courses and professors at your school from those who know best: your peers.</b-card-text>
+            </b-card>
+            <b-card
+              title="Get Insight"
+              img-src="../assets/ReviewScreenshot.png"
+              img-alt="Image"
+              img-top
+              tag="article"
+              class="mb-2"
+              style="max-width:500px;"
+            >
+              <b-card-text>View ratings and comments from students who have taken the class and how similar they are to you.</b-card-text>
+            </b-card>
+          </b-card-group>
+        </div>
+
+        <hr class="my-4" />
+        
+        <!-- Second Row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <img src="../assets/teacher.svg" width="60%" height="auto" />
+          </div>
+          <div class="col-sm-6">
+            <b-embed
+            type="iframe"
+            aspect="16by9"
+            src="https://player.vimeo.com/video/410807511"
+            allowfullscreen
+            />
+          </div>
+        </div>
+
 
         <!-- Third Row -->
         <div class="row mt-4">
@@ -127,9 +180,9 @@ export default {
 .row {
   width: 100%;
   padding: 10px;
-     display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 ul {
   list-style-type: none;
