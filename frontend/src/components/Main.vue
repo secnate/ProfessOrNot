@@ -10,10 +10,8 @@
         <template v-slot:lead>Your professors. Your choice.</template>
         <Search />
         <hr class="my-4" />
-
-        <p>Take Our Quiz To Find Your Perfect Professor Here:</p>
-
-        <b-button href="#" size="lg" variant="primary" to="quiz">To The Quiz >></b-button>
+        <b-button href="#" size="lg" variant="primary" class="button" to="quiz">View All Professors >></b-button>
+        <b-button href="#" size="lg" variant="primary" class="button" to="quiz">View All Courses >></b-button>
       </b-jumbotron>
     </div>
 
@@ -73,6 +71,9 @@ export default {
   width: 80%;
 }
 .container-fluid {
-  margin-top: 5%;
+  margin-top: 20px;
+}
+.button{
+  margin-right:20px;
 }
 </style>

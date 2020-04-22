@@ -1,7 +1,16 @@
 
 <template>
   <div>
-    <NavBar />
+    <div v-if="$store.getters.isAuthenticated">
+      <Navbar />
+    </div>
+    <div v-else>
+      <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top" ref="nav_bar">
+      <b-navbar-brand to="/" class="pl-4">
+        <img src="../assets/logotitle.svg" margin-left="10" alt="bb" width="300" />
+      </b-navbar-brand>
+      </b-navbar>
+    </div>
     <br/>
 
     <h1 class="contact_title"> Contact Us </h1>
@@ -60,12 +69,12 @@
 </template>
 
 <script>
-import NavBar from "./Navbar.vue";
+import Navbar from "./Navbar.vue";
 
 export default {
   name: "ContactPage",
   components: {
-    NavBar
+    Navbar
   },
   mounted: function() {
   },

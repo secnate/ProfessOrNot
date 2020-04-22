@@ -1,16 +1,17 @@
 <template>
-    <div>
-        <Navbar />
+  <div>
+    <div v-if="$store.getters.isAuthenticated">
+      <Navbar />
+    </div>
+    <div v-else>
+      <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top" ref="nav_bar">
+      <b-navbar-brand to="/" class="pl-4">
+        <img src="../assets/logotitle.svg" margin-left="10" alt="bb" width="300" />
+      </b-navbar-brand>
+      </b-navbar>
+    </div>
+    <br/>
         <div>
-            <b-jumbotron>
-                <template v-slot:header>
-                    <b-img src="../assets/logotitle_2.svg" width="600%" height=auto alt="Fluid-grow image"></b-img>
-                </template>
-                <template v-slot:lead>
-                    Your professors. Your choice.
-                </template>
-                <Search />
-            </b-jumbotron>
             <div class="page-title">Everything You Should Know About Us</div>
             <div class="card" style="margin = 40px">
             <!-- <div class="card-md-6"> -->
@@ -42,13 +43,11 @@
 
 <script>
     import Navbar from "./Navbar.vue";
-    import Search from "./Search.vue";
 
     export default {
         name: "AboutUs",
         components: {
-            Navbar,
-            Search
+            Navbar
         },
         data() {
             return {};

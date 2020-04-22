@@ -4,7 +4,8 @@ import Vue from "vue";
 const state = {
   status: "",
   questions: [],
-  responses: []
+  responses: [],
+  showUnanswered: false
 };
 const getters = {
   getQuestions: state => state.questions,
@@ -68,6 +69,10 @@ const mutations = {
     state.status = "loading";
     // Clear response array on quiz_request to prevent lingering answers from incomplete survey.
     state.responses = [];
+    state.showUnanswered = false;
+  },
+  quiz_show_unanswered(state) {
+    state.showUnanswered = true;
   },
   quiz_loaderror(state) {
     state.status = "load error";

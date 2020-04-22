@@ -21,66 +21,65 @@
         <br />
         <br />
       </div>
+      <div class="container-fluid">
 
-      <div class="row">
-        <div class="col-sm-6">
-          <h2>Find your perfect schedule, guaranteed.</h2>
-          <h3>It's super simple.</h3>
-          <ul style="list-style-type:none text-align:left;" class="h4">
-            <li>
-              <span><b-icon-check-box /></span> Take a simple learning style quiz to generate your profile.
-            </li>
-            <li>
-              <span><b-icon-file-earmark-break /></span> Our system scans your responses and compares it to those of other students.
-            </li>
-            <li>
-              <span><b-icon-book /></span> View your results and make an informed decision during registration.
-            </li>
-          </ul>
-        </div>
-        <div class="col-sm-6">
-          <img src="../assets/teacher.svg" width="60%" height="auto" />
-        </div>
+        <!-- First Row -->
         <div class="row">
           <div class="col-sm-6">
-          <img src="../assets/university.svg" width="60%" height="auto" />
-        </div>
-        <div class="col-sm-6">
-          <b-card
-          title="Join Us!"
-          style="">
-            <Register />
-          </b-card>
-        
-        </div>
+            <h2>Find your perfect schedule, guaranteed.</h2>
+            <h3>It's super simple.</h3>
+            <ul style="list-style-type:none text-align:left;" class="h4">
+              <li>
+                <span>
+                  <b-icon-check-box />
+                </span> Take a simple learning style quiz to generate your profile.
+              </li>
+              <li>
+                <span>
+                  <b-icon-file-earmark-break />
+                </span> Our system scans your responses and compares it to those of other students.
+              </li>
+              <li>
+                <span>
+                  <b-icon-book />
+                </span> View your results and make an informed decision during registration.
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <img src="../assets/teacher.svg" width="60%" height="auto" />
+          </div>
         </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="card" style="margin = 20px">
-            <div class="card-body">
-              <h5 class="card-title">Learn More about ProfessOrNot</h5>
-              <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
-              <router-link to="/about">
-                <b-button size="lg" variant="primary">Our About Page</b-button>
-              </router-link>
-            </div>
+        <!-- Second Row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <img src="../assets/university.svg" width="60%" height="auto" />
+          </div>
+          <div class="col-sm-6">
+            <b-card title="Join Us!" style>
+              <Register />
+            </b-card>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Need More help?</h5>
-              <p class="card-text">Contact Us If You Need More Help With Our Website.</p>
-              <router-link to="/contact">
-                <b-button size="lg" variant="primary">
-                  Contact Us 
-                </b-button>
-              </router-link>
-            </div>
+
+        <!-- Third Row -->
+        <div class="row mt-4">
+          <div class="col-sm-6">
+            <h5>Learn More about ProfessOrNot</h5>
+            <p class="card-text">Learn More About Our Team and Our Misson Here.</p>
+            <router-link to="/about">
+              <b-button size="lg" variant="primary">Our About Page</b-button>
+            </router-link>
+          </div>
+          <div class="col-sm-6">
+            <h5>Need More help?</h5>
+            <p class="card-text">Contact Us If You Need More Help With Our Website.</p>
+            <router-link to="/contact">
+              <b-button size="lg" variant="primary">Contact Us</b-button>
+            </router-link>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -127,7 +126,10 @@ export default {
 <style scoped>
 .row {
   width: 100%;
-  padding:10px;
+  padding: 10px;
+     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 ul {
   list-style-type: none;
@@ -136,7 +138,7 @@ ul {
   text-align: left;
   padding-left: 1em;
 }
-ul>li {
+ul > li {
   position: relative;
 }
 span {
@@ -147,6 +149,6 @@ span {
   line-height: inherit;
 }
 li {
-  padding: .6em;
+  padding: 0.6em;
 }
 </style>

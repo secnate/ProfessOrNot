@@ -27,13 +27,16 @@
 
       <br />
       <!-- button will activate when allQuestionsAnswered is true -->
+      <div id="submit-button-div">
       <b-button
         @click="submitAnswers"
         variant="primary"
         class="submitButton"
-        style="width: 80%; font-size: 20pt;"
+        style="width: 80%; font-size: 20pt; margin-bottom:20px;"
         :disabled="!this.$store.getters.allQuestionsAnswered"
       >Submit</b-button>
+      </div>
+      <b-tooltip v-if="!this.$store.getters.allQuestionsAnswered" target="submit-button-div" placement="top" @shown="$store.commit('quiz_show_unanswered')">Please answer all questions.</b-tooltip>
     </div>
 
     <!-- Results of submission -->

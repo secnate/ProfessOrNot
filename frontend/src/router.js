@@ -43,7 +43,10 @@ let router = new Router({
     {
       path: "/about",
       name: "about",
-      component: AboutUs
+      component: AboutUs,
+      meta: {
+        unauth: true
+      }
     },
     {
       path: "/myreviews",
@@ -53,7 +56,10 @@ let router = new Router({
     {
       path: "/contact",
       name: "contact",
-      component: ContactPage
+      component: ContactPage,
+      meta: {
+        unauth: true
+      }
     }
   ]
 });

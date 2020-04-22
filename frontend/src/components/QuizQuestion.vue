@@ -1,8 +1,8 @@
 <!--This represents a multiple choice learning style quiz question with four answer choices-->
 
 <template>
-  <div>
-    <b-card border-variant="secondary" style="margin-left: 10%; width: 80%;">
+  <div class="quizCard">
+    <b-card class="mb-2" :class="{quizCardFill : showAsUnanswered}" border-variant="secondary" text-variant="black" style="margin-left: 10%; width: 80%;">
       <b-card-title class="cardTitle">{{ this.question.text }}</b-card-title>
       <div v-if="scale">
         <b-form-radio-group v-model="selected" size="lg">
@@ -40,7 +40,7 @@ export default {
   components: {},
   data() {
     return {
-      selected: {},
+      selected: -1,
       // The options array allows for the dynamic generation of the options in an easiliy-updatable fashion
       scaledOptions: [
         { text: "Strongly Disagree", id: 1 },
@@ -71,6 +71,12 @@ export default {
         return true;
       }
       return false;
+    },
+    showAsUnanswered() {
+      if(this.$store.state.quiz.showUnanswered == true && this.selected == -1) {
+        return true;
+      }
+      return false;
     }
   },
   props: {
@@ -84,6 +90,8 @@ export default {
 .cardTitle {
   font-style: bold;
   font-size: 20pt;
-  color: black;
+}
+.quizCardFill {
+  background-color: rgba(247, 78, 78, 0.4);
 }
 </style>

@@ -10,7 +10,14 @@
     </div>
     <div v-else class="reviews"> 
       <h1> Your Reviews </h1>
-
+      <div v-if="all_reviews.length == 0">
+        <div class="mt-5">
+        <b-img src="../assets/empty_box.svg" class="mt-50" width="300" />
+        </div>
+                <div class="mt-5 h2">
+        You have submitted no reviews. How sad 	&#128532;
+        </div>
+      </div>
       <Review
               v-for="review in this.all_reviews"
               :key="review.id"
