@@ -62,8 +62,14 @@
         </li>
         <li>
           <h2>
-            Will Bootle
+            Matt Hayward
             (<b-link href="https://github.com/mhayward12">@mhayward12</b-link>)
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Kassidy Block
+            (<b-link href="https://github.com/mhayward12">@kblock97</b-link>) [1st Semester]
           </h2>
         </li>
       </ul>
