@@ -22,8 +22,10 @@
         <h1>No Reviews Have Been Created.</h1>
         <h1>
           Would You Like To
-          <div v-on:click="displayReviewModal" class="makeNewReview">Make One?</div>
         </h1>
+        <b-button variant="primary" v-on:click="displayReviewModal" class="makeNewReview">
+          Make One?
+        </b-button>
       </div>
 
       <!-- If there are reviews -->
@@ -193,8 +195,9 @@ export default {
 }
 
 .makeNewReview {
-  color: blue;
-  font-style: underline;
+  color: white;
+  font-size: 20pt;
+  font-weight: bold;
 }
 
 .review_course_name {
