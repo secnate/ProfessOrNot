@@ -8,6 +8,8 @@ import AboutUs from "./components/AboutUs.vue";
 import QuizPage from "./components/QuizPage.vue";
 import MyReviews from "./components/MyReviews.vue";
 import ContactPage from "./components/ContactPage.vue";
+import AllCourses from "./components/AllCourses.vue";
+import AllProfessors from "./components/AllProfessors.vue";
 import store from "./store";
 Vue.use(Router);
 
@@ -22,6 +24,16 @@ let router = new Router({
       meta: {
         unauth: true
       }
+    },
+    {
+      path: "/allcourses",
+      name: "allcourss",
+      component: AllCourses,
+    },
+    {
+      path: "/allprofessors",
+      name: "allprofessors",
+      component: AllProfessors,
     },
     {
       path: "/professor/:id",

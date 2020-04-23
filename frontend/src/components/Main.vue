@@ -10,8 +10,8 @@
         <template v-slot:lead>Your professors. Your choice.</template>
         <Search />
         <hr class="my-4" />
-        <b-button href="#" size="lg" variant="primary" class="button" to="quiz">View All Professors >></b-button>
-        <b-button href="#" size="lg" variant="primary" class="button" to="quiz">View All Courses >></b-button>
+        <b-button href="#" size="lg" variant="primary" class="button" to="allprofessors">View All Professors >></b-button>
+        <b-button href="#" size="lg" variant="primary" class="button" to="allcourses">View All Courses >></b-button>
       </b-jumbotron>
     </div>
 
