@@ -42,13 +42,31 @@
 
           <div>
             <h2 align="left">Reviews:</h2>
-            <Review
+
+            <b-input-group size="sm">
+
+              <b-form-input 
+                placeholder="Search By Course Name..."
+                v-model="search_text"
+              > 
+              </b-form-input >
+
+            </b-input-group>
+
+            <div 
               v-for="review in this.courseReviews"
-              :key="review.id"
-              :review="review"
-              v-on:delete="deleteReview"
-              hideCourseName
-            />
+              :key="review.id + 10"
+            >
+              <div v-if="searchTextMeetsReviewName(review.professor.name)">
+                <Review
+                  :key="review.id"
+                  :review="review"
+                  v-on:delete="deleteReview"
+                  hideCourseName
+                />
+              </div>
+            </div>
+
           </div>
         </b-container>
       </div>
@@ -76,7 +94,8 @@ export default {
       courseName: "",
       courseProfessors: [],
       courseReviews: [],
-      courseId: -1
+      courseId: -1,
+      search_text: ""
     };
   },
   methods: {
@@ -87,6 +106,7 @@ export default {
       this.courseProfessors = [];
       this.courseReviews = [];
       this.courseId = -1;
+      this.search_text = "";
     },
     convertDateStringToDateRepresentation(date_str) {
       var dateObj = new Date(date_str);
@@ -135,6 +155,28 @@ export default {
           this.courseReviews.splice(i, 1); // remove one element at index i
         }
       }
+    },
+    searchTextMeetsReviewName(professorName)
+    {
+
+      if (this.search_text == "") {
+        // if nothing has been entered as a search text, anything works!
+        return true; 
+      }
+
+      // the goal is to determine if the text 
+      // entered in the search bar matches the leading portion of a course name 
+
+      if (this.search_text.length > professorName.length) {
+        return false;   // we are going beyond the length of the course name and that is baaad
+      }
+
+      // we now check if the search text corresponds to the course name in earlier portions
+
+      var lowercased_search_text = this.search_text.toLowerCase();
+      var lowercased_course_name = professorName.toLowerCase();
+
+      return lowercased_course_name.startsWith(lowercased_search_text);
     }
   },
   computed: {
