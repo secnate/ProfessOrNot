@@ -26,23 +26,23 @@ let router = new Router({
       }
     },
     {
-      path: "/allcourses",
-      name: "allcourss",
+      path: "/courses",
+      name: "courses",
       component: AllCourses,
     },
     {
-      path: "/allprofessors",
-      name: "allprofessors",
+      path: "/professors",
+      name: "professors",
       component: AllProfessors,
     },
     {
-      path: "/professor/:id",
+      path: "/professors/:id",
       name: "professor",
       component: ProfessorPage,
       props: true
     },
     {
-      path: "/course/:id",
+      path: "/courses/:id",
       name: "course",
       component: CoursePage,
       props: true
