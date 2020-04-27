@@ -7,6 +7,7 @@
         :variant="alertColor"
         dismissible
         show
+        v-if="devMode"
       >
         Connected to API
         <b-icon-cloud />
@@ -30,6 +31,12 @@ export default {
     ErrorPage
   },
   computed: {
+    devMode() {
+      if(process.env.NODE_ENV !== "production"){
+        return true;
+      }
+      return false;
+    },
     backendOnline() {
       return this.$backendOnline;
     },
