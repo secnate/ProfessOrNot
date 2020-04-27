@@ -57,7 +57,7 @@
 
             <div 
               v-for="review in this.professorReviews"
-              :key="review.id + 10"
+              :key="review.id"
             >
               <div v-if="searchTextMeetsReviewName(review.course.name)">
                 <Review

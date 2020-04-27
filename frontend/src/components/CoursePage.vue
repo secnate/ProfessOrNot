@@ -46,7 +46,7 @@
             <b-input-group size="sm">
 
               <b-form-input 
-                placeholder="Search By Course Name..."
+                placeholder="Search By Professor Name..."
                 v-model="search_text"
               > 
               </b-form-input >
@@ -55,7 +55,7 @@
 
             <div 
               v-for="review in this.courseReviews"
-              :key="review.id + 10"
+              :key="review.id"
             >
               <div v-if="searchTextMeetsReviewName(review.professor.name)">
                 <Review
