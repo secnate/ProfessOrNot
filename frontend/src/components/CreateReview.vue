@@ -57,13 +57,14 @@
 
         <br />
 
-        <b-form-group label="Enter Comments">
+        <b-form-group label="Enter Comments (255 Characters Max)">
           <b-form-textarea
             id="comment-textarea"
             v-model="new_review.comment"
             autocomplete="off"
             type="text"
             placeholder="Enter comments..."
+            :state="0 <= new_review.comment.length && new_review.comment.length <= 255"
           ></b-form-textarea>
         </b-form-group>
 
@@ -160,6 +161,14 @@ export default {
       return ret;
     },
     saveReview() {
+
+      // check if the comments text is too long
+      if (this.new_review.comment.length > 255) {
+        this.errors.push("Your Comments Are Too Long (255 Characters Maximum)");
+        return;
+      }
+
+
       return new Promise((resolve, reject) => {
         this.status = "loading"; // We can show a loading wheel while in this state
         axios({ url: "/reviews", data: this.new_review, method: "POST" })
