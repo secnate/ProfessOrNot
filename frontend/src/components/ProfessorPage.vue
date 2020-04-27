@@ -41,14 +41,34 @@
           </b-row>
 
           <div>
+
             <h2 align="left">Reviews:</h2>
-            <Review
+
+            <!-- searchbar to filter reviews & reviews themselves -->
+            <b-input-group size="sm">
+
+              <b-form-input 
+                placeholder="Search By Course Name..."
+                v-model="search_text"
+              > 
+              </b-form-input >
+
+            </b-input-group>
+
+            <div 
               v-for="review in this.professorReviews"
               :key="review.id"
-              :review="review"
-              v-on:delete="deleteReview"
-              hideProfessorName
-            />
+            >
+              <div v-if="searchTextMeetsReviewName(review.course.name)">
+                <Review
+                  :key="review.id"
+                  :review="review"
+                  v-on:delete="deleteReview"
+                  hideProfessorName
+                />
+              </div>
+            </div>
+
           </div>
         </b-container>
       </div>
@@ -75,7 +95,8 @@ export default {
       professorName: "",
       professorCourses: [],
       professorReviews: [],
-      profId: -1
+      profId: -1,
+      search_text: ""
     };
   },
   methods: {
@@ -85,6 +106,7 @@ export default {
       this.professorCourses = [];
       this.professorReviews = [];
       this.profId = -1;
+      this.search_text="";
     },
     getRatingString(value) {
       return "Rating: " + JSON.stringify(value);
@@ -129,6 +151,28 @@ export default {
           this.professorReviews.splice(i, 1); // remove one element at index i
         }
       }
+    },
+    searchTextMeetsReviewName(courseName)
+    {
+
+      if (this.search_text == "") {
+        // if nothing has been entered as a search text, anything works!
+        return true; 
+      }
+
+      // the goal is to determine if the text 
+      // entered in the search bar matches the leading portion of a course name 
+
+      if (this.search_text.length > courseName.length) {
+        return false;   // we are going beyond the length of the course name and that is baaad
+      }
+
+      // we now check if the search text corresponds to the course name in earlier portions
+
+      var lowercased_search_text = this.search_text.toLowerCase();
+      var lowercased_course_name = courseName.toLowerCase();
+
+      return lowercased_course_name.startsWith(lowercased_search_text);
     }
   },
   computed: {
@@ -140,6 +184,15 @@ export default {
     },
     hasReviews: function() {
       return this.professorReviews.length > 0;
+    },
+    professorCourseNames: function() {
+      var toReturn = [];
+
+      var i = 0;
+      for (i = 0; i < this.professorCourses.length; i++) {
+        toReturn.push( this.professorCourses[i].name );
+      }
+      return toReturn;
     }
   },
   mounted() {
