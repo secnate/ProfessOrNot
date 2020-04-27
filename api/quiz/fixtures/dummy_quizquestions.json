@@ -1,0 +1,436 @@
+[
+  {
+    "model": "quiz.quizquestion",
+    "pk": 1,
+    "fields": {
+      "text": "If you are not sure how to spell a word, you;",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "spell it out loud or in your head"
+        },
+        {
+          "id": 2,
+          "text": "you write it down until it looks right"
+        },
+        {
+          "id": 3,
+          "text": "you draw it in the air with your finger"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 2,
+    "fields": {
+      "text": "When you see the word \"cat,\" what do you do first?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Picture a cat in your mind"
+        },
+        {
+          "id": 2,
+          "text": "Say the word \"cat\" to yourself"
+        },
+        {
+          "id": 3,
+          "text": "Think about being with a cat (petting it or hearing it purr)"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 3,
+    "fields": {
+      "text": "I am good at taking tests",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 4,
+    "fields": {
+      "text": "I like a professor with firm due dates",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 5,
+    "fields": {
+      "text": "What's the best way for you to learn about how something works?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Get someone to show you"
+        },
+        {
+          "id": 2,
+          "text": "Read about it or listen to someone explain it"
+        },
+        {
+          "id": 3,
+          "text": "Figure it out on your own"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 6,
+    "fields": {
+      "text": "When in a new place, how do you find your way around?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Look for a map or directory that shows you where everything is"
+        },
+        {
+          "id": 2,
+          "text": "Ask someone for directions"
+        },
+        {
+          "id": 3,
+          "text": "Just start walking around until you find what you're looking for"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 7,
+    "fields": {
+      "text": "When you hear a song on the radio, what are you most likely to do?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Sing or hum along with the music"
+        },
+        {
+          "id": 2,
+          "text": "Start dancing or tapping your foot"
+        },
+        {
+          "id": 3,
+          "text": "Picture the video that goes along with it"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 8,
+    "fields": {
+      "text": "I am a heavy note taker",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 9,
+    "fields": {
+      "text": "What's the best way for you to remember a friend's phone number?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Picture the numbers on the phone as you would dial them"
+        },
+        {
+          "id": 2,
+          "text": "Say it out loud over and over"
+        },
+        {
+          "id": 3,
+          "text": "Try to write it down"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 10,
+    "fields": {
+      "text": "Which would you rather go to with a group of friends?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "A movie"
+        },
+        {
+          "id": 2,
+          "text": "A concert"
+        },
+        {
+          "id": 3,
+          "text": "An amusement park"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 11,
+    "fields": {
+      "text": "I feel as though I am \"smarter\" than my classmates",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 12,
+    "fields": {
+      "text": "What are you most likely to remember about new people you meet?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Their face but not their name"
+        },
+        {
+          "id": 2,
+          "text": "Their name but not their face"
+        },
+        {
+          "id": 3,
+          "text": "What you talked about with them"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 13,
+    "fields": {
+      "text": "I love to solve puzzles",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 14,
+    "fields": {
+      "text": "I like to work in groups",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 15,
+    "fields": {
+      "text": "I am very organized",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 16,
+    "fields": {
+      "text": "When working in a group, I feel as though",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "I end up doing most of the work"
+        },
+        {
+          "id": 2,
+          "text": "I wait until someone asks me to do something"
+        },
+        {
+          "id": 3,
+          "text": "I do as little as possible, lol."
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 17,
+    "fields": {
+      "text": "At a party, I am",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Quiet and stick with my close friends"
+        },
+        {
+          "id": 2,
+          "text": "Very excited to meet new people"
+        },
+        {
+          "id": 3,
+          "text": "The center of attention"
+        },
+        {
+          "id": 4,
+          "text": "By myself"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 18,
+    "fields": {
+      "text": "I would rather have large projects, than small assignments",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 19,
+    "fields": {
+      "text": "I don't like it when a professor takes attendance",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 20,
+    "fields": {
+      "text": "I like a little humor in the classroom",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 21,
+    "fields": {
+      "text": "I prefer to work at my own pace over a rigid schedule.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 22,
+    "fields": {
+      "text": "I ask the Professor a lot of questions in lecture.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 23,
+    "fields": {
+      "text": "What is the best way for you to remember course material?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "repetition or mnemonics eg. PEMDAS"
+        },
+        {
+          "id": 2,
+          "text": "flashcards"
+        },
+        {
+          "id": 3,
+          "text": "making detailed notes with diagrams"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 24,
+    "fields": {
+      "text": "I learn best when I am shown how to do something, and I have the opportunity to do it.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 25,
+    "fields": {
+      "text": "I don’t like to read directions; I’d rather just start doing.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 26,
+    "fields": {
+      "text": "I need one-on-one time with my professors to get the most out of the material.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 27,
+    "fields": {
+      "text": "My grade in a class is heavily impacted by the professor.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 28,
+    "fields": {
+      "text": "I prefer professors who demonstrate absolute masterly over the subject even if they lack charisma.",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 29,
+    "fields": {
+      "text": "I prefer a more course that challenges me over an easy A",
+      "type": "sc",
+      "options": []
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 31,
+    "fields": {
+      "text": "I think the happiest person is",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Someone with a lot of money"
+        },
+        {
+          "id": 2,
+          "text": "Someone who is famous or looked up to"
+        },
+        {
+          "id": 3,
+          "text": "Someone has close friends/family"
+        },
+        {
+          "id": 4,
+          "text": "Someone who loves what they do"
+        }
+      ]
+    }
+  }
+]

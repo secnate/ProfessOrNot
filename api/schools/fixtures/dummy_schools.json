@@ -1,0 +1,16 @@
+[
+    {
+    "model": "schools.school",
+    "pk": 1,
+    "fields": {
+      "name": "TEST SCHOOL 1"
+    }
+  },
+  {
+    "model": "schools.school",
+    "pk": 2,
+    "fields": {
+      "name": "TEST SCHOOL 2"
+    }
+  }
+]
