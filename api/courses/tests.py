@@ -20,7 +20,6 @@ class CreateCourseTestCase(APITestCase):
             "name": "TEST101"
         }
         response = self.client.post(self.url, new_course, format='json')
-        response.render()
         body = json.loads(response.content)
         self.assertEqual(201, response.status_code)
         self.assertEqual(1, body['school']['id'])
@@ -33,6 +32,6 @@ class GetCourseTestCase(APITestCase):
         auth_token = AuthToken.objects.create(User.objects.get(pk=1))[1]
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + auth_token)
 
-    def test_course_create(self):
+    def test_course_get(self):
         response = self.client.get('/courses/1')
         self.assertEqual(200, response.status_code)
