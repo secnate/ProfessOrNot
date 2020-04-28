@@ -12,6 +12,7 @@ from django.http import Http404
 
 
 class ProfessorList(ListCreateAPIView):
+    # Context passed through automatically
     serializer_class = ProfessorSerializer
 
     def get_queryset(self):
@@ -23,9 +24,7 @@ class ProfessorList(ListCreateAPIView):
         return queryset
 
     def post(self, request):
-        new_professor_data = request.data
-        new_professor_data['school_id'] = request.user.school.id
-        serializer = self.get_serializer(data=new_professor_data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         course = serializer.save()
         return Response(ProfessorSerializer(course, context=self.get_serializer_context()).data,
@@ -43,12 +42,12 @@ class ProfessorDetail(APIView):
         professor = self.get_object(pk)
         professor_serialized = ProfessorSerializer(professor)
         reviews = Review.objects.filter(professor=professor)
-        reviews_serialized = ReviewSerializer(reviews, many=True)
         courses = []
         for review in reviews:
             course = Course.objects.get(pk=review.course.pk)
             if not course in courses:
                 courses.append(course)
+        reviews_serialized = ReviewSerializer(reviews, many=True, context={'request':request})
         courses_serialized = CourseSerializer(courses, many=True)
         return Response({
             "professor": professor_serialized.data,

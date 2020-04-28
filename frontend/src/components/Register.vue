@@ -88,6 +88,24 @@ export default {
       });
     },
     register: function() {
+      // we need to check if a school has been entered
+      // since the v-select element isn't the part of a b-form
+      // and we need to ensure that a valid university 
+      // name has been entered before we continue with the registration
+
+      if (this.newUser.school_id == 0) {
+        
+        // we didn't enter a university yet -- can't proceed with registration
+        this.$bvToast.toast('You Must Select A University When Registering', {
+                title: `No University Selected`,
+                variant: 'warning',
+                solid: true,
+                toaster:'b-toaster-top-full'
+        });
+
+        return;
+      }
+
       let user = this.newUser;
       this.$store
         .dispatch("register", user)

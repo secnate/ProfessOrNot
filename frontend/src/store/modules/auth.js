@@ -4,11 +4,10 @@ import router from "../../router";
 
 const state = {
   status: "",
-  token: localStorage.getItem("token") || "",
   user: {}
 };
 const getters = {
-  isAuthenticated: state => !!state.token,
+  isAuthenticated: state => state.status === "success",
   authStatus: state => state.status,
   getUser: state => state.user
 };
@@ -22,8 +21,8 @@ const actions = {
           const user = resp.data.user;
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = "Token " + token;
-          const payload = [token, user];
-          commit("auth_success", payload);
+          commit("auth_success", user);
+          router.push("/quiz");
           resolve(resp);
         })
         .catch(err => {
@@ -49,8 +48,10 @@ const actions = {
           const user = resp.data.user;
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = "Token " + token;
-          const payload = [token, user];
-          commit("auth_success", payload);
+          commit("auth_success", user);
+          if (!user.quiz_complete) {
+            router.push("/quiz");
+          }
           resolve(resp);
         })
         .catch(err => {
@@ -68,7 +69,7 @@ const actions = {
           commit("logout");
           localStorage.removeItem("token");
           delete axios.defaults.headers.common["Authorization"];
-          router.push("/login");
+          router.push("/");
           resolve(resp);
         })
         .catch(err => {
@@ -84,13 +85,14 @@ const actions = {
         .then(resp => {
           const payload = resp.data;
           commit("update_user", payload);
+
           resolve(resp);
         })
         .catch(err => {
           commit("auth_error");
           localStorage.removeItem("token");
           delete axios.defaults.headers.common["Authorization"];
-          router.push("/login");
+          router.push("/");
           reject(err);
         });
     });
@@ -118,23 +120,22 @@ const mutations = {
   },
   auth_success(state, payload) {
     state.status = "success";
-    state.token = payload[0];
-    state.user = payload[1];
+    state.user = payload;
   },
   auth_error(state) {
     state.status = "error";
-    state.token = "";
     state.user = "";
   },
   logout(state) {
-    state.status = "";
-    state.token = "";
+    state.status = "logout";
     state.user = "";
   },
   update_user(state, payload) {
-    state.token = localStorage.getItem("token");
     state.status = "success";
     state.user = payload;
+  },
+  set_quiz_complete(state) {
+    state.user.quiz_complete = true;
   }
 };
 

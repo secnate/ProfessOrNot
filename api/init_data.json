@@ -28,7 +28,7 @@
     "model": "accounts.user",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$150000$k4jZLXbdMDO5$krBYTzEvTNt66cpBlqvfIgWSWPHqJnMQOu7pXTu1ivY=",
+      "password": "pbkdf2_sha256$180000$OCknlvt4N1eI$AsRDAGLvvnVjtVprlj4ug8Y/87Aoxnln0lDPdWkK0Cg=",
       "last_login": "2019-11-07T15:28:41.545Z",
       "is_superuser": false,
       "email": "defaultuser@professornot.com",

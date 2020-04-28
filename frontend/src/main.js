@@ -1,34 +1,43 @@
 import Vue from "vue";
 import App from "./App.vue";
-import BootstrapVue from "bootstrap-vue";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
 import store from "./store";
 import Axios from "axios";
-import vSelect from "vue-select";
+import intercept from "./axios-intercept";
+import backendRunup from "./backend-runup";
+import vSelect, { VueSelect } from "vue-select";
 import "vue-select/dist/vue-select.css";
 
-require("axios-base-url")("https://dev-api.professornot.com");
-//require("axios-base-url")("http://localhost:8000");
+// Vue settings
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
-const accessToken = localStorage.getItem("token");
+if (process.env.NODE_ENV === "production") {
+  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
+} else {
+  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
 
-if (accessToken) {
-  Vue.prototype.$http.defaults.headers.common["Authorization"] =
-    "Token " + accessToken;
+  //This line needs to be uncommented and the other needs to be commented
+  //Axios.defaults.baseURL = `http://localhost:8000`;
 }
-// If token is present but user object is not, fetch the user
-if (store.getters.isAuthenticated && !store.getters.getUser.name) {
-  store.dispatch("fetch_user");
-}
+
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 Vue.component("v-select", vSelect);
-var EventBus = new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
 
-export default EventBus;
+backendRunup(Vue)
+  .then(() => mountRoot())
+  .catch(() => mountRoot());
+// Mount the main vue object (event bus)
+function mountRoot() {
+  var EventBus = new Vue({
+    router,
+    store,
+    render: (h) => h(App),
+  }).$mount("#app");
+  intercept();
+}
+// Initialize imported components
+export default async () => EventBus;

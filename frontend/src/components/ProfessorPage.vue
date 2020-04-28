@@ -1,25 +1,31 @@
 <template>
-<div>
+  <div>
     <Navbar />
     <!-- Popovers to display -->
     <CreateReview :propProfessor="professor" @add-new-review="addNewReview" />
+    <!-- Loading -->
+    <div v-if="status ==='loading'">
+      <br />
+      <b-spinner variant="primary" label="Spinning" />
+    </div>
     <!-- If loaded successfully -->
     <div v-if="loadSuccess">
-	
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-      <h1 class="professorTitle">
-        <b>{{ this.professor != null ? this.professor.name : ""}}</b>
-      </h1>
-	  </div>
-</div>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="professorTitle">
+            <b>{{ this.professor != null ? this.professor.name : ""}}</b>
+          </h1>
+        </div>
+      </div>
       <!-- If the course doesn't have any reviews, then we just display a default message -->
       <div v-if="!this.hasReviews">
         <h1>No Reviews Have Been Created.</h1>
         <h1>
           Would You Like To
-          <div v-on:click="displayReviewModal" class="makeNewReview">Make One?</div>
         </h1>
+        <b-button variant="primary" v-on:click="displayReviewModal" class="makeNewReview">
+          Make One?
+        </b-button>
       </div>
 
       <!-- If there are reviews -->
@@ -37,13 +43,34 @@
           </b-row>
 
           <div>
+
             <h2 align="left">Reviews:</h2>
-            <Review
+
+            <!-- searchbar to filter reviews & reviews themselves -->
+            <b-input-group size="sm">
+
+              <b-form-input 
+                placeholder="Search By Course Name..."
+                v-model="search_text"
+              > 
+              </b-form-input >
+
+            </b-input-group>
+
+            <div 
               v-for="review in this.professorReviews"
               :key="review.id"
-              :review="review"
-              hideProfessorName
-            />
+            >
+              <div v-if="searchTextMeetsReviewName(review.course.name)">
+                <Review
+                  :key="review.id"
+                  :review="review"
+                  v-on:delete="deleteReview"
+                  hideProfessorName
+                />
+              </div>
+            </div>
+
           </div>
         </b-container>
       </div>
@@ -70,7 +97,8 @@ export default {
       professorName: "",
       professorCourses: [],
       professorReviews: [],
-      profId: -1
+      profId: -1,
+      search_text: ""
     };
   },
   methods: {
@@ -80,6 +108,7 @@ export default {
       this.professorCourses = [];
       this.professorReviews = [];
       this.profId = -1;
+      this.search_text="";
     },
     getRatingString(value) {
       return "Rating: " + JSON.stringify(value);
@@ -93,8 +122,8 @@ export default {
       this.$bvModal.show("review-modal");
     },
     addNewReview(review) {
-      this.professorReviews.unshift(review)
-      this.professor.avg_rating = review.professor.avg_rating
+      this.professorReviews.unshift(review);
+      this.professor.avg_rating = review.professor.avg_rating;
     },
     retrieveData() {
       new Promise((resolve, reject) => {
@@ -115,6 +144,37 @@ export default {
             reject(err);
           });
       });
+    },
+    deleteReview(id_to_delete) {
+      // we recieve event from the child Review component and update our data accordingly
+      var i = 0;
+      for (i = 0; i < this.professorReviews.length; i++) {
+        if (this.professorReviews[i].id == id_to_delete) {
+          this.professorReviews.splice(i, 1); // remove one element at index i
+        }
+      }
+    },
+    searchTextMeetsReviewName(courseName)
+    {
+
+      if (this.search_text == "") {
+        // if nothing has been entered as a search text, anything works!
+        return true; 
+      }
+
+      // the goal is to determine if the text 
+      // entered in the search bar matches the leading portion of a course name 
+
+      if (this.search_text.length > courseName.length) {
+        return false;   // we are going beyond the length of the course name and that is baaad
+      }
+
+      // we now check if the search text corresponds to the course name in earlier portions
+
+      var lowercased_search_text = this.search_text.toLowerCase();
+      var lowercased_course_name = courseName.toLowerCase();
+
+      return lowercased_course_name.startsWith(lowercased_search_text);
     }
   },
   computed: {
@@ -126,6 +186,15 @@ export default {
     },
     hasReviews: function() {
       return this.professorReviews.length > 0;
+    },
+    professorCourseNames: function() {
+      var toReturn = [];
+
+      var i = 0;
+      for (i = 0; i < this.professorCourses.length; i++) {
+        toReturn.push( this.professorCourses[i].name );
+      }
+      return toReturn;
     }
   },
   mounted() {
@@ -139,10 +208,9 @@ export default {
 
 
 <style scoped>
-
-.container{
-height: 50px;
-width: auto;
+.container {
+  height: 50px;
+  width: auto;
 }
 
 .professorTitle {
@@ -180,8 +248,9 @@ width: auto;
 }
 
 .makeNewReview {
-  color: blue;
-  font-style: underline;
+  color: white;
+  font-size: 20pt;
+  font-weight: bold;
 }
 
 .review_course_name {
@@ -191,9 +260,8 @@ width: auto;
 }
 
 .container-fluid {
-text-align: left;
-margin-bottom: 20px;
-margin-left:10%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-left: 10%;
 }
-
 </style>

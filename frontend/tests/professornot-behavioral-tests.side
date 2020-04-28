@@ -1,0 +1,161 @@
+{
+  "id": "d87d3a7b-8e74-4530-9754-ec031c042591",
+  "version": "2.0",
+  "name": "professornot-behavioral-tests",
+  "url": "https://dev.professornot.com/login",
+  "tests": [{
+    "id": "28d8ee93-909e-43bd-b2a2-22bd167619cf",
+    "name": "First test- login",
+    "commands": [{
+      "id": "db00e220-9463-47ca-b793-56e3c1d9cb3b",
+      "comment": "",
+      "command": "open",
+      "target": "https://dev.professornot.com/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "71a8e490-47be-47a4-9bd8-d48b15859ad2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbdfe4b1-ef4d-406a-abc6-9357a616defb",
+      "comment": "",
+      "command": "click",
+      "target": "id=input-email",
+      "targets": [
+        ["id=input-email", "id"],
+        ["css=#input-email", "css:finder"],
+        ["xpath=//input[@id='input-email']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div/div/div/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5e4caa4a-2097-473d-8dbe-beaacc9a861f",
+      "comment": "",
+      "command": "type",
+      "target": "id=input-email",
+      "targets": [
+        ["id=input-email", "id"],
+        ["css=#input-email", "css:finder"],
+        ["xpath=//input[@id='input-email']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div/div/div/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "cab11@email.sc.edu"
+    }, {
+      "id": "531b56e5-6e13-457b-869f-11a261d52dc8",
+      "comment": "",
+      "command": "type",
+      "target": "id=input-password",
+      "targets": [
+        ["id=input-password", "id"],
+        ["css=#input-password", "css:finder"],
+        ["xpath=//input[@id='input-password']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div/div/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "97c563c8-14b4-45c7-a919-c16d4589e8ec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div/div/div/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e15670e0-105a-48ac-bc04-c302eba0515a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.jumbotron",
+      "targets": [
+        ["css=.jumbotron", "css:finder"],
+        ["xpath=//div[@id='app']/div/div[2]/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "22ff5c45-0fc2-4164-9e32-1ca9473134ee",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/nav/div/button/span", "xpath:idRelative"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "944c07a0-65ea-4901-b6fd-7f64397f7e9b",
+      "comment": "",
+      "command": "click",
+      "target": "id=__BVID__18__BV_button_",
+      "targets": [
+        ["id=__BVID__18__BV_button_", "id"],
+        ["linkText=Alex Brock", "linkText"],
+        ["css=#\\__BVID__18__BV_button_", "css:finder"],
+        ["xpath=//a[contains(text(),'Alex Brock')]", "xpath:link"],
+        ["xpath=//a[@id='__BVID__18__BV_button_']", "xpath:attributes"],
+        ["xpath=//li[@id='__BVID__18']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Alex Brock')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "94c7b722-8337-4982-bc32-f03eca6d5392",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Profile",
+      "targets": [
+        ["linkText=Profile", "linkText"],
+        ["css=li:nth-child(1) > .dropdown-item", "css:finder"],
+        ["xpath=//a[contains(text(),'Profile')]", "xpath:link"],
+        ["xpath=//li[@id='__BVID__18']/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//li/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Profile')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1924f099-6b3b-4187-821e-6532bccc32de",
+      "comment": "",
+      "command": "click",
+      "target": "css=.close",
+      "targets": [
+        ["css=.close", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//header[@id='profile-modal___BV_modal_header_']/button", "xpath:idRelative"],
+        ["xpath=//header/button", "xpath:position"],
+        ["xpath=//button[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bfd29244-daf6-40eb-b78c-51ba2783459d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "cc2fba43-4b74-465d-8ecf-20aa2731f6f3",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["28d8ee93-909e-43bd-b2a2-22bd167619cf"]
+  }],
+  "urls": ["https://dev.professornot.com/login"],
+  "plugins": []
+}

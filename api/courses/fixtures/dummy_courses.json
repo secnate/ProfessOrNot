@@ -1,0 +1,11 @@
+[
+    {
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T20:28:08.364Z",
+      "name": "TEST101",
+      "school": 1
+    }
+  }
+]

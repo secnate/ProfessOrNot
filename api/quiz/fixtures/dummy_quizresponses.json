@@ -1,0 +1,42 @@
+[
+  {
+    "model": "quiz.quizresponses",
+    "pk": 1,
+    "fields": {
+      "responses": [
+        {
+          "questionId": 1,
+          "responseId": 3
+        },
+        {
+          "questionId": 2,
+          "responseId": 1
+        },
+        {
+          "questionId": 3,
+          "responseId": 1
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizresponses",
+    "pk": 2,
+    "fields": {
+      "responses": [
+        {
+          "questionId": 1,
+          "responseId": 1
+        },
+        {
+          "questionId": 2,
+          "responseId": 2
+        },
+        {
+          "questionId": 3,
+          "responseId": 3
+        }
+      ]
+    }
+  }
+]

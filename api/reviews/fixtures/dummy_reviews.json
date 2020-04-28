@@ -1,0 +1,26 @@
+[
+  {
+    "model": "reviews.review",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T20:29:50.081Z",
+      "reviewer": 1,
+      "professor": 1,
+      "course": 1,
+      "rating": 5,
+      "comment": "DEFAULT_REVIEW_COMMENT"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 2,
+    "fields": {
+      "created": "2019-12-07T20:29:50.081Z",
+      "reviewer": 2,
+      "professor": 1,
+      "course": 1,
+      "rating": 5,
+      "comment": "DEFAULT_REVIEW_COMMENT"
+    }
+  }
+]

@@ -9,6 +9,7 @@
       @hide="closeModal"
       @show="show"
     >
+      <b-alert v-for="error in errors" :key="error" show variant="danger">{{error}}</b-alert>
       <b-form @submit="submit">
         <label>Professor's Name</label>
         <v-select
@@ -16,11 +17,19 @@
           label="name"
           @input="setProfessor"
           :clearable="false"
-          taggable
-          @option:created="createProfessor"
           :disabled="professorDisabled"
-          :value="propProfessor"
-        ></v-select>
+          :value="profVal || propProfessor"
+        >
+          <template v-slot:no-options="{ search, searching }">
+            <template v-if="searching">
+              <div v-on:click="createProfessor(search)" class="vs__dropdown-option">
+                Create New Professor:
+                <em>{{ search }}</em>
+                <b-icon icon="arrow-right" class="ml-1"></b-icon>
+              </div>
+            </template>
+          </template>
+        </v-select>
 
         <label>Course Name (Three or Four Uppercase Letters + Three Digits)</label>
         <v-select
@@ -28,11 +37,19 @@
           label="name"
           @input="setCourse"
           :clearable="false"
-          taggable
-          @option:created="createCourse"
           :disabled="courseDisabled"
-          :value="propCourse"
-        ></v-select>
+          :value="courseVal || propCourse"
+        >
+          <template v-slot:no-options="{ search, searching }">
+            <template v-if="searching">
+              <div v-on:click="createCourse(search)" class="vs__dropdown-option">
+                Create New Course:
+                <em>{{ search }}</em>
+                <b-icon icon="arrow-right" class="ml-1"></b-icon>
+              </div>
+            </template>
+          </template>
+        </v-select>
 
         <b-form-group label="Ranking">
           <StarRating v-model="new_review.rating" v-bind:star-size="30" />
@@ -40,13 +57,14 @@
 
         <br />
 
-        <b-form-group label="Enter Comments">
+        <b-form-group label="Enter Comments (255 Characters Max)">
           <b-form-textarea
             id="comment-textarea"
             v-model="new_review.comment"
             autocomplete="off"
             type="text"
             placeholder="Enter comments..."
+            :state="0 <= new_review.comment.length && new_review.comment.length <= 255"
           ></b-form-textarea>
         </b-form-group>
 
@@ -69,7 +87,9 @@ export default {
   data() {
     return {
       status: "",
-      
+      profVal: "",
+      courseVal: "",
+      errors: [],
       professors: [],
       courses: [],
       new_review: {
@@ -83,16 +103,16 @@ export default {
   computed: {
     professorDisabled() {
       if (this.propProfessor != null) {
-        return true
+        return true;
       }
-      return false
+      return false;
     },
     courseDisabled() {
       if (this.propCourse != null) {
-        return true
+        return true;
       }
-      return false
-    },
+      return false;
+    }
   },
   methods: {
     show() {
@@ -101,76 +121,81 @@ export default {
       if (this.propProfessor != null) {
         this.new_review.professor_id = this.propProfessor.id;
 
-        this.loadCourses()
-      }
-      else if (this.propCourse != null) {
+        this.loadCourses();
+      } else if (this.propCourse != null) {
         this.new_review.course_id = this.propCourse.id;
-        this.loadProfessors()
-      }
-      else {
-        this.loadCourses()
-        this.loadProfessors()
+        this.loadProfessors();
+      } else {
+        this.loadCourses();
+        this.loadProfessors();
       }
     },
     submit(event) {
       event.preventDefault();
-      if(this.validateFields()){
-      this.saveReview();
-      this.closeModal();
+      this.errors = [];
+      if (this.validateFields()) {
+        this.saveReview();
       }
     },
     validateFields() {
+      var ret = true;
       if (this.new_review.professor_id == 0) {
-        this.$bvToast.toast('No Professor Entered', {
-                title: `Required Professor  Name Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
-
+        this.errors.push("Professor Not Selected");
         // don't do anything
-        return false;
+        ret = false;
       }
 
       if (this.new_review.course_id == 0) {
-        this.$bvToast.toast('No Course Entered', {
-                title: `Required Course  Name Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
+        this.errors.push("Course Not Selected");
 
         // don't do anything
-        return false
+        ret = false;
       }
 
       if (this.new_review.rating == 0) {
-
-        this.$bvToast.toast('Enter Your Rating On The Scale Of 1-5 Stars', {
-                title: `Required Rating Not Entered`,
-                variant: 'warning',
-                solid: true,
-                toaster:'b-toaster-top-full'
-        })
+        this.errors.push("Ranking Not Selected");
 
         // don't do anything
-        return false
+        ret = false;
       }
-      return true
+      return ret;
     },
     saveReview() {
+
+      // check if the comments text is too long
+      if (this.new_review.comment.length > 255) {
+        this.errors.push("Your Comments Are Too Long (255 Characters Maximum)");
+        return;
+      }
+
+
       return new Promise((resolve, reject) => {
         this.status = "loading"; // We can show a loading wheel while in this state
         axios({ url: "/reviews", data: this.new_review, method: "POST" })
           .then(resp => {
-            this.$emit('add-new-review', resp.data)
+            this.$emit("add-new-review", resp.data);
             this.status = "success";
             resolve(resp);
+            this.closeModal();
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
-            reject(err);
+            var resp = err.response;
+            if (
+              (resp.status == 400) &
+              (JSON.stringify(resp.data) ===
+                JSON.stringify({
+                  non_field_errors: [
+                    "The fields course, professor, reviewer must make a unique set."
+                  ]
+                }))
+            ) {
+              this.errors.push(
+                "You've Already Reviewed This Professor & Course!"
+              );
+            } else {
+              this.errors.push("Error!");
+            }
           });
       });
     },
@@ -184,6 +209,7 @@ export default {
         comment: ""
       };
       this.status = "";
+      this.errors = [];
     },
     closeModal() {
       // close the window
@@ -202,7 +228,6 @@ export default {
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -221,7 +246,6 @@ export default {
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -234,22 +258,23 @@ export default {
       this.new_review.course_id = value.id;
     },
     createProfessor(newOption) {
-      console.log(newOption);
       new Promise((resolve, reject) => {
         this.status = "loading"; // we can show a loading wheel while in this state
         axios({
           url: "/professors",
           method: "POST",
-          data: newOption
+          data: {
+            name: newOption
+          }
         })
           .then(resp => {
             this.professors.push(resp.data);
-            this.new_review.professor_id = resp.data.id
+            this.profVal = resp.data.name;
+            this.new_review.professor_id = resp.data.id;
             this.status = "success";
             resolve(resp);
           })
           .catch(err => {
-            console.log(err);
             this.status = "error";
             reject(err);
           });
@@ -257,32 +282,36 @@ export default {
     },
     createCourse(newOption) {
       // check to see if the new option fits our regular expression
-      var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$")
-      if (!courseRE.test(newOption.name)) {
-        this.$bvToast.toast('Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number', {
-          title: `Invalid Course Name`,
-          variant: 'warning',
-          solid: true
-        })
+      var courseRE = new RegExp("^[A-Z]{3}[A-Z]?[1-9][0-9]{2}$");
+      if (!courseRE.test(newOption)) {
+        this.$bvToast.toast(
+          "Must Be Three/Four Uppercase Letters Followed By A Three-Digit Number",
+          {
+            title: `Invalid Course Name`,
+            variant: "warning",
+            solid: true
+          }
+        );
 
         return;
-      }
-      else {
+      } else {
         new Promise((resolve, reject) => {
           this.status = "loading"; // we can show a loading wheel while in this state
           axios({
             url: "/courses",
             method: "POST",
-            data: newOption
+            data: {
+              name: newOption
+            }
           })
             .then(resp => {
               this.courses.push(resp.data);
-              this.new_review.course_id = resp.data.id
+              this.courseVal = resp.data.name;
+              this.new_review.course_id = resp.data.id;
               this.status = "success";
               resolve(resp);
             })
             .catch(err => {
-              console.log(err);
               this.status = "error";
               reject(err);
             });

@@ -1,15 +1,15 @@
 from rest_framework import serializers
 from .models import Course
-from schools.models import School
+from api import custom_fields
+from schools.serializers import SchoolSerializer
 from rest_framework.validators import UniqueTogetherValidator
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), source='school', write_only=True)
-
+    school = SchoolSerializer(default=custom_fields.GetSchool())
     class Meta:
         model = Course
-        fields = ['id', 'name', 'avg_rating', 'school_id']
+        fields = ['id', 'name', 'avg_rating', 'school']
         validators = [
             UniqueTogetherValidator(
                 queryset=Course.objects.all(),

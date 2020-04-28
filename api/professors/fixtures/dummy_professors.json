@@ -1,0 +1,11 @@
+  [
+    {
+    "model": "professors.professor",
+    "pk": 1,
+    "fields": {
+      "created": "2019-11-07T19:30:16.644Z",
+      "name": "DEFAULT_PROFESSOR",
+      "school": 1
+    }
+  }
+  ]

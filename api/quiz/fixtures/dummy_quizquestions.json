@@ -1,0 +1,55 @@
+[
+  {
+    "model": "quiz.quizquestion",
+    "pk": 1,
+    "fields": {
+      "text": "If you are not sure how to spell a word, you;",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "spell it out loud or in your head"
+        },
+        {
+          "id": 2,
+          "text": "you write it down until it looks right"
+        },
+        {
+          "id": 3,
+          "text": "you draw it in the air with your finger"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 3,
+    "fields": {
+      "text": "When you see the word \"cat,\" what do you do first?",
+      "type": "mc",
+      "options": [
+        {
+          "id": 1,
+          "text": "Picture a cat in your mind"
+        },
+        {
+          "id": 2,
+          "text": "Say the word \"cat\" to yourself"
+        },
+        {
+          "id": 3,
+          "text": "Think about being with a cat (petting it or hearing it purr)"
+        }
+      ]
+    }
+  },
+  {
+    "model": "quiz.quizquestion",
+    "pk": 2,
+    "fields": {
+      "text": "I am good at taking tests",
+      "type": "sc",
+      "options": []
+    }
+  }
+]
