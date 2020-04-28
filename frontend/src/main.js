@@ -14,14 +14,7 @@ import "vue-select/dist/vue-select.css";
 // Vue settings
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
-if (process.env.NODE_ENV === "production") {
-  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
-} else {
-  Axios.defaults.baseURL = `https://dev-api.professornot.com`;
-
-  //This line needs to be uncommented and the other needs to be commented
-  //Axios.defaults.baseURL = `http://localhost:8000`;
-}
+Axios.defaults.baseURL = `https://api.professornot.com`;
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
