@@ -210,6 +210,8 @@ export default {
       };
       this.status = "";
       this.errors = [];
+      this.profVal = ""
+      this.courseVal = ""
     },
     closeModal() {
       // close the window
