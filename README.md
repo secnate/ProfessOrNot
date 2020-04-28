@@ -18,7 +18,12 @@ Backend: Django, Django Rest Framework, PostgreSQLs.\
 Django Rest Framework is the backend framework we chose to develop our RESTful API. We are using PostgreSQL as our database which is accessed through Django's built in Object Relational Model (ORM) system. You can find our interactive API docs on [SwaggerHub](https://app.swaggerhub.com/apis-docs/professornot/Django/1.0.0#/Reviews/post_reviews).
 
 Systems Engineering\
-Our website is running on four DigitalOcean droplets in two isolated enviroments, DEV and PROD. The dev branch is automatically updated by GitHub commits to the develop branch through TravisCI. The frontend is served statically by Ngnix, and the backend is served through Nginx (Web Server) -> Gunicorn (Application Server) -> Django (.py files).
+Our website is running on four DigitalOcean droplets in two isolated enviroments, DEV and PROD. The dev branch is automatically updated by GitHub commits to the develop branch through TravisCI. The frontend is served statically by Ngnix, and the backend is served through Nginx (Web Server) -> Gunicorn (Application Server) -> Django (.py files).\
+Hostnames:\
+https://www.professornot.com (PROD Frontend)\
+https://api.professornot.com (PROD Backend)\
+https://dev.professornot.com (DEV Frontend)\
+https://dev-api.professornot.com (DEV Backend)
 
 ### Repository
 
@@ -67,4 +72,9 @@ When reviewing a PR, check that the person isn't going to break your code or som
       3. Install selenium-side-runner. "npm i selenium-side-runner"
       4. Run the test. "selenium-side-runner testfile.side" 
    
+
+#### Management Commands
+*Must be in pipenv shell*\
+Clean Dangling Professors and Courses (Run on Cronjob): ./manage.py cleandb\
+Add new quiz questions tool: ./manage.py load_question
 
