@@ -5,6 +5,8 @@ A better rate my professor that uses personality tests and heuristics to recomme
 
 This was the Capstone Design project for the University of South Carolina Computer Science/Computer Engineering program for all team members during the Fall 2019 and Spring 2020 semesters
 
+Video Demo: [Click here](https://www.youtube.com/watch?v=uGk_euw9dZc)
+
 ### Mission
 
 Different students learn in different ways, and what one student likes in a professor may not apply to everyone. We think this could be improved. Using a personality test and learning style survey, we can create an algorithm to weight scores based on the submitters learning style similarity to the requestor, and provide a personalized recommendation.
