@@ -13,7 +13,7 @@ Different students learn in different ways, and what one student likes in a prof
 ### Key Technologies
 
 Frontend: VueJS, Vuex, Axios.
-- VueJS is our Javascript framework, similar to React and Angular, it provides the concept of reusable compontents for us to build our application with.\
+- VueJS is our Javascript framework, similar to React and Angular, it provides the concept of reusable compontents for us to build our application with.
 - Redux is our state management system. This is similar to 'global variables' in that it is a globally accessible data store from inside all components in the application.
 - Axios handles our Rest API calls to the backend.
 
