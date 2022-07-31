@@ -23,6 +23,7 @@ Backend: Django, Django Rest Framework, PostgreSQLs.
 Systems Engineering
 
 The website ran on four DigitalOcean droplets in two isolated enviroments, DEV and PROD. The dev branch was automatically updated by GitHub commits to the develop branch through TravisCI. The frontend was served statically by Ngnix, and the backend is served through Nginx (Web Server) -> Gunicorn (Application Server) -> Django (.py files).
+
 Hostnames:
 https://www.professornot.com (PROD Frontend)
 https://api.professornot.com (PROD Backend)
