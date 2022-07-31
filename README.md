@@ -20,8 +20,7 @@ Frontend: VueJS, Vuex, Axios.
 Backend: Django, Django Rest Framework, PostgreSQLs.
 - Django Rest Framework is the backend framework we chose to develop our RESTful API. We are using PostgreSQL as our database which is accessed through Django's built in Object Relational Model (ORM) system. You can find our interactive API docs on [SwaggerHub](https://app.swaggerhub.com/apis-docs/professornot/Django/1.0.0#/Reviews/post_reviews).
 
-Systems Engineering
-
+Systems Engineering:
 The website ran on four DigitalOcean droplets in two isolated enviroments, DEV and PROD. The dev branch was automatically updated by GitHub commits to the develop branch through TravisCI. The frontend was served statically by Ngnix, and the backend is served through Nginx (Web Server) -> Gunicorn (Application Server) -> Django (.py files).
 
 Hostnames:
