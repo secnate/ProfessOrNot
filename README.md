@@ -1,7 +1,6 @@
 ## ProfessOrNot
-[![Build Status](https://travis-ci.com/SCCapstone/ProfessOrNot.svg?token=pYg6WhKK8Np7sPZkTLzW&branch=develop)](https://travis-ci.com/SCCapstone/ProfessOrNot)
 
-A better rate my professor that uses personality tests and heuristics to recommend classes based on your learning styles and preferences. Its latest deployed version can be accessed at https://dev.professornot.com/ The 1.0 can be found at https://www.professornot.com.
+A better rate my professor that uses personality tests and heuristics to recommend classes based on your learning styles and preferences. While currently not live, it originally could be at https://www.professornot.com.
 
 This was the Capstone Design project for the University of South Carolina Computer Science/Computer Engineering program for all team members during the Fall 2019 and Spring 2020 semesters
 
